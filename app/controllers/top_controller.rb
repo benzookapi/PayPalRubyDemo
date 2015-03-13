@@ -5,8 +5,9 @@ class TopController < ApplicationController
   end
 
   def xo
-    p params["id"]
-    
+    p "================" + params["id"]
+    render :text => "OK"
+
   end
 
 

@@ -56,5 +56,5 @@ Rails.application.routes.draw do
 
   get 'xo/:id' => 'top#xo'
 
-  
+
 end
