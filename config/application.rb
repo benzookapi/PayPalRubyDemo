@@ -25,5 +25,11 @@ module PayPalRubyDemo
 
     config.assets.paths << "#{Rails}/vender/assets/fonts"
 
+    config.paypal.api.url = "https://api-3t.sandbox.paypal.com/nvp"
+
+    config.paypal.api.version = "109.0"
+
+    config.paypal.login.url = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token="
+
   end
 end
