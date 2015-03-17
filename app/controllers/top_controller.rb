@@ -8,11 +8,13 @@ class TopController < ApplicationController
 
     puts "wwwwwwwwwwwwwwwww"
 
+    p "XXXXXXXXXXXXXX"
+
     pp = Pp.new()
 
     url = pp.setEC(request.url, request.url, 5)
 
-    p "XXXXXXXXXXXXXX"
+
 
     redirect_to(url)
 
