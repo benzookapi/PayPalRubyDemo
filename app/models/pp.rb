@@ -18,7 +18,7 @@ class Pp < ActiveRecord::Base
   BASE_QUERY = "USER=" + API_USER + "&PWD=" +
              API_PWD + "&SIGNATURE=" + API_SIG + "&VERSION=" + API_VERSION
 
- def setEC(returnUrl, cancelUrl, amount)
+ def self.setEC(returnUrl, cancelUrl, amount)
    p "VVVVVVVVVVVVV"
    query = URI.escape(BASE_QUERY + "&METHOD=" + "SetExpressCheckout"+
                 "&RETURNURL=" + returnUrl + "&CANCELURL=" + cancelUrl +
