@@ -19,25 +19,25 @@ class Pp < ActiveRecord::Base
              API_PWD + "&SIGNATURE=" + API_SIG + "&VERSION=" + API_VERSION
 
  def setEC(returnUrl, cancelUrl, amount)
-     query = URI.escape(BASE_QUERY + "&METHOD=" + "SetExpressCheckout"+
+   query = URI.escape(BASE_QUERY + "&METHOD=" + "SetExpressCheckout"+
                 "&RETURNURL=" + returnUrl + "&CANCELURL=" + cancelUrl +
                 "&PAYMENTREQUEST_0_AMT=" + amount.to_s +
                 "&PAYMENTREQUEST_0_PAYMENTACTION=" + "Sale")
 
-     uri = URI.parse(API_URL)
+   uri = URI.parse(API_URL)
 
-     https = Net::HTTP.new(uri.host, 443)
+   https = Net::HTTP.new(uri.host, 443)
 
-     https.use_ssl = true
-     https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+   https.use_ssl = true
+   https.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-    res = https.post(uri.path, query)
+   res = https.post(uri.path, query)
 
-    p "setEC response:#{res.body}"
+   puts "setEC response:#{res.body}"
 
-    res_hash = Hash[URI::decode_www_form(res.body)]
+   res_hash = Hash[URI::decode_www_form(res.body)]
 
-    return LOGIN_URL + res_hash["TOKEN"]
+   return LOGIN_URL + res_hash["TOKEN"]
 
   end
 

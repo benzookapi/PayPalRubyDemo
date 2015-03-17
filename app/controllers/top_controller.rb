@@ -6,6 +6,8 @@ class TopController < ApplicationController
 
   def xo
 
+    puts "wwwwwwwwwwwwwwwww"
+
     pp = Pp.new()
 
     url = pp.setEC(request.url, request.url, 5)
