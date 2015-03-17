@@ -6,21 +6,9 @@ class TopController < ApplicationController
 
   def xo
 
-    p "SSSSS"
-
-    begin
-      pp = Pp.new()
-    rescue => ex
-      p "#{ex}"
-    end
-
-    p "FFFFFF"
-
     url = Pp.setEC(request.url, request.url, 5)
 
-    #redirect_to(url)
-
-    render :text => "OK"
+    redirect_to(url)
 
   end
 
