@@ -12,6 +12,8 @@ class TopController < ApplicationController
 
     url = pp.setEC(request.url, request.url, 5)
 
+    p "XXXXXXXXXXXXXX"
+
     redirect_to(url)
 
   end
