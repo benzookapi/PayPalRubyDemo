@@ -8,7 +8,7 @@ class TopController < ApplicationController
 
     p "SSSSS"
 
-    #pp = Pp.new()
+    pp = Pp.new()
 
     p "FFFFFF"
 
