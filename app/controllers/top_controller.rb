@@ -8,13 +8,15 @@ class TopController < ApplicationController
 
     p "SSSSS"
 
-    pp = Pp.new()
+    #pp = Pp.new()
 
     p "FFFFFF"
 
-    url = pp.setEC(request.url, request.url, 5)
+    #url = pp.setEC(request.url, request.url, 5)
 
-    redirect_to(url)
+    #redirect_to(url)
+
+    render :text => "OK"
 
   end
 
