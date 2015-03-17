@@ -6,7 +6,11 @@ class TopController < ApplicationController
 
   def xo
 
+    p "SSSSS"
+
     pp = Pp.new()
+
+    p "FFFFFF"
 
     url = pp.setEC(request.url, request.url, 5)
 
