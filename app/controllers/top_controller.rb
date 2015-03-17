@@ -8,7 +8,11 @@ class TopController < ApplicationController
 
     p "SSSSS"
 
-    pp = Pp.new()
+    begin
+      pp = Pp.new()
+    rescue => ex
+      p "#{ex}"
+    end
 
     p "FFFFFF"
 
