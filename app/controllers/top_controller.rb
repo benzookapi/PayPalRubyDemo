@@ -6,10 +6,18 @@ class TopController < ApplicationController
 
   def xo
 
-  
-
     p "================" + params["id"]
-    render :text => "OK"
+    p "#{request.url}"
+
+
+  pp = Pp.new()
+
+    url = pp.setEC(request.url, request.url, 1000)
+
+    
+
+
+    redirect_to(url)
 
   end
 
