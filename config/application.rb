@@ -27,7 +27,7 @@ module PayPalRubyDemo
 
     config.paypal_api_url = "https://api-3t.sandbox.paypal.com/nvp"
 
-    config.paypal_api_version = "109.0"
+    config.paypal_api_version = "121.0"
 
     config.paypal_login_url = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token="
 

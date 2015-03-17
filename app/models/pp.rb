@@ -31,9 +31,11 @@ class Pp < ActiveRecord::Base
    https.use_ssl = true
    https.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
+   puts "setEC query: #{query}"
+
    res = https.post(uri.path, query)
 
-   puts "setEC response:#{res.body}"
+   puts "setEC response: #{res.body}"
 
    res_hash = Hash[URI::decode_www_form(res.body)]
 
