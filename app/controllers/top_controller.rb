@@ -6,20 +6,12 @@ class TopController < ApplicationController
 
   def xo
 
-    p "================" + params["id"]
-    p "#{request.url}"
+    pp = Pp.new()
 
-
-  pp = Pp.new()
-
-    url = pp.setEC(request.url, request.url, 1000)
-
-    
-
+    url = pp.setEC(request.url, request.url, 5)
 
     redirect_to(url)
 
   end
-
 
 end

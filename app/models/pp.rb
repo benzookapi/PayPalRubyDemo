@@ -24,32 +24,20 @@ class Pp < ActiveRecord::Base
                 "&PAYMENTREQUEST_0_AMT=" + amount.to_s +
                 "&PAYMENTREQUEST_0_PAYMENTACTION=" + "Sale")
 
-
-
      uri = URI.parse(API_URL)
 
-     http = Net::HTTP.new(uri.host)
+     https = Net::HTTP.new(uri.host, 443)
 
-     http.use_ssl = true
+     https.use_ssl = true
+     https.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-     p uri.host
+    res = https.post(uri.path, query)
 
-     p query
+    p "setEC response:#{res.body}"
 
-     p uri.path
+    res_hash = Hash[URI::decode_www_form(res.body)]
 
-     #begin
-      res = http.post(uri.path, query)
-
-    # rescue => e
-      p "www#{e}"
-
-
-     #p res
-
-  #   end
-
-   return LOGIN_URL
+    return LOGIN_URL + res_hash["TOKEN"]
 
   end
 
