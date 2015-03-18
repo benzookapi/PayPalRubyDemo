@@ -43,4 +43,16 @@ class Pp < ActiveRecord::Base
 
   end
 
+  def self.getEC(token)
+    query = URI.escape(BASE_QUERY + "&METHOD=" + "SetExpressCheckout" +
+      "&RETURNURL=" + returnUrl + "&CANCELURL=" + cancelUrl +
+      "&PAYMENTREQUEST_0_AMT=" + amount.to_s +
+      "&PAYMENTREQUEST_0_PAYMENTACTION=" + "Sale")
+
+  end
+
+  def self.doEC
+
+  end
+
 end

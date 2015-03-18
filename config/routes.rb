@@ -54,7 +54,12 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  get 'xo/:id' => 'top#xo'
+  get 'xo/:id' => 'top#set'
+
+  get 'xo' => 'top#pay'
+
+  get 'err' => 'top#error'
+
 
 
 end
