@@ -10,6 +10,8 @@ class TopController < ApplicationController
 
     url = Pp.setEC(base_url + "/xo", base_url + "/err", 100)
 
+    p "==================set redirect url: #{url}"
+
     redirect_to(url)
 
   end
@@ -20,8 +22,15 @@ class TopController < ApplicationController
 
     payer_id = params[:PayerID]
 
-    render :text => token + payer_id
-    
+    p "==================pay token: #{token}"
+    p "pay payer_id: #{payer_id}"
+
+    p "==================getEC #{Pp.getEC(token)}"
+
+    p "==================doEC #{Pp.doEC(token, payer_id, 100)}"
+
+    render action: :main
+
   end
 
   def error
