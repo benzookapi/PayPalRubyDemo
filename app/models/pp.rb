@@ -65,11 +65,11 @@ class Pp < ActiveRecord::Base
 
     q = URI.escape(query)
 
-    puts "callApi query: #{q}"
+    p "callApi query: #{q}"
 
     res = https.post(uri.path, q)
 
-    puts "callApi response: #{res.body}"
+    p "callApi response: #{res.body}"
 
     res_hash = Hash[URI::decode_www_form(res.body)]
 
