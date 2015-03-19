@@ -8,15 +8,18 @@ class TopController < ApplicationController
 
     base_url = request.url.sub(request.fullpath, "")
 
-    url = Pp.setEC(base_url + "/xo", base_url + "/err", 100)
+    url = Pp.set_ec(base_url + "/xo?q_d=" + params[:q_d],
+      base_url + "/err?q_s=" + params[:q_s], URI.unescape(params[:q_s]))
 
-    p "==================set redirect url: #{url}"
+    p "==================set_ec: #{url}"
 
     redirect_to(url)
 
   end
 
   def pay
+
+    #flash.now[:return_url] = request.url.sub(request.fullpath, "")
 
     token = params[:token]
 
@@ -25,11 +28,32 @@ class TopController < ApplicationController
     p "==================pay token: #{token}"
     p "pay payer_id: #{payer_id}"
 
-    p "==================getEC #{Pp.getEC(token)}"
+    res_do = Pp.do_ec(token, payer_id, URI.unescape(params[:q_d]))
 
-    p "==================doEC #{Pp.doEC(token, payer_id, 100)}"
+    p "==================do_ec #{res_do}"
+
+    flash[:method] = 'doExpressCheckoutPayment'
+    flash[:res] = res_do.to_s
+
+    if res_do['ACK'] == 'Success' then
+      flash[:ec_msg] = "Success!"
+    else
+      flash[:ec_msg] = "Error!"
+    end
 
     render action: :main
+
+  end
+
+  def get
+    
+    token = params[:token]
+
+    res_get = Pp.get_ec(token)
+
+    p "==================get_ec #{res_get}"
+
+    render :text => res_get.to_s
 
   end
 

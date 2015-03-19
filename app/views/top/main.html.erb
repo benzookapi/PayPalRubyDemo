@@ -4,7 +4,7 @@
         <h1>PayPal Demo</h1>
         <p>
           This is my sandbox for PayPal integration by <span style="color:green">Ruby</span>,
-          not an offical sample.<br/>
+          unoffical.<br/>
           Get Code: <a href="https://github.com/benzookapi/PayPalRubyDemo" taget="_blank">https://github.com/benzookapi/PayPalRubyDemo</a>
         </p>
       </div>
@@ -24,10 +24,36 @@
             </td>
             <td>
               <p>
-                <h5>Minimum integration sample, fixning the amount '100'</h5>
-                <a href="/xo/1" data-paypal-button="true">
+                <label for="q_s">SetEC query</label>
+                <textarea id="q_s" class="form-control" rows="3">PAYMENTREQUEST_0_AMT=100
+&PAYMENTREQUEST_0_PAYMENTACTION=Sale
+                </textarea>
+                <label for="q_d">DoEC query</label>
+                <textarea id="q_d" class="form-control" rows="3">PAYMENTREQUEST_0_AMT=100
+&PAYMENTREQUEST_0_PAYMENTACTION=Sale
+                </textarea>
+                <a href="#" data-paypal-button="true" onclick="go_ec();return false;">
                   <img src="//www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Check out with PayPal" />
                 </a>
+                <% if flash.key?(:ec_msg) then %>
+                  <div class="alert <%= flash[:ec_msg] == "Success!" ? 'alert-success' : 'alert-danger' %>" role="alert"><%= flash[:ec_msg] %></div>
+                  <p id="m1">
+                    <%= flash[:method] %>
+                  </p>
+                  <p id="r1">
+                    <%= flash[:res] %>
+                  </p>
+                  <script>
+                  get_ec();
+                  </script>
+                  <p id="m2">
+
+                  </p>
+                  <p id="r2">
+                    
+                  </p>
+                  <a href="/">Return</a>
+                <% end %>
               </p>
             </td>
           </tr>
@@ -37,6 +63,15 @@
       </div>
 
       <hr>
+
+      <script>
+      function go_ec() {
+        var q_s = 'q_s=' + encodeURIComponent($('#q_s').val().replace('\n', ''));
+        var q_d = 'q_d=' + encodeURIComponent($('#q_d').val().replace('\n', ''));
+        //var base = window.location.href.replace(window.location.pathname, '');
+        window.location.href = 'xo/1/?' + q_s + '&' + q_d;
+      }
+      </script>
 
 
     </div> <!-- /container -->

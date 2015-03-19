@@ -18,42 +18,40 @@ class Pp < ActiveRecord::Base
   BASE_QUERY = "USER=" + API_USER + "&PWD=" +
              API_PWD + "&SIGNATURE=" + API_SIG + "&VERSION=" + API_VERSION
 
- def self.setEC(returnUrl, cancelUrl, amount)
-   query = BASE_QUERY + "&METHOD=" + "SetExpressCheckout"+
+ def self.set_ec(returnUrl, cancelUrl, query)
+   q = BASE_QUERY + "&METHOD=" + "SetExpressCheckout"+
                 "&RETURNURL=" + returnUrl + "&CANCELURL=" + cancelUrl +
-                "&PAYMENTREQUEST_0_AMT=" + amount.to_s +
-                "&PAYMENTREQUEST_0_PAYMENTACTION=" + "Sale"
+                "&" + query
 
-   res_hash = callApi(query)
+   res_hash = call_api(q)
 
    return LOGIN_URL + res_hash["TOKEN"]
 
   end
 
-  def self.getEC(token)
-    query = BASE_QUERY + "&METHOD=" + "GetExpressCheckoutDetails" +
+  def self.get_ec(token)
+    q = BASE_QUERY + "&METHOD=" + "GetExpressCheckoutDetails" +
       "&TOKEN=" + token
 
-    resh_hash = callApi(query)
+    resh_hash = call_api(q)
 
     return resh_hash
 
   end
 
-  def self.doEC(token, payer_id, amount)
-    query = BASE_QUERY + "&METHOD=" + "DoExpressCheckoutPayment"+
+  def self.do_ec(token, payer_id, query)
+    q = BASE_QUERY + "&METHOD=" + "DoExpressCheckoutPayment"+
       "&TOKEN=" + token + "&PAYERID=" + payer_id +
-      "&PAYMENTREQUEST_0_AMT=" + amount.to_s +
-      "&PAYMENTREQUEST_0_PAYMENTACTION=" + "Sale"
+      "&" + query
 
-    resh_hash = callApi(query)
+    resh_hash = call_api(q)
 
     return resh_hash
 
   end
 
   private
-  def self.callApi(query)
+  def self.call_api(query)
     uri = URI.parse(API_URL)
 
     https = Net::HTTP.new(uri.host, 443)
@@ -65,11 +63,11 @@ class Pp < ActiveRecord::Base
 
     q = URI.escape(query)
 
-    p "callApi query: #{q}"
+    p "==================call_api query: #{q}"
 
     res = https.post(uri.path, q)
 
-    p "callApi response: #{res.body}"
+    p "==================call_api response: #{res.body}"
 
     res_hash = Hash[URI::decode_www_form(res.body)]
 

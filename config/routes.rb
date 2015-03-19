@@ -58,6 +58,8 @@ Rails.application.routes.draw do
 
   get 'xo' => 'top#pay'
 
+  get 'get' => 'top#get'
+
   get 'err' => 'top#error'
 
 
