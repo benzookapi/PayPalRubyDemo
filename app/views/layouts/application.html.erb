@@ -12,7 +12,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
   <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -35,7 +34,14 @@
         </div><!--/.container-fluid -->
   </nav>
 
-  <%= yield %>
+  <div class="container">
+    <a href="https://github.com/benzookapi/PayPalRubyDemo" target="_blank">Code on GitHub</a>
+
+    <%= yield %>
+
+  </div>
+
+  <hr>
 
   <footer class="text-center">
     <p>&copy; benzookapi 2015</p>
