@@ -1,6 +1,6 @@
-class TopController < ApplicationController
+class ClController < ApplicationController
 
-  def main
+  def index
 
   end
 
