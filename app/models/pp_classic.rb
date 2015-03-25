@@ -2,7 +2,7 @@ require 'uri'
 require 'net/http'
 
 # PP
-class PpClassic < ActiveRecord::Base
+class PpClassic
   ENDPOINT_NVP_SIG = 'sig'
 
   ENDPOINT_NVP_CER = 'cer'
