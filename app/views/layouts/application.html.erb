@@ -25,19 +25,21 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/web">Web</a></li>
-              <li><a href="/cl">Classic API</a></li>
-              <li><a href="/rest">REST API</a></li>
-              <li><a href="/ad">Adaptive API</a></li>
-              <li><a href="/lg">Login With PayPal</a></li>
+              <li class="<%= request.path_info.start_with?('/web') || request.path_info == '/' ? 'active' : '' %>"><a href="/web">Web</a></li>
+              <li class="<%= request.path_info.start_with?('/cl') ? 'active' : '' %>"><a href="/cl">Classic API</a></li>
+              <li class="<%= request.path_info.start_with?('/rest') ? 'active' : '' %>"><a href="/rest">REST API</a></li>
+              <li class="<%= request.path_info.start_with?('/ad') ? 'active' : '' %>"><a href="/ad">Adaptive API</a></li>
+              <li class="<%= request.path_info.start_with?('/lg') ? 'active' : '' %>"><a href="/lg">Login With PayPal</a></li>
             </ul>
 
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="https://github.com/benzookapi/PayPalRubyDemo" target="_blank">&gt;&gt; Code on GitHub</a></li>
+            </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
   </nav>
 
   <div class="container">
-    <a href="https://github.com/benzookapi/PayPalRubyDemo" target="_blank">Code on GitHub</a>
 
     <%= yield %>
 

@@ -54,13 +54,15 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  get 'web' => 'web#index'
+
   get 'cl' => 'cl#index'
 
-  get 'cl/setec' => 'cl#setec'
+  post 'cl/setec' => 'cl#setec'
 
-  get 'cl/getec' => 'cl#getec'
+  post 'cl/getec' => 'cl#getec'
 
-  get 'cl/doec' => 'cl#doec'
+  post 'cl/doec' => 'cl#doec'
 
   get 'rest' => 'rest#index'
 

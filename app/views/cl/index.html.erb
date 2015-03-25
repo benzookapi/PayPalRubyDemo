@@ -1,78 +1,77 @@
-<h4>Express Checkout</h4>
-
-<select >
-
+<h4>Choose Endpoint (Sandbox only)</h4>
+<select class="form-control"  id="e_p">
+  <option value="<%= PpClassic::ENDPOINT_NVP_SIG %>" <%= @endpoint == PpClassic::ENDPOINT_NVP_SIG ? 'selected' : '' %> >NVP Signature</option>
+  <option value="<%= PpClassic::ENDPOINT_NVP_CER %>" <%= @endpoint == PpClassic::ENDPOINT_NVP_CER ? 'selected' : '' %> >NVP Certificate</option>
+  <option value="<%= PpClassic::ENDPOINT_NVP_CER_CDN %>" <%= @endpoint == PpClassic::ENDPOINT_NVP_CER_CDN ? 'selected' : '' %>>NVP Certificate (CDN)</option>
 </select>
+<br/>
 
+<h4>Express Checkout</h4>
 <table class="table table-striped">
         <tbody>
           <tr>
-            <td>
-              setExpressCheckout
+            <td style="width:10%;">
+              SetExpressCheckout
             </td>
             <td>
-              <p><label>endpoint</label>
-                <select id="">
-              <p>
-                <textarea id="q_s" class="form-control" rows="3">PAYMENTREQUEST_0_AMT=100
-&PAYMENTREQUEST_0_PAYMENTACTION=Sale
-                </textarea>
-
-              </p>
+              <%= form_tag("/cl/setec", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Parameters") %>
+                <%= text_area_tag('q_setec', @q_setec, {:rows=>'3', :class=>'form-control'}) %>
+                <%= hidden_field_tag('endpoint','') %>
+                </p>
+               <%= button_tag("1.Begin the payment!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('SetExpressCheckout', @res) if request.path_info == '/cl/setec' %>
             </td>
           </tr>
 
-            <tbody>
-              <tr>
-                <td>
-                  setExpressCheckout
-                </td>
-                <td>
-                  <p>
-                    <label for="q_s">SetEC query</label>
-                    <textarea id="q_s" class="form-control" rows="3">PAYMENTREQUEST_0_AMT=100
-    &PAYMENTREQUEST_0_PAYMENTACTION=Sale
-                    </textarea>
-                    <label for="q_d">DoEC query</label>
-                    <textarea id="q_d" class="form-control" rows="3">PAYMENTREQUEST_0_AMT=100
-    &PAYMENTREQUEST_0_PAYMENTACTION=Sale
-                    </textarea>
-                    <a href="#" data-paypal-button="true" onclick="go_ec();return false;">
-                      <img src="//www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif" alt="Check out with PayPal" />
-                    </a>
-                    <% if flash.key?(:ec_msg) then %>
-                      <div class="alert <%= flash[:ec_msg] == "Success!" ? 'alert-success' : 'alert-danger' %>" role="alert"><%= flash[:ec_msg] %></div>
-                      <p id="m1">
-                        <%= flash[:method] %>
-                      </p>
-                      <p id="r1">
-                        <%= flash[:res] %>
-                      </p>
-                      <script>
-                      get_ec();
-                      </script>
-                      <p id="m2">
+          <tr>
+            <td>
+              GetExpressCheckoutDetails
+            </td>
+            <td>
+              <%= form_tag("/cl/getec", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Token") %>
+                <%= text_field_tag('t_getec', @t_getec, :class=>'form-control') %>
+                </p>
+               <%= button_tag("2.Check the paymant!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('GetExpressCheckoutDetails', @res) if request.path_info == '/cl/getec' %>
+            </td>
+          </tr>
 
-                      </p>
-                      <p id="r2">
-
-                      </p>
-                      <a href="/">Return</a>
-                    <% end %>
-                  </p>
-                </td>
-              </tr>
-
+          <tr>
+            <td>
+              DoExpressCheckoutPayment
+            </td>
+            <td>
+              <%= form_tag("/cl/doec", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Token") %>
+                <%= text_field_tag('t_doec', @t_doec, :class=>'form-control') %>
+                <%= label_tag(nil, "PayerId") %>
+                <%= text_field_tag('p_doec', @p_doec, :class=>'form-control') %>
+                <%= label_tag(nil, "Parameters") %>
+                <%= text_area_tag('q_doec', @q_doec, {:rows=>'3', :class=>'form-control'}) %>
+                <%= hidden_field_tag('endpoint','') %>
+                </p>
+               <%= button_tag("3.Finish the payment!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('DoExpressCheckoutPayment', @res) if request.path_info == '/cl/doec' %>
+            </td>
+          </tr>
     </tbody>
 </table>
 
+<script>
+var setEp = function () {
+  $("#e_setec").val($('#e_p').val());
+};
 
+$('#e_p').change(setEp);
 
-      <script>
-      function go_ec() {
-        var q_s = 'q_s=' + encodeURIComponent($('#q_s').val().replace('\n', ''));
-        var q_d = 'q_d=' + encodeURIComponent($('#q_d').val().replace('\n', ''));
-        //var base = window.location.href.replace(window.location.pathname, '');
-        window.location.href = 'xo/1/?' + q_s + '&' + q_d;
-      }
-      </script>
+setEp();
+
+</script>
