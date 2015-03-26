@@ -32,13 +32,13 @@ class PpClassic
     q = BASE_QUERY + '&METHOD=' + 'SetExpressCheckout' +
       '&RETURNURL=' + returnUrl + '&CANCELURL=' + cancelUrl + '&' + query
 
-    res_hash = call_api(q, endpoint)
+    res = call_api(q, endpoint)
 
-    if res_hash['ACK'] == 'Success' then
-      CMD_URL + '_express-checkout&token=' + res_hash['TOKEN']
-    else
-      res_hash.to_s
+    if res.has_key?('TOKEN') then
+      res['_MY_REDIRECT'] = CMD_URL + '_express-checkout&token=' + res['TOKEN']
     end
+
+    res
   end
 
   def self.get_ec(token, endpoint = ENDPOINT_NVP_SIG)
@@ -76,18 +76,28 @@ class PpClassic
 
     https.use_ssl = true
 
-    # If you encounter SSL error, toggle this line.
+    https.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    # If you want to skip certificate validation, toggle this line.
     # https.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
     q = URI.escape(query)
 
     p "==================call_api query: #{q}"
 
+    now = Time.now
+
     res = https.post(uri.path, q)
 
+    elapsed = Time.now - now
+
+    p "==================call_api elapsed time (sec.): #{elapsed}"
     p "==================call_api response: #{res.body}"
 
-    Hash[URI.decode_www_form(res.body)]
+    res = Hash[URI.decode_www_form(res.body)]
+
+    res['_MY_ELAPSED_TIME'] = elapsed
+
+    res
   end
 
 end

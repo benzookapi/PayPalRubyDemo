@@ -5,33 +5,38 @@ class ClController < ApplicationController
       @t_getec = params[:token]
       @t_doec = @t_getec
       @p_doec = params[:PayerID]
+      if session.has_key?(:redirect_count) then
+        session[:redirect_count] = session[:redirect_count].to_i + 1
+      else
+        session[:redirect_count] = 1
+      end
+      @method = 'SetExpressCheckout'
+      @res = Hash['ACK', 'Success']
     else
-      @endpoint = PpClassic::ENDPOINT_NVP_SIG
-      @q_setec = 'PAYMENTREQUEST_0_AMT=100&PAYMENTREQUEST_0_PAYMENTACTION=Sale'
-      @q_doec = 'PAYMENTREQUEST_0_AMT=100&PAYMENTREQUEST_0_PAYMENTACTION=Sale'
-      @t_getec = ''
-      @t_doec = ''
-      @p_doec = ''
+      session[:endpoint] = PpClassic::ENDPOINT_NVP_SIG
+      session[:q_setec] = 'PAYMENTREQUEST_0_AMT=100&PAYMENTREQUEST_0_PAYMENTACTION=Sale'
+      session[:redirect_count] = 0
     end
+    @q_doec = session[:q_setec]
   end
 
   def setec
-    @endpoint = params[:endpoint]
-    @q_setec = params[:q_setec]
+    session[:endpoint] = params[:endpoint]
+    session[:q_setec] = params[:q_setec]
+
+    session[:redirect_count] = 0
 
     base_url = request.url.sub(request.fullpath, '')
 
     callback = base_url + '/cl'
 
-    res = PpClassic.set_ec(callback, callback, @q_setec, @endpoint)
+    res = PpClassic.set_ec(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec], @endpoint)
 
     p "==================setec: #{res}"
 
-    if res.start_with?('http') then
-      @success = true
-      redirect_to(res)
+    if res.has_key?('_MY_REDIRECT') then
+      redirect_to(res['_MY_REDIRECT'])
     else
-      @success = false
       @method = 'SetExpressCheckout'
       @res = res
       render template: 'cl/index'
@@ -40,24 +45,22 @@ class ClController < ApplicationController
 
   def getec
     @t_getec = params[:t_getec]
+    @t_doec = params[:t_doec]
+    @p_doec = params[:p_doec]
+    @q_doec = params[:q_doec]
 
     res = PpClassic.get_ec(@t_getec, @endpoint)
 
     p "==================getec #{res}"
 
     @method = 'GetExpressCheckoutDetails'
-    @res = res.to_s
-
-    if res['ACK'] == 'Success' then
-      @success = true
-    else
-      @success = false
-    end
+    @res = res
 
     render template: 'cl/index'
   end
 
   def doec
+    @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
@@ -67,13 +70,7 @@ class ClController < ApplicationController
     p "==================doec #{res}"
 
     @method = 'DoExpressCheckoutPayment'
-    @res = res.to_s
-
-    if res['ACK'] == 'Success' then
-      @success = true
-    else
-      @success = false
-    end
+    @res = res
 
     render template: 'cl/index'
   end

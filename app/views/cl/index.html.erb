@@ -1,9 +1,5 @@
 <h4>Choose Endpoint (Sandbox only)</h4>
-<select class="form-control"  id="e_p">
-  <option value="<%= PpClassic::ENDPOINT_NVP_SIG %>" <%= @endpoint == PpClassic::ENDPOINT_NVP_SIG ? 'selected' : '' %> >NVP Signature</option>
-  <option value="<%= PpClassic::ENDPOINT_NVP_CER %>" <%= @endpoint == PpClassic::ENDPOINT_NVP_CER ? 'selected' : '' %> >NVP Certificate</option>
-  <option value="<%= PpClassic::ENDPOINT_NVP_CER_CDN %>" <%= @endpoint == PpClassic::ENDPOINT_NVP_CER_CDN ? 'selected' : '' %>>NVP Certificate (CDN)</option>
-</select>
+<%= raw show_endpoint(session[:endpoint]) %>
 <br/>
 
 <h4>Express Checkout</h4>
@@ -11,18 +7,19 @@
         <tbody>
           <tr>
             <td style="width:10%;">
-              SetExpressCheckout
+              SetExpressCheckout<br/>
+              Redirect count: <%=session[:redirect_count] %>
             </td>
             <td>
               <%= form_tag("/cl/setec", method: "post") do %>
                 <p>
                 <%= label_tag(nil, "Parameters") %>
-                <%= text_area_tag('q_setec', @q_setec, {:rows=>'3', :class=>'form-control'}) %>
+                <%= text_area_tag('q_setec', session[:q_setec], {:rows=>'3', :class=>'form-control'}) %>
                 <%= hidden_field_tag('endpoint','') %>
                 </p>
                <%= button_tag("1.Begin the payment!", :class =>'btn btn-default') %>
               <% end %>
-              <%= raw show_res('SetExpressCheckout', @res) if request.path_info == '/cl/setec' %>
+              <%= raw show_res('SetExpressCheckout', @res) if request.path_info == '/cl/setec' || request.fullpath.include?('st=') %>
             </td>
           </tr>
 
@@ -35,6 +32,9 @@
                 <p>
                 <%= label_tag(nil, "Token") %>
                 <%= text_field_tag('t_getec', @t_getec, :class=>'form-control') %>
+                <%= hidden_field_tag('t_doec', @t_doec) %>
+                <%= hidden_field_tag('p_doec', @p_doec) %>
+                <%= hidden_field_tag('q_doec', @q_doec) %>
                 </p>
                <%= button_tag("2.Check the paymant!", :class =>'btn btn-default') %>
               <% end %>
@@ -55,7 +55,7 @@
                 <%= text_field_tag('p_doec', @p_doec, :class=>'form-control') %>
                 <%= label_tag(nil, "Parameters") %>
                 <%= text_area_tag('q_doec', @q_doec, {:rows=>'3', :class=>'form-control'}) %>
-                <%= hidden_field_tag('endpoint','') %>
+                <%= hidden_field_tag('t_getec', @t_getec) %>
                 </p>
                <%= button_tag("3.Finish the payment!", :class =>'btn btn-default') %>
               <% end %>
