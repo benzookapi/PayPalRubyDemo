@@ -1,7 +1,7 @@
 require 'uri'
 require 'net/http'
 
-# PP
+# PayPal Classic API wrapper
 class PpClassic
   ENDPOINT_NVP_SIG = 'sig'
 
@@ -26,6 +26,8 @@ class PpClassic
   API_USER_CER = ENV['PP_API_USER_CER']
 
   API_PWD_CER = ENV['PP_API_PWD_CER']
+
+  API_CER = ENV['PP_API_CER']
 
   CMD_URL = PayPalRubyDemo::Application.config.paypal_cmd_url
 
@@ -92,14 +94,12 @@ class PpClassic
     https.use_ssl = true
 
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    # https.verify_depth = 5
-    # If you want to skip certificate validation, toggle this line.
-    # https.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
     if endpoint != ENDPOINT_NVP_SIG then
-      p12 = OpenSSL::PKCS12.new(File.read('/Users/jokamura/Desktop/paypal_cert.p12'), "okamuratestB")
-      https.key = p12.key
-      https.cert = p12.certificate
+      key = OpenSSL::PKey::RSA.new(API_CER)
+      cert = OpenSSL::X509::Certificate.new(API_CER)
+      https.key = key
+      https.cert = cert
     end
 
     now = Time.now
