@@ -2,20 +2,16 @@ class ClController < ApplicationController
 
   def index
     if params.has_key?(:token) then
+      p "==================index redirected: #{Time.now}"
       @t_getec = params[:token]
       @t_doec = @t_getec
       @p_doec = params[:PayerID]
-      if session.has_key?(:redirect_count) then
-        session[:redirect_count] = session[:redirect_count].to_i + 1
-      else
-        session[:redirect_count] = 1
-      end
       @method = 'SetExpressCheckout'
-      @res = Hash['ACK', 'Success']
+      @res = session[:res]
     else
       session[:endpoint] = PpClassic::ENDPOINT_NVP_SIG
       session[:q_setec] = 'PAYMENTREQUEST_0_AMT=100&PAYMENTREQUEST_0_PAYMENTACTION=Sale'
-      session[:redirect_count] = 0
+      session[:res] = nil
     end
     @q_doec = session[:q_setec]
   end
@@ -23,8 +19,6 @@ class ClController < ApplicationController
   def setec
     session[:endpoint] = params[:endpoint]
     session[:q_setec] = params[:q_setec]
-
-    session[:redirect_count] = 0
 
     base_url = request.url.sub(request.fullpath, '')
 
@@ -35,6 +29,7 @@ class ClController < ApplicationController
     p "==================setec: #{res}"
 
     if res.has_key?('_MY_REDIRECT') then
+      session[:res] = res
       redirect_to(res['_MY_REDIRECT'])
     else
       @method = 'SetExpressCheckout'
