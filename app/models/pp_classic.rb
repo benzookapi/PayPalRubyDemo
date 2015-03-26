@@ -83,7 +83,7 @@ class PpClassic
 
     p "==================call_api uri: #{uri}"
 
-    q = URI.escape(api_query)
+    q = URI.escape(api_query).sub('+', '%2B')
 
     p "==================call_api query: #{q}"
 
@@ -92,8 +92,15 @@ class PpClassic
     https.use_ssl = true
 
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    # https.verify_depth = 5
     # If you want to skip certificate validation, toggle this line.
     # https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    if endpoint != ENDPOINT_NVP_SIG then
+      p12 = OpenSSL::PKCS12.new(File.read('/Users/jokamura/Desktop/paypal_cert.p12'), "okamuratestB")
+      https.key = p12.key
+      https.cert = p12.certificate
+    end
 
     now = Time.now
 
