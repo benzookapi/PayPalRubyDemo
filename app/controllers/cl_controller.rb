@@ -24,7 +24,7 @@ class ClController < ApplicationController
 
     callback = base_url + '/cl'
 
-    res = PpClassic.set_ec(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec], @endpoint)
+    res = PpClassic.set_ec(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec], session[:endpoint])
 
     p "==================setec: #{res}"
 
@@ -44,7 +44,7 @@ class ClController < ApplicationController
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
-    res = PpClassic.get_ec(@t_getec, @endpoint)
+    res = PpClassic.get_ec(@t_getec, session[:endpoint])
 
     p "==================getec #{res}"
 
@@ -60,7 +60,7 @@ class ClController < ApplicationController
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
-    res = PpClassic.do_ec(@t_doec, @p_doec, @q_doec, @endpoint)
+    res = PpClassic.do_ec(@t_doec, @p_doec, @q_doec, session[:endpoint])
 
     p "==================doec #{res}"
 

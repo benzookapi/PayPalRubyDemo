@@ -14,7 +14,7 @@
                 <p>
                 <%= label_tag(nil, "Parameters") %>
                 <%= text_area_tag('q_setec', session[:q_setec], {:rows=>'3', :class=>'form-control'}) %>
-                <%= hidden_field_tag('endpoint','') %>
+                <%= hidden_field_tag('endpoint','', :id=>'e_setec') %>
                 </p>
                <%= button_tag("1.Begin the payment!", :class =>'btn btn-default') %>
               <% end %>
