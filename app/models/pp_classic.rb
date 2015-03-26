@@ -23,13 +23,14 @@ class PpClassic
 
   API_SIG = ENV['PP_API_SIG']
 
+  API_USER_CER = ENV['PP_API_USER_CER']
+
+  API_PWD_CER = ENV['PP_API_PWD_CER']
+
   CMD_URL = PayPalRubyDemo::Application.config.paypal_cmd_url
 
-  BASE_QUERY = 'USER=' + API_USER + '&PWD=' + API_PWD +
-    '&SIGNATURE=' + API_SIG + '&VERSION=' + API_VERSION
-
   def self.set_ec(returnUrl, cancelUrl, query, endpoint = ENDPOINT_NVP_SIG)
-    q = BASE_QUERY + '&METHOD=' + 'SetExpressCheckout' +
+    q = '&METHOD=' + 'SetExpressCheckout' +
       '&RETURNURL=' + returnUrl + '&CANCELURL=' + cancelUrl + '&' + query
 
     res = call_api(q, endpoint)
@@ -42,14 +43,14 @@ class PpClassic
   end
 
   def self.get_ec(token, endpoint = ENDPOINT_NVP_SIG)
-    q = BASE_QUERY + '&METHOD=' + 'GetExpressCheckoutDetails' +
+    q = '&METHOD=' + 'GetExpressCheckoutDetails' +
       '&TOKEN=' + token
 
     call_api(q, endpoint)
   end
 
   def self.do_ec(token, payer_id, query, endpoint = ENDPOINT_NVP_SIG)
-    q = BASE_QUERY + '&METHOD=' + 'DoExpressCheckoutPayment' +
+    q = '&METHOD=' + 'DoExpressCheckoutPayment' +
       '&TOKEN=' + token + '&PAYERID=' + payer_id +
       '&' + query
 
@@ -59,18 +60,32 @@ class PpClassic
   private
   def self.call_api(query, endpoint)
     api_url = API_URL_NVP_SIG
+
+    api_user = API_USER_CER
+    api_pwd = API_PWD_CER
+    api_sig = ''
+
     case endpoint
     when ENDPOINT_NVP_SIG then
       api_url = API_URL_NVP_SIG
+      api_user = API_USER
+      api_pwd = API_PWD
+      api_sig = '&SIGNATURE=' + API_SIG
     when ENDPOINT_NVP_CER then
       api_url = API_URL_NVP_CER
     when ENDPOINT_NVP_CER_CDN then
       api_url = API_URL_NVP_CER_CDN
     end
 
+    api_query = 'USER=' + api_user + '&PWD=' + api_pwd + '&VERSION=' + API_VERSION + api_sig + query
+
     uri = URI.parse(api_url)
 
     p "==================call_api uri: #{uri}"
+
+    q = URI.escape(api_query)
+
+    p "==================call_api query: #{q}"
 
     https = Net::HTTP.new(uri.host, 443)
 
@@ -79,10 +94,6 @@ class PpClassic
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
     # If you want to skip certificate validation, toggle this line.
     # https.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-    q = URI.escape(query)
-
-    p "==================call_api query: #{q}"
 
     now = Time.now
 
