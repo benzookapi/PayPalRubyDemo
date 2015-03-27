@@ -1,8 +1,10 @@
 class ClController < ApplicationController
 
   def index
-    if params.has_key?(:token) then
+    if params.has_key?(:st) then
       p "==================index redirected: #{Time.now}"
+    end
+    if params.has_key?(:token) then
       @t_getec = params[:token]
       @t_doec = @t_getec
       @p_doec = params[:PayerID]

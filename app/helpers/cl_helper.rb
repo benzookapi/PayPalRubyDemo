@@ -16,7 +16,7 @@ module ClHelper
     if endpoint == PpClassic::ENDPOINT_NVP_CER_CDN then
       html += 'selected'
     end
-    html += '>NVP Certificate (CDN)</option>'
+    html += '>NVP Certificate (new beta)</option>'
     html += '</select>'
     html
   end
@@ -31,10 +31,23 @@ module ClHelper
     when 'Failure' then
       div_class = 'alert-danger'
     end
+
+    detail = ''
+    case method
+    when 'SetExpressCheckout' then
+      detail = 'https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/'
+    when 'GetExpressCheckoutDetails' then
+      detail = 'https://developer.paypal.com/docs/classic/api/merchant/GetExpressCheckoutDetails_API_Operation_NVP/'
+    when 'DoExpressCheckoutPayment' then
+      detail = 'https://developer.paypal.com/docs/classic/api/merchant/DoExpressCheckoutPayment_API_Operation_NVP/'
+    end
+
     msg = res['ACK'] + ', elapsed (sec.): ' + res['_MY_ELAPSED_TIME'].to_s
     html = '<p>' +
     '<div class="alert ' + div_class + '" role="alert">' + msg + '</div>' +
-    '<p>' + method + '</p>' +
+    '<p>' + method +
+    ' <a target="_blank" href="' + detail + '" >' + "details" + '</a>' +
+    '</p>' +
     '<p>' + res.to_s + '</p>' +
     '</p>'
     html
