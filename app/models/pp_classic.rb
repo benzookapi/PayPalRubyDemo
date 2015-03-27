@@ -3,17 +3,24 @@ require 'net/http'
 
 # PayPal Classic API wrapper
 class PpClassic
+  IS_PROD = ENV.has_key?('PP_PROD') && ENV['PP_PROD'] == 'true' ? true : false
+
+  private
+  def self.set_variable(variable)
+    IS_PROD ? variable.sub('sandbox.', '') : variable
+  end
+
   ENDPOINT_NVP_SIG = 'sig'
 
   ENDPOINT_NVP_CER = 'cer'
 
   ENDPOINT_NVP_CER_CDN = 'cer_cdn'
 
-  API_URL_NVP_SIG = PayPalRubyDemo::Application.config.paypal_api_url_nvp_sig
+  API_URL_NVP_SIG = set_variable(PayPalRubyDemo::Application.config.paypal_api_url_nvp_sig)
 
-  API_URL_NVP_CER = PayPalRubyDemo::Application.config.paypal_api_url_nvp_cer
+  API_URL_NVP_CER = set_variable(PayPalRubyDemo::Application.config.paypal_api_url_nvp_cer)
 
-  API_URL_NVP_CER_CDN = PayPalRubyDemo::Application.config.paypal_api_url_nvp_cer_cdn
+  API_URL_NVP_CER_CDN = set_variable(PayPalRubyDemo::Application.config.paypal_api_url_nvp_cer_cdn)
 
   API_VERSION = PayPalRubyDemo::Application.config.paypal_api_version
 
@@ -29,7 +36,7 @@ class PpClassic
 
   API_CER = ENV['PP_API_CER']
 
-  CMD_URL = PayPalRubyDemo::Application.config.paypal_cmd_url
+  CMD_URL = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url)
 
   def self.set_ec(returnUrl, cancelUrl, query, endpoint = ENDPOINT_NVP_SIG)
     q = '&METHOD=' + 'SetExpressCheckout' +
@@ -117,5 +124,7 @@ class PpClassic
 
     res
   end
+
+
 
 end

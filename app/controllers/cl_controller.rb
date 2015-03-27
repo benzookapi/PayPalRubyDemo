@@ -10,7 +10,7 @@ class ClController < ApplicationController
       @res = session[:res]
     else
       session[:endpoint] = PpClassic::ENDPOINT_NVP_SIG
-      session[:q_setec] = 'PAYMENTREQUEST_0_AMT=100&PAYMENTREQUEST_0_PAYMENTACTION=Sale'
+      session[:q_setec] = 'PAYMENTREQUEST_0_AMT=100'
       session[:res] = nil
     end
     @q_doec = session[:q_setec]
