@@ -100,3 +100,20 @@
   <button type="button" class="btn btn-primary btn-lg btn-block">Next</button>
 </div>
 </div>
+
+<h4>
+  Wep Payment Plus (Hosted Solutiuon)
+  <a target="_blank" href="https://www.paypal.jp/merchant/service/web-payment-plus/integration.html">details</a>
+</h4>
+
+<form method="post"
+action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
+webflow/sparta/hostedSoleSolutionProcess">
+<input type="hidden" name="cmd" value="_hosted-payment">
+<input type="hidden" name="subtotal" value="50">
+<input type="hidden" name="business" value="W2RNXXPHP3YXE">
+<input type="hidden" name="paymentaction" value="sale">
+<input type="hidden" name="template" value="templateD">
+<input type="hidden" name="return" value="http://localhost:3000/web">
+<input type="submit" value="Pay">
+</form>

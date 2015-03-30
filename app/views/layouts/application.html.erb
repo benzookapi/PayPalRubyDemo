@@ -26,6 +26,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="<%= request.path_info.start_with?('/web') || request.path_info == '/' ? 'active' : '' %>"><a href="/web">Web</a></li>
+              <li class="<%= request.path_info.start_with?('/btn') ? 'active' : '' %>"><a href="/btn">Buttons</a></li>
               <li class="<%= request.path_info.start_with?('/cl') ? 'active' : '' %>"><a href="/cl">Classic API</a></li>
               <li class="<%= request.path_info.start_with?('/rest') ? 'active' : '' %>"><a href="/rest">REST API</a></li>
               <li class="<%= request.path_info.start_with?('/ad') ? 'active' : '' %>"><a href="/ad">Adaptive API</a></li>
