@@ -56,10 +56,6 @@ Rails.application.routes.draw do
 
   get 'web' => 'web#index'
 
-  post 'rtn' => 'rtn#index'
-
-  post 'ipn' => 'ipn#index'
-
   get 'btn' => 'btn#index'
 
   get 'cl' => 'cl#index'
@@ -76,5 +72,7 @@ Rails.application.routes.draw do
 
   get 'lg' => 'lg#index'
 
+  post 'rtn' => 'rtn#index'
 
+  post 'ipn' => 'ipn#index'
 end
