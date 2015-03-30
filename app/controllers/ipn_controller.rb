@@ -3,7 +3,7 @@ class IpnController < ApplicationController
   def index
 
 
-    render :text => "IPN"
+    render :text => "#{params}"
 
   end
 end
