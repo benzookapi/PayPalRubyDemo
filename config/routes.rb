@@ -76,6 +76,8 @@ Rails.application.routes.draw do
 
   post 'ipn' => 'ipn#index'
 
-  post 'rdcheck' => 'rdcheck#index'  
+  get 'rdcheck' => 'rdcheck#index'
+
+  post 'rdcheck/rd' => 'rdcheck#rd'
 
 end
