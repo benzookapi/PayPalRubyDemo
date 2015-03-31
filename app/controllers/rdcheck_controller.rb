@@ -5,13 +5,13 @@ class RdcheckController < ApplicationController
   def index
     @ug = params.has_key?(:ug) ? params[:ug] : ''
 
-
-    html =<<"HTML"
+html =<<"HTML"
     <html>
     <head>
       #{@ug}
     </head>
     <body>
+    Document mode meta tag: #{@ug}
     <form method="POST" action="rdcheck/rd">
       <input type="hidden" name="rd" value="https://jo-static-web.herokuapp.com/ugcheck.html">
     <input type="submit" value="Redirect">
