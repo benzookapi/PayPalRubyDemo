@@ -3,6 +3,8 @@
 <%= raw show_endpoint(session[:endpoint]) %>
 <br/>
 
+<p>navigator.userAgent: <span id="js_ua"></span></p>
+
 <h4>Express Checkout API</h4>
 <table class="table table-striped">
         <tbody>
@@ -75,5 +77,7 @@ var setEp = function () {
 $('#e_p').change(setEp);
 
 setEp();
+
+$("#js_ua").text(navigator.userAgent);
 
 </script>
