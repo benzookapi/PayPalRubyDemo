@@ -16,6 +16,7 @@ class ClController < ApplicationController
       session[:res] = nil
     end
     @q_doec = session[:q_setec]
+    @ua = request.user_agent
   end
 
   def setec
