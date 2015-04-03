@@ -23,7 +23,8 @@ module ClHelper
 
   def show_ua(stored_ua, ua)
     color = stored_ua == ua ? '' : 'class="text-danger"'
-    html = '<p>User-Agent Request Header: <span ' + color + '>' + ua + '</span></p>'
+    msg = stored_ua == ua ? '' : 'changed!'
+    html = '<p>User-Agent Request Header: <span ' + color + '>' + ua + ' ' + msg + '</span></p>'
     html
   end
 
