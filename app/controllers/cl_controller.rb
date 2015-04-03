@@ -14,9 +14,9 @@ class ClController < ApplicationController
       session[:endpoint] = PpClassic::ENDPOINT_NVP_SIG
       session[:q_setec] = 'PAYMENTREQUEST_0_AMT=100'
       session[:res] = nil
+      session[:ua] = request.user_agent
     end
-    @q_doec = session[:q_setec]
-    session[:ua] = request.user_agent
+    @q_doec = session[:q_setec]    
   end
 
   def setec
