@@ -21,6 +21,12 @@ module ClHelper
     html
   end
 
+  def show_ua(stored_ua, ua)
+    color = stored_ua == ua ? '' : 'class="text-danger"'
+    html = '<p>User-Agent Request Header: <span ' + color + '>' + ua + '</span></p>'
+    html
+  end
+
   def show_res(method, res)
     div_class = ''
     case res['ACK']

@@ -3,7 +3,7 @@
 <%= raw show_endpoint(session[:endpoint]) %>
 <br/>
 
-<p>User-Agent Request Header: <%= request.user_agent %></p>
+<%= raw show_ua(session[:ua], request.user_agent) %>
 <p>navigator.userAgent (JS): <span id="js_ua"></span></p>
 
 <h4>Express Checkout API</h4>
