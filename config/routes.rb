@@ -78,6 +78,8 @@ Rails.application.routes.draw do
 
   get 'lg' => 'lg#index'
 
+  get 'ipn' => 'ipn#index'
+
   post 'ipn' => 'ipn#index'
 
 

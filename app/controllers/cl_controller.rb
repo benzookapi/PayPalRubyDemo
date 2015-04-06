@@ -105,13 +105,13 @@ class ClController < ApplicationController
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
     @t_crrp = params[:t_crrp]
-    
+
     @sd_trsr = params[:sd_trsr]
     @q_trsr = params[:q_trsr]
 
     res = PpClassic.search_TR(@sd_trsr, @q_trsr, session[:endpoint])
 
-    p "==================resr #{res}"
+    p "==================trsr #{res}"
 
     @method = 'TransactionSearch'
     @res = res
