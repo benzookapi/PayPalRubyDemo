@@ -11,12 +11,12 @@ class ClController < ApplicationController
       @method = 'SetExpressCheckout'
       @res = session[:res]
     else
-      session[:endpoint] = PpClassic::ENDPOINT_NVP_SIG
+      session[:endpoint] = PpClassic::ENDPOINT_NVP_CER
       session[:q_setec] = 'PAYMENTREQUEST_0_AMT=100'
       session[:res] = nil
       session[:ua] = request.user_agent
     end
-    @q_doec = session[:q_setec]    
+    @q_doec = session[:q_setec]
   end
 
   def setec
@@ -27,7 +27,7 @@ class ClController < ApplicationController
 
     callback = base_url + '/cl'
 
-    res = PpClassic.set_ec(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec], session[:endpoint])
+    res = PpClassic.set_EC(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec], session[:endpoint])
 
     p "==================setec: #{res}"
 
@@ -47,7 +47,7 @@ class ClController < ApplicationController
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
-    res = PpClassic.get_ec(@t_getec, session[:endpoint])
+    res = PpClassic.get_EC(@t_getec, session[:endpoint])
 
     p "==================getec #{res}"
 
@@ -63,11 +63,25 @@ class ClController < ApplicationController
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
-    res = PpClassic.do_ec(@t_doec, @p_doec, @q_doec, session[:endpoint])
+    res = PpClassic.do_EC(@t_doec, @p_doec, @q_doec, session[:endpoint])
 
     p "==================doec #{res}"
 
     @method = 'DoExpressCheckoutPayment'
+    @res = res
+
+    render template: 'cl/index'
+  end
+
+  def trsr
+    @sd_trsr = params[:sd_trsr]
+    @q_trsr = params[:q_trsr]
+
+    res = PpClassic.search_TR(@sd_trsr, @q_trsr, session[:endpoint])
+
+    p "==================resr #{res}"
+
+    @method = 'TransactionSearch'
     @res = res
 
     render template: 'cl/index'

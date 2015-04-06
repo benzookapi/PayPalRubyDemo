@@ -38,7 +38,7 @@ class PpClassic
 
   CMD_URL = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url)
 
-  def self.set_ec(returnUrl, cancelUrl, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.set_EC(returnUrl, cancelUrl, query, endpoint = ENDPOINT_NVP_SIG)
     q = '&METHOD=' + 'SetExpressCheckout' +
       '&RETURNURL=' + returnUrl + '&CANCELURL=' + cancelUrl + '&' + query
 
@@ -51,16 +51,24 @@ class PpClassic
     res
   end
 
-  def self.get_ec(token, endpoint = ENDPOINT_NVP_SIG)
+  def self.get_EC(token, endpoint = ENDPOINT_NVP_SIG)
     q = '&METHOD=' + 'GetExpressCheckoutDetails' +
       '&TOKEN=' + token
 
     call_api(q, endpoint)
   end
 
-  def self.do_ec(token, payer_id, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.do_EC(token, payer_id, query, endpoint = ENDPOINT_NVP_SIG)
     q = '&METHOD=' + 'DoExpressCheckoutPayment' +
       '&TOKEN=' + token + '&PAYERID=' + payer_id +
+      '&' + query
+
+    call_api(q, endpoint)
+  end
+
+  def self.search_TR(start_date, query, endpoint = ENDPOINT_NVP_SIG)
+    q = '&METHOD=' + 'TransactionSearch' +
+      '&STARTDATE=' + start_date + 
       '&' + query
 
     call_api(q, endpoint)

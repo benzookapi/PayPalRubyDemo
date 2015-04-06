@@ -66,18 +66,15 @@ Rails.application.routes.draw do
 
   post 'cl/doec' => 'cl#doec'
 
+  post 'cl/trsr' => 'cl#trsr'
+
   get 'rest' => 'rest#index'
 
   get 'ad' => 'ad#index'
 
   get 'lg' => 'lg#index'
 
-  post 'rtn' => 'rtn#index'
-
   post 'ipn' => 'ipn#index'
 
-  get 'rdcheck' => 'rdcheck#index'
-
-  post 'rdcheck/rd' => 'rdcheck#rd'
 
 end
