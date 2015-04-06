@@ -12,14 +12,17 @@ class ClController < ApplicationController
       @method = 'SetExpressCheckout'
       @res = session[:res]
     else
+      init_amt = Random.rand(100 .. 500).to_s
       session[:endpoint] = PpClassic::ENDPOINT_NVP_CER
-      session[:q_setec] = 'PAYMENTREQUEST_0_AMT=100'
+      session[:q_setec] = 'PAYMENTREQUEST_0_AMT=' + init_amt + '&L_BILLINGTYPE0=RecurringPayments' +
+      '&L_BILLINGAGREEMENTDESCRIPTION0=MY_RECURRSIVE_PAYMENT_' + init_amt
       session[:res] = nil
       session[:ua] = request.user_agent
     end
-    @q_doec = session[:q_setec]
-
-    session[:q_crrp] = 'AMT=100&BILLINGPERIOD=Day&BILLINGFREQUENCY=1&DESC=testRP'
+    amt = session[:q_setec].match(/PAYMENTREQUEST_0_AMT=(\d{1,9})/)[1]
+    @q_doec = 'PAYMENTREQUEST_0_AMT=' + amt
+    desc = session[:q_setec].match(/L_BILLINGAGREEMENTDESCRIPTION0=([^&]+)/)[1]
+    session[:q_crrp] = 'AMT=' + amt + '&BILLINGPERIOD=Day&BILLINGFREQUENCY=1&DESC=' + desc
   end
 
   def setec
@@ -99,6 +102,10 @@ class ClController < ApplicationController
   end
 
   def trsr
+    @t_getec = params[:t_getec]
+    @t_doec = params[:t_doec]
+    @t_crrp = params[:t_crrp]
+    
     @sd_trsr = params[:sd_trsr]
     @q_trsr = params[:q_trsr]
 
