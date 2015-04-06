@@ -56,6 +56,8 @@ Rails.application.routes.draw do
 
   get 'web' => 'web#index'
 
+  post 'web' => 'web#index'
+
   get 'btn' => 'btn#index'
 
   get 'cl' => 'cl#index'
