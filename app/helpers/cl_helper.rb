@@ -47,6 +47,8 @@ module ClHelper
       detail = 'https://developer.paypal.com/docs/classic/api/merchant/GetExpressCheckoutDetails_API_Operation_NVP/'
     when 'DoExpressCheckoutPayment' then
       detail = 'https://developer.paypal.com/docs/classic/api/merchant/DoExpressCheckoutPayment_API_Operation_NVP/'
+    when 'CreateRecurringPaymentsProfile' then
+      detail = 'https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/'
     when 'TransactionSearch' then
       detail = 'https://developer.paypal.com/docs/classic/api/merchant/TransactionSearch_API_Operation_NVP/'
     end

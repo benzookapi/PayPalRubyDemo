@@ -66,9 +66,17 @@ class PpClassic
     call_api(q, endpoint)
   end
 
+  def self.create_RP(token, start_date, query, endpoint = ENDPOINT_NVP_SIG)
+      q = '&METHOD=' + 'CreateRecurringPaymentsProfile' +
+        '&TOKEN=' + token + '&PROFILESTARTDATE=' + start_date +
+        '&' + query
+
+    call_api(q, endpoint)
+  end
+
   def self.search_TR(start_date, query, endpoint = ENDPOINT_NVP_SIG)
     q = '&METHOD=' + 'TransactionSearch' +
-      '&STARTDATE=' + start_date + 
+      '&STARTDATE=' + start_date +
       '&' + query
 
     call_api(q, endpoint)

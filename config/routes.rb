@@ -66,6 +66,8 @@ Rails.application.routes.draw do
 
   post 'cl/doec' => 'cl#doec'
 
+  post 'cl/crrp' => 'cl#crrp'
+
   post 'cl/trsr' => 'cl#trsr'
 
   get 'rest' => 'rest#index'

@@ -7,6 +7,7 @@ class ClController < ApplicationController
     if params.has_key?(:token) then
       @t_getec = params[:token]
       @t_doec = @t_getec
+      @t_crrp = @t_getec
       @p_doec = params[:PayerID]
       @method = 'SetExpressCheckout'
       @res = session[:res]
@@ -17,6 +18,8 @@ class ClController < ApplicationController
       session[:ua] = request.user_agent
     end
     @q_doec = session[:q_setec]
+
+    session[:q_crrp] = 'AMT=100&BILLINGPERIOD=Day&BILLINGFREQUENCY=1&DESC=testRP'
   end
 
   def setec
@@ -44,6 +47,7 @@ class ClController < ApplicationController
   def getec
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
+    @t_crrp = params[:t_crrp]
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
@@ -60,6 +64,7 @@ class ClController < ApplicationController
   def doec
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
+    @t_crrp = params[:t_crrp]
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
@@ -68,6 +73,26 @@ class ClController < ApplicationController
     p "==================doec #{res}"
 
     @method = 'DoExpressCheckoutPayment'
+    @res = res
+
+    render template: 'cl/index'
+  end
+
+  def crrp
+    @t_getec = params[:t_getec]
+    @t_doec = params[:t_doec]
+    @t_crrp = params[:t_crrp]
+    @p_doec = params[:p_doec]
+    @q_doec = params[:q_doec]
+
+    @sd_crrp = params[:sd_crrp]
+    session[:q_crrp] = params[:q_crrp]
+
+    res = PpClassic.create_RP(@t_crrp, @sd_crrp, session[:q_crrp], session[:endpoint])
+
+    p "==================crrp #{res}"
+
+    @method = 'CreateRecurringPaymentsProfile'
     @res = res
 
     render template: 'cl/index'
