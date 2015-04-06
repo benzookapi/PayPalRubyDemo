@@ -80,7 +80,7 @@
                 <%= label_tag(nil, "TOKEN") %>
                 <%= text_field_tag('t_crrp', @t_crrp, :class=>'form-control') %>
                 <%= label_tag(nil, "PROFILESTARTDATE (GMT: JST - 9 hr)") %>
-                <%= text_field_tag('sd_crrp', set_default_time(@sd_crrp), :class=>'form-control') %>
+                <%= text_field_tag('sd_crrp', set_default_time(@sd_crrp, +(60*60*24), true), :class=>'form-control') %>
                 <%= label_tag(nil, "Parameters") %>
                 <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/', :target => '_blank') %>
                 <%= text_area_tag('q_crrp', session[:q_crrp], {:rows=>'3', :class=>'form-control'}) %>
@@ -109,7 +109,7 @@
               <%= form_tag("/cl/trsr", method: "post") do %>
                 <p>
                 <%= label_tag(nil, "STARTDATE (GMT: JST - 9 hr)") %>
-                <%= text_field_tag('sd_trsr', set_default_time(@sd_trsr), :class=>'form-control') %>
+                <%= text_field_tag('sd_trsr', set_default_time(@sd_trsr, -60), :class=>'form-control') %>
                 <%= label_tag(nil, "Parameters") %>
                 <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/merchant/TransactionSearch_API_Operation_NVP/', :target => '_blank') %>
                 <%= text_area_tag('q_trsr', @q_trsr, {:rows=>'3', :class=>'form-control'}) %>

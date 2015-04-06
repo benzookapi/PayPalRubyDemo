@@ -108,7 +108,7 @@ class PpClassic
 
     p "==================call_api uri: #{uri}"
 
-    q = URI.escape(api_query).sub('+', '%2B')
+    q = URI.escape(api_query).gsub('+', '%2B')
 
     p "==================call_api query: #{q}"
 

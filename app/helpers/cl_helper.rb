@@ -64,8 +64,9 @@ module ClHelper
     html
   end
 
-  def set_default_time(t)
-    df = Time.now.strftime("%Y-%m-%dT%H:%M:%SZ")
+  def set_default_time(t, plus=0, init=false)
+    hms = init == false ? "%H:%M:%S" : "00:00:00"
+    df = (Time.zone.now + plus).strftime("%Y-%m-%dT" + hms + "Z")
     t.blank? ? df : t
   end
 
