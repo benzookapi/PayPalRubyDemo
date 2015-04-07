@@ -19,9 +19,11 @@ class ClController < ApplicationController
       session[:res] = nil
       session[:ua] = request.user_agent
     end
-    amt = session[:q_setec].match(/PAYMENTREQUEST_0_AMT=(\d{1,9})/)[1]
+    a = session[:q_setec].match(/PAYMENTREQUEST_0_AMT=(\d{1,9})/)
+    amt = a.blank? ? '0' : a[1]
     @q_doec = 'PAYMENTREQUEST_0_AMT=' + amt
-    desc = session[:q_setec].match(/L_BILLINGAGREEMENTDESCRIPTION0=([^&]+)/)[1]
+    d = session[:q_setec].match(/L_BILLINGAGREEMENTDESCRIPTION0=([^&]+)/)
+    desc = d.blank? ? '' : d[1]
     session[:q_crrp] = 'AMT=' + amt + '&BILLINGPERIOD=Day&BILLINGFREQUENCY=1&DESC=' + desc
   end
 

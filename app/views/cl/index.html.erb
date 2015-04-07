@@ -10,7 +10,7 @@
 <table class="table table-striped">
         <tbody>
           <tr>
-            <td style="width:22%;">
+            <td style="width:26%;">
               SetExpressCheckout
             </td>
             <td>
@@ -21,7 +21,7 @@
                 <%= text_area_tag('q_setec', session[:q_setec], {:rows=>'3', :class=>'form-control'}) %>
                 <%= hidden_field_tag('endpoint','', :id=>'e_setec') %>
                 </p>
-               <%= button_tag("1.Begin the payment!", :class =>'btn btn-default') %>
+               <%= button_tag("1.Begin a payment!", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('SetExpressCheckout', @res) if request.path_info == '/cl/setec' || request.fullpath.include?('st=') %>
             </td>
@@ -42,7 +42,7 @@
                 <%= hidden_field_tag('p_doec', @p_doec) %>
                 <%= hidden_field_tag('q_doec', @q_doec) %>
                 </p>
-               <%= button_tag("2.Check the paymant!", :class =>'btn btn-default') %>
+               <%= button_tag("2.Check the payment!", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('GetExpressCheckoutDetails', @res) if request.path_info == '/cl/getec' %>
             </td>
@@ -90,7 +90,7 @@
                 <%= hidden_field_tag('p_doec', @p_doec) %>
                 <%= hidden_field_tag('q_doec', @q_doec) %>
                 </p>
-               <%= button_tag("Create Recurring Payment", :class =>'btn btn-default') %>
+               <%= button_tag("Start a recurring payment", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('CreateRecurringPaymentsProfile', @res) if request.path_info == '/cl/crrp' %>
             </td>
@@ -110,7 +110,7 @@
                 <%= hidden_field_tag('p_doec', @p_doec) %>
                 <%= hidden_field_tag('q_doec', @q_doec) %>
                 </p>
-               <%= button_tag("Create Billing Agreement", :class =>'btn btn-default') %>
+               <%= button_tag("Get a billing agreement", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('CreateBillingAgreement', @res) if request.path_info == '/cl/crba' %>
             </td>
@@ -123,7 +123,7 @@
 <table class="table table-striped">
     <tbody>
           <tr>
-            <td style="width:22%;">
+            <td style="width:26%;">
               TransactionSearch
             </td>
             <td>
@@ -137,7 +137,7 @@
                 <%= hidden_field_tag('t_getec', @t_getec) %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
                 </p>
-               <%= button_tag("Search Transactions", :class =>'btn btn-default') %>
+               <%= button_tag("Search transactions", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('TransactionSearch', @res) if request.path_info == '/cl/trsr' %>
             </td>
@@ -158,7 +158,7 @@
                 <%= hidden_field_tag('t_getec', @t_getec) %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
                 </p>
-               <%= button_tag("Get Transaction Details", :class =>'btn btn-default') %>
+               <%= button_tag("Check a transaction", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('GetTransactionDetails', @res) if request.path_info == '/cl/gettr' %>
             </td>
@@ -179,7 +179,7 @@
                 <%= hidden_field_tag('t_getec', @t_getec) %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
                 </p>
-               <%= button_tag("Get Recurring Payment Details", :class =>'btn btn-default') %>
+               <%= button_tag("Check a recurring payment", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('GetRecurringPaymentsProfileDetails', @res) if request.path_info == '/cl/getrp' %>
             </td>
@@ -200,7 +200,7 @@
                 <%= hidden_field_tag('t_getec', @t_getec) %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
                 </p>
-               <%= button_tag("Execute the Payment!", :class =>'btn btn-default') %>
+               <%= button_tag("Execute a payment!", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('DoReferenceTransaction', @res) if request.path_info == '/cl/dort' %>
             </td>
