@@ -9,7 +9,6 @@ class ClController < ApplicationController
       @t_doec = @t_getec
       @t_crrp = @t_getec
       @p_doec = params[:PayerID]
-      @method = 'SetExpressCheckout'
       @res = session[:res]
     else
       init_amt = Random.rand(100 .. 500).to_s
@@ -41,7 +40,6 @@ class ClController < ApplicationController
       session[:res] = res
       redirect_to(res['_MY_REDIRECT'])
     else
-      @method = 'SetExpressCheckout'
       @res = res
       render template: 'cl/index'
     end
@@ -58,7 +56,6 @@ class ClController < ApplicationController
 
     p "==================getec #{res}"
 
-    @method = 'GetExpressCheckoutDetails'
     @res = res
 
     render template: 'cl/index'
@@ -75,7 +72,6 @@ class ClController < ApplicationController
 
     p "==================doec #{res}"
 
-    @method = 'DoExpressCheckoutPayment'
     @res = res
 
     render template: 'cl/index'
@@ -95,7 +91,6 @@ class ClController < ApplicationController
 
     p "==================crrp #{res}"
 
-    @method = 'CreateRecurringPaymentsProfile'
     @res = res
 
     render template: 'cl/index'
@@ -113,7 +108,40 @@ class ClController < ApplicationController
 
     p "==================trsr #{res}"
 
-    @method = 'TransactionSearch'
+    @res = res
+
+    render template: 'cl/index'
+  end
+
+  def gettr
+    @t_getec = params[:t_getec]
+    @t_doec = params[:t_doec]
+    @t_crrp = params[:t_crrp]
+
+    @i_gettr = params[:i_gettr]
+    @q_gettr = params[:q_gettr]
+
+    res = PpClassic.get_TR(@i_gettr, @q_gettr, session[:endpoint])
+
+    p "==================gettr #{res}"
+
+    @res = res
+
+    render template: 'cl/index'
+  end
+
+  def getrp
+    @t_getec = params[:t_getec]
+    @t_doec = params[:t_doec]
+    @t_crrp = params[:t_crrp]
+
+    @i_getrp = params[:i_getrp]
+    @q_getrp = params[:q_getrp]
+
+    res = PpClassic.get_RP(@i_getrp, @q_getrp, session[:endpoint])
+
+    p "==================getrp #{res}"
+
     @res = res
 
     render template: 'cl/index'

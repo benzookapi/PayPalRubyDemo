@@ -82,6 +82,22 @@ class PpClassic
     call_api(q, endpoint)
   end
 
+  def self.get_TR(trans_id, query, endpoint = ENDPOINT_NVP_SIG)
+    q = '&METHOD=' + 'GetTransactionDetails' +
+      '&TRANSACTIONID=' + trans_id +
+      '&' + query
+
+    call_api(q, endpoint)
+  end
+
+  def self.get_RP(prof_id, query, endpoint = ENDPOINT_NVP_SIG)
+    q = '&METHOD=' + 'GetRecurringPaymentsProfileDetails' +
+      '&PROFILEID=' + prof_id +
+      '&' + query
+
+    call_api(q, endpoint)
+  end
+
   private
   def self.call_api(query, endpoint)
     api_url = API_URL_NVP_SIG

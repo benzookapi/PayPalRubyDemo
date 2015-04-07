@@ -31,6 +31,7 @@
               <li class="<%= request.path_info.start_with?('/rest') ? 'active' : '' %>"><a href="/rest">REST API</a></li>
               <li class="<%= request.path_info.start_with?('/ad') ? 'active' : '' %>"><a href="/ad">Adaptive API</a></li>
               <li class="<%= request.path_info.start_with?('/lg') ? 'active' : '' %>"><a href="/lg">Login With PayPal</a></li>
+              <li class="<%= request.path_info.start_with?('/brain') ? 'active' : '' %>"><a href="/brain">Braintree</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

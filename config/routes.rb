@@ -72,6 +72,10 @@ Rails.application.routes.draw do
 
   post 'cl/trsr' => 'cl#trsr'
 
+  post 'cl/gettr' => 'cl#gettr'
+
+  post 'cl/getrp' => 'cl#getrp'
+
   get 'rest' => 'rest#index'
 
   get 'ad' => 'ad#index'

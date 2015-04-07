@@ -51,6 +51,10 @@ module ClHelper
       detail = 'https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/'
     when 'TransactionSearch' then
       detail = 'https://developer.paypal.com/docs/classic/api/merchant/TransactionSearch_API_Operation_NVP/'
+    when 'TransactionSearch' then
+      detail = 'https://developer.paypal.com/docs/classic/api/merchant/GetTransactionDetails_API_Operation_NVP/'
+    when 'GetRecurringPaymentsProfileDetails' then
+      detail = 'https://developer.paypal.com/docs/classic/api/merchant/GetRecurringPaymentsProfileDetails_API_Operation_NVP/'
     end
 
     msg = res['ACK'] + ', elapsed (sec.): ' + res['_MY_ELAPSED_TIME'].to_s
@@ -64,9 +68,9 @@ module ClHelper
     html
   end
 
-  def set_default_time(t, plus=0, init=false)
-    hms = init == false ? "%H:%M:%S" : "00:00:00"
-    df = (Time.zone.now + plus).strftime("%Y-%m-%dT" + hms + "Z")
+  def set_default_time(t, offset_sec=0, zeo_hour=false)
+    hms = zeo_hour == false ? "%H:%M:%S" : "00:00:00"
+    df = (Time.zone.now + offset_sec).strftime("%Y-%m-%dT" + hms + "Z")
     t.blank? ? df : t
   end
 
