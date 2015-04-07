@@ -38,6 +38,7 @@
                 <%= text_field_tag('t_getec', @t_getec, :class=>'form-control') %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
                 <%= hidden_field_tag('t_crrp', @t_crrp) %>
+                <%= hidden_field_tag('t_crrp', @t_crba) %>
                 <%= hidden_field_tag('p_doec', @p_doec) %>
                 <%= hidden_field_tag('q_doec', @q_doec) %>
                 </p>
@@ -72,7 +73,7 @@
 
           <tr>
             <td>
-              CreateRecurringPaymentsProfile<br/>(For RP)
+              CreateRecurringPaymentsProfile<br/>(For recurring payments)
             </td>
             <td>
               <%= form_tag("/cl/crrp", method: "post") do %>
@@ -92,6 +93,26 @@
                <%= button_tag("Create Recurring Payment", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('CreateRecurringPaymentsProfile', @res) if request.path_info == '/cl/crrp' %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              CreateBillingAgreement<br/>(For reference transaction without DoEC)
+            </td>
+            <td>
+              <%= form_tag("/cl/crba", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "TOKEN") %>
+                <%= text_field_tag('t_crba', @t_crba, :class=>'form-control') %>
+                <%= hidden_field_tag('t_getec', @t_getec) %>
+                <%= hidden_field_tag('t_doec', @t_doec) %>
+                <%= hidden_field_tag('p_doec', @p_doec) %>
+                <%= hidden_field_tag('q_doec', @q_doec) %>
+                </p>
+               <%= button_tag("Create Billing Agreement", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('CreateBillingAgreement', @res) if request.path_info == '/cl/crba' %>
             </td>
           </tr>
 
@@ -115,8 +136,6 @@
                 <%= text_area_tag('q_trsr', @q_trsr, {:rows=>'3', :class=>'form-control'}) %>
                 <%= hidden_field_tag('t_getec', @t_getec) %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
-                <%= hidden_field_tag('t_getec', @t_getec) %>
-                <%= hidden_field_tag('t_crrp', @t_crrp) %>
                 </p>
                <%= button_tag("Search Transactions", :class =>'btn btn-default') %>
               <% end %>
@@ -138,8 +157,6 @@
                 <%= text_area_tag('q_gettr', @q_gettr, {:rows=>'3', :class=>'form-control'}) %>
                 <%= hidden_field_tag('t_getec', @t_getec) %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
-                <%= hidden_field_tag('t_getec', @t_getec) %>
-                <%= hidden_field_tag('t_crrp', @t_crrp) %>
                 </p>
                <%= button_tag("Get Transaction Details", :class =>'btn btn-default') %>
               <% end %>
@@ -161,12 +178,31 @@
                 <%= text_area_tag('q_getrp', @q_getrp, {:rows=>'3', :class=>'form-control'}) %>
                 <%= hidden_field_tag('t_getec', @t_getec) %>
                 <%= hidden_field_tag('t_doec', @t_doec) %>
-                <%= hidden_field_tag('t_getec', @t_getec) %>
-                <%= hidden_field_tag('t_crrp', @t_crrp) %>
                 </p>
                <%= button_tag("Get Recurring Payment Details", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('GetRecurringPaymentsProfileDetails', @res) if request.path_info == '/cl/getrp' %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              DoReferenceTransaction
+            </td>
+            <td>
+              <%= form_tag("/cl/dort", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "REFERENCEID (TRANSACTIONID or BILLINGAGREEMENTID)") %>
+                <%= text_field_tag('i_dort', @i_dort, :class=>'form-control') %>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/merchant/DoReferenceTransaction_API_Operation_NVP/', :target => '_blank') %>
+                <%= text_area_tag('q_dort', @q_dort, {:rows=>'3', :class=>'form-control'}) %>
+                <%= hidden_field_tag('t_getec', @t_getec) %>
+                <%= hidden_field_tag('t_doec', @t_doec) %>
+                </p>
+               <%= button_tag("Execute the Payment!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('DoReferenceTransaction', @res) if request.path_info == '/cl/dort' %>
             </td>
           </tr>
 

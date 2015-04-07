@@ -70,11 +70,15 @@ Rails.application.routes.draw do
 
   post 'cl/crrp' => 'cl#crrp'
 
+  post 'cl/crba' => 'cl#crba'
+
   post 'cl/trsr' => 'cl#trsr'
 
   post 'cl/gettr' => 'cl#gettr'
 
   post 'cl/getrp' => 'cl#getrp'
+
+  post 'cl/dort' => 'cl#dort'
 
   get 'rest' => 'rest#index'
 

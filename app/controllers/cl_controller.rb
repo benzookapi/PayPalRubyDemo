@@ -8,6 +8,7 @@ class ClController < ApplicationController
       @t_getec = params[:token]
       @t_doec = @t_getec
       @t_crrp = @t_getec
+      @t_crba = @t_getec
       @p_doec = params[:PayerID]
       @res = session[:res]
     else
@@ -49,6 +50,7 @@ class ClController < ApplicationController
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
     @t_crrp = params[:t_crrp]
+    @t_crba = params[:t_crba]
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
@@ -80,10 +82,10 @@ class ClController < ApplicationController
   def crrp
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
-    @t_crrp = params[:t_crrp]
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
+    @t_crrp = params[:t_crrp]
     @sd_crrp = params[:sd_crrp]
     session[:q_crrp] = params[:q_crrp]
 
@@ -96,10 +98,26 @@ class ClController < ApplicationController
     render template: 'cl/index'
   end
 
+  def crba
+    @t_getec = params[:t_getec]
+    @t_doec = params[:t_doec]
+    @p_doec = params[:p_doec]
+    @q_doec = params[:q_doec]
+
+    @t_crba = params[:t_crba]
+
+    res = PpClassic.create_BA(@t_crba, session[:endpoint])
+
+    p "==================crba #{res}"
+
+    @res = res
+
+    render template: 'cl/index'
+  end
+
   def trsr
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
-    @t_crrp = params[:t_crrp]
 
     @sd_trsr = params[:sd_trsr]
     @q_trsr = params[:q_trsr]
@@ -116,7 +134,6 @@ class ClController < ApplicationController
   def gettr
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
-    @t_crrp = params[:t_crrp]
 
     @i_gettr = params[:i_gettr]
     @q_gettr = params[:q_gettr]
@@ -133,7 +150,6 @@ class ClController < ApplicationController
   def getrp
     @t_getec = params[:t_getec]
     @t_doec = params[:t_doec]
-    @t_crrp = params[:t_crrp]
 
     @i_getrp = params[:i_getrp]
     @q_getrp = params[:q_getrp]
@@ -141,6 +157,22 @@ class ClController < ApplicationController
     res = PpClassic.get_RP(@i_getrp, @q_getrp, session[:endpoint])
 
     p "==================getrp #{res}"
+
+    @res = res
+
+    render template: 'cl/index'
+  end
+
+  def dort
+    @t_getec = params[:t_getec]
+    @t_doec = params[:t_doec]
+
+    @i_dort = params[:i_dort]
+    @q_dort = params[:q_dort]
+
+    res = PpClassic.do_RT(@i_dort, @q_dort, session[:endpoint])
+
+    p "==================dort #{res}"
 
     @res = res
 

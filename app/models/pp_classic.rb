@@ -74,6 +74,13 @@ class PpClassic
     call_api(q, endpoint)
   end
 
+  def self.create_BA(token, endpoint = ENDPOINT_NVP_SIG)
+      q = '&METHOD=' + 'CreateBillingAgreement' +
+        '&TOKEN=' + token
+
+    call_api(q, endpoint)
+  end
+
   def self.search_TR(start_date, query, endpoint = ENDPOINT_NVP_SIG)
     q = '&METHOD=' + 'TransactionSearch' +
       '&STARTDATE=' + start_date +
@@ -93,6 +100,14 @@ class PpClassic
   def self.get_RP(prof_id, query, endpoint = ENDPOINT_NVP_SIG)
     q = '&METHOD=' + 'GetRecurringPaymentsProfileDetails' +
       '&PROFILEID=' + prof_id +
+      '&' + query
+
+    call_api(q, endpoint)
+  end
+
+  def self.do_RT(ref_id, query, endpoint = ENDPOINT_NVP_SIG)
+    q = '&METHOD=' + 'DoReferenceTransaction' +
+      '&REFERENCEID=' + ref_id +
       '&' + query
 
     call_api(q, endpoint)

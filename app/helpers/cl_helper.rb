@@ -55,6 +55,10 @@ module ClHelper
       detail = 'https://developer.paypal.com/docs/classic/api/merchant/GetTransactionDetails_API_Operation_NVP/'
     when 'GetRecurringPaymentsProfileDetails' then
       detail = 'https://developer.paypal.com/docs/classic/api/merchant/GetRecurringPaymentsProfileDetails_API_Operation_NVP/'
+    when 'GetRecurringPaymentsProfileDetails' then
+        detail = 'https://developer.paypal.com/docs/classic/api/merchant/CreateBillingAgreement_API_Operation_NVP/'
+    when 'GetRecurringPaymentsProfileDetails' then
+        detail = 'https://developer.paypal.com/docs/classic/api/merchant/DoReferenceTransaction_API_Operation_NVP/'
     end
 
     msg = res['ACK'] + ', elapsed (sec.): ' + res['_MY_ELAPSED_TIME'].to_s
