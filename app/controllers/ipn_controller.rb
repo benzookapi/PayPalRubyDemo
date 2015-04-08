@@ -4,7 +4,7 @@ class IpnController < ApplicationController
 
   def index
 
-    p "==================index #{request}"
+    request.headers.sort.map { |k, v| p "==================index #{k}:#{v}" }
 
 sample_ec=<<'SAMPLE_EC'
 mc_gross=105.02&protection_eligibility=Eligible&address_status=unconfirmed&payer_id=RPXDAMFRCMMVE<br/>
