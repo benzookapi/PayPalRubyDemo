@@ -40,7 +40,7 @@ class IpnController < ApplicationController
     res = https.post(uri.path, q)
 
     res_str = ""
-    res.headers.map{|k,v|
+    res.map{|k,v|
       res_str += "#{k}=#{v},"
     }
 
