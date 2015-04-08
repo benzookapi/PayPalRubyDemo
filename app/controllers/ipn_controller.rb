@@ -45,12 +45,10 @@ class IpnController < ApplicationController
 
     p "==================IPN varification response: #{result}"
 
-    #if result == 'VERIFIED' then
+    if result == 'VERIFIED' then
       # I know this is aout of Rails styles...
       check_sql = "SELECT relname FROM pg_class WHERE relkind = 'r' AND relname = 'ipn'"
       check = ActiveRecord::Base.connection.execute(check_sql).to_a
-      p "XXXXXXX#{check.blank?}"
-      p "GGGG#{check}"
       if check.blank? then
         ActiveRecord::Base.connection.create_table(:ipn) do |t|
           t.column :dump, :JSON
@@ -65,9 +63,9 @@ class IpnController < ApplicationController
       insert_sql = "INSERT INTO ipn (dump) VALUES ('#{insert_json}')"
       ActiveRecord::Base.connection.update(insert_sql)
       render :text => "<h4>Verified!</h4><p>#{query}</p>"
-    #else
-  #    render :text => "<h4>Not Verified!</h4><p>#{query}</p>"
-  #  end
+    else
+      render :text => "<h4>Not Verified!</h4><p>#{query}</p>"
+    end
   end
 
   def indexget
