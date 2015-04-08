@@ -27,24 +27,26 @@ class IpnController < ApplicationController
 
     verify_url = PpClassic::CMD_URL + '_notify-validate'
 
-    p "==================IPN verifiction url: #{verify_url}"
+    p "==================IPN verification url: #{verify_url}"
 
     uri = URI.parse(verify_url)
 
     https = Net::HTTP.new(uri.host, 443)
 
+    https.set_debug_output $stderr
+
     https.use_ssl = true
 
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-    res = https.post(uri.path, q)
+    res = https.post(uri.path, q, 'Content-Type' => 'application/x-www-form-urlencoded')
 
     res_str = ""
-    res.map{|k,v|
-      res_str += "#{k}=#{v},"
-    }
+    #res.map{|k,v|
+  #    res_str += "#{k}=#{v},"
+#    }
 
-    p "==================IPN varification response: #{res_str}"
+    p "==================IPN varification response: #{res.body}"
 
     #res = Hash[URI.decode_www_form(res.body)]
 
