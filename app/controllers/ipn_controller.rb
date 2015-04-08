@@ -9,6 +9,13 @@ class IpnController < ApplicationController
 
     verify_url = PpClassic::CMD_URL + '_notify-validate'
 
+    query = ''
+    params.map {|k, v| query += "#{k}=#{v}&" if k != 'controller' && k != 'action'}
+
+    p "==================IPN received data: #{query}"
+
+    q = URI.escape(query).gsub('+', '%2B')
+
     uri = URI.parse(verify_url)
 
     https = Net::HTTP.new(uri.host, 443)
@@ -17,7 +24,7 @@ class IpnController < ApplicationController
 
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-    res = https.post(uri.path, params)
+    res = https.post(uri.path, q)
 
     res = Hash[URI.decode_www_form(res.body)]
 
