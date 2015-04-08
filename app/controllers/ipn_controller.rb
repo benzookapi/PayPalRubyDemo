@@ -48,7 +48,7 @@ class IpnController < ApplicationController
     if result == 'VERIFIED' then
       # I know this is aout of Rails styles...
       check_sql = "SELECT relname FROM pg_class WHERE relkind = 'r' AND relname = 'ipn'"
-      check = ActiveRecord::Base.connection.select(check_sql)
+      check = ActiveRecord::Base.connection.execute(check_sql)
       if check.blank? then
         ActiveRecord::Base.connection.create_table(:ipn) do |t|
           t.column :dump, :JSON
