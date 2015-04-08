@@ -23,6 +23,8 @@ class IpnController < ApplicationController
 
     q = URI.escape(query).gsub('+', '%2B')
 
+    q += '&cmd=_notify-validate'
+
     p "==================IPN verification params: #{q}"
 
     verify_url = PpClassic::CMD_URL + '_notify-validate'
@@ -39,7 +41,7 @@ class IpnController < ApplicationController
 
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-    res = https.post(uri.path, q, 'Content-Type' => 'application/x-www-form-urlencoded')
+    res = https.post(uri.path, q)
 
     res_str = ""
     #res.map{|k,v|
