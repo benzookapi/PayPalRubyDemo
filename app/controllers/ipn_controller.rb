@@ -1,10 +1,27 @@
+require 'uri'
+require 'net/http'
+
 class IpnController < ApplicationController
 
   protect_from_forgery with: :null_session
 
   def index
 
-    request.headers.sort.map { |k, v| p "==================index #{k}:#{v}" }
+    verify_url = PpClassic.CMD_URL + '_notify-validate'
+
+    uri = URI.parse(verify_url)
+
+    https = Net::HTTP.new(uri.host, 443)
+
+    https.use_ssl = true
+
+    https.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+    res = https.post(uri.path, params)
+
+    res = Hash[URI.decode_www_form(res.body)]
+
+    p "==================IPN varification response: #{res}"
 
 sample_ec=<<'SAMPLE_EC'
 mc_gross=105.02&protection_eligibility=Eligible&address_status=unconfirmed&payer_id=RPXDAMFRCMMVE<br/>
