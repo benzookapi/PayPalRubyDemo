@@ -7,8 +7,6 @@ class IpnController < ApplicationController
 
   def index
 
-    verify_url = PpClassic::CMD_URL + '_notify-validate'
-
     query = ''
     params.map {|k, v| query += "#{k}=#{v}&" if k != 'controller' && k != 'action'}
 
@@ -25,6 +23,10 @@ class IpnController < ApplicationController
     q = URI.escape(query).gsub('+', '%2B')
 
     p "==================IPN verification params: #{q}"
+
+    verify_url = PpClassic::CMD_URL + '_notify-validate'
+
+    p "==================IPN verifiction url: #{verify_url}"
 
     uri = URI.parse(verify_url)
 
