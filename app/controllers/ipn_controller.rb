@@ -60,7 +60,7 @@ class IpnController < ApplicationController
       insert_json += "}"
       p "==================IPN json: #{insert_json}"
       insert_sql = "INSEERT INTO ipn (dump) VALUES (#{insert_json})"
-      ActiveRecord::Base.connection.select(insert_sql)
+      ActiveRecord::Base.connection.update(insert_sql)
       render :text => "<h4>Verified!</h4><p>#{query}</p>"
     else
       render :text => "<h4>Not Verified!</h4><p>#{query}</p>"
