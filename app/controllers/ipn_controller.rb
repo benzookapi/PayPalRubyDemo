@@ -7,7 +7,7 @@ class IpnController < ApplicationController
 
   def index
 
-    verify_url = PpClassic.CMD_URL + '_notify-validate'
+    verify_url = PpClassic::CMD_URL + '_notify-validate'
 
     uri = URI.parse(verify_url)
 
