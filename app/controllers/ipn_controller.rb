@@ -9,6 +9,7 @@ class IpnController < ApplicationController
 
     query = ''
     params.map {|k, v| query += "#{k}=#{v}&" if k != 'controller' && k != 'action'}
+    query.chop!
 
     p "==================IPN received data: #{query}"
 
@@ -37,6 +38,8 @@ class IpnController < ApplicationController
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
     res = https.post(uri.path, q)
+
+    p "==================IPN varification response: #{res}"
 
     res = Hash[URI.decode_www_form(res.body)]
 
