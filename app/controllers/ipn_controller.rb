@@ -14,7 +14,17 @@ class IpnController < ApplicationController
 
     p "==================IPN received data: #{query}"
 
+    charset = params[:charset].blank? ? 'UTF-8' : params[:charset]
+
+    p "==================IPN charset: #{charset}"
+
+    if charset != 'UTF-8' then
+      query = query.encode('UTF-8', charset)
+    end
+
     q = URI.escape(query).gsub('+', '%2B')
+
+    p "==================IPN verification params: #{q}"
 
     uri = URI.parse(verify_url)
 
