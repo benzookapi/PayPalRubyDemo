@@ -39,11 +39,16 @@ class IpnController < ApplicationController
 
     res = https.post(uri.path, q)
 
-    p "==================IPN varification response: #{res}"
+    res_str = ""
+    res.headers.map{|k,v|
+      res_str += "#{k}=#{v},"
+    }
 
-    res = Hash[URI.decode_www_form(res.body)]
+    p "==================IPN varification response: #{res_str}"
 
-    p "==================IPN varification response: #{res}"
+    #res = Hash[URI.decode_www_form(res.body)]
+
+    #p "==================IPN varification response: #{res}"
 
 sample_ec=<<'SAMPLE_EC'
 mc_gross=105.02&protection_eligibility=Eligible&address_status=unconfirmed&payer_id=RPXDAMFRCMMVE<br/>
