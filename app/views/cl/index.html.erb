@@ -2,9 +2,10 @@
 </h4>
 <%= raw show_endpoint(session[:endpoint]) %>
 <br/>
-
+<!--
 <%= raw show_ua(session[:ua], request.user_agent) %>
 <p>navigator.userAgent (JS): <span id="js_ua"></span></p>
+-->
 
 <h4>Express Checkout API</h4>
 <table class="table table-striped">
@@ -221,6 +222,6 @@ $('#e_p').change(setEp);
 
 setEp();
 
-$("#js_ua").text(navigator.userAgent);
+//$("#js_ua").text(navigator.userAgent);
 
 </script>
