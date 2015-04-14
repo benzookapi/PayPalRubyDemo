@@ -1,0 +1,20 @@
+<form id="checkout" method="post" action="/brain/checkout">
+  <div id="dropin"></div>
+  <input type="hidden" name="amount" value="10">
+  <input type="submit" value="Pay $10" id="pay_btn">
+</form>
+
+<div class="alert alert-info" role="alert"><%= @success %> <%= @status %></div>
+
+<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+
+<script>
+  braintree.setup(
+    // Replace this with a client token from your server
+    "<%= @client_token %>",
+    'dropin', {
+      container: 'dropin'
+    });
+
+
+</script>
