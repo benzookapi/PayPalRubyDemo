@@ -86,6 +86,10 @@ Rails.application.routes.draw do
 
   get 'lg' => 'lg#index'
 
+  get 'brain' => 'brain#index'
+
+  post 'brain/checkout' => 'brain#checkout'
+
   get 'ipn' => 'ipn#indexget'
 
   post 'ipn' => 'ipn#index'
