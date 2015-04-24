@@ -35,5 +35,7 @@ module PayPalRubyDemo
 
     config.paypal_cmd_url = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=" # _express-checkout&token="
 
+    config.paypal_api_url_ad = "https://svcs.sandbox.paypal.com/"
+
   end
 end

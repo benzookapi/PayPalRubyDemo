@@ -1,2 +1,21 @@
 
-<div class="alert alert-info" role="alert">TODO</div>
+<h4>Adaptive Payments</h4>
+<table class="table table-striped">
+        <tbody>
+          <tr>
+            <td style="width:26%;">
+              Pay
+            </td>
+            <td>
+              <%= form_tag("/ad/pay", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/webapps/developer/docs/classic/api/adaptive-payments/Pay_API_Operation/', :target => '_blank') %>
+                <%= text_area_tag('q_pay', @q_pay, {:rows=>'3', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("payment!", :class =>'btn btn-default') %>
+              <% end %>
+                        </td>
+          </tr>
+        </tbody>
+</table>
