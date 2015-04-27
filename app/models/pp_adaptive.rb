@@ -31,9 +31,15 @@ class PpAdaptive
   CMD_URL = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url)
 
   def self.pay(returnUrl, cancelUrl, query)
-    q = 'returnUrl=' + returnUrl + '&cancelurl=' + cancelUrl + '&' + query
+    q = 'returnUrl=' + returnUrl + '&cancelUrl=' + cancelUrl + '&' + query
 
-    call_api(q, API_PATH_PAYMENT, 'Pay')
+    res = call_api(q, API_PATH_PAYMENT, 'Pay')
+
+    if res.has_key?('payKey') then
+      res['_MY_REDIRECT'] = CMD_URL + '_ap-payment&paykey=' + res['payKey']
+    end
+
+    res
   end
 
   private
@@ -44,7 +50,7 @@ class PpAdaptive
 
     p "==================call_api uri: #{uri}"
 
-    q = URI.escape(query).gsub('+', '%2B')
+    q = URI.escape(query.gsub("\r", "").gsub("\n", "")).gsub('+', '%2B')
 
     p "==================call_api query: #{q}"
 
@@ -55,16 +61,18 @@ class PpAdaptive
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
     req = Net::HTTP::Post.new(uri.request_uri)
-    req['X-PAYPAL-SECURITY-USERID'] = API_USER
+    req['X-PAYPAL-SECURITY-USERID'] =API_USER
     req['X-PAYPAL-SECURITY-PASSWORD'] = API_PWD
     req['X-PAYPAL-SECURITY-SIGNATURE'] = API_SIG
     req['X-PAYPAL-APPLICATION-ID'] = API_APP_AD
-    req['X-PAYPAL-REQUEST-DATA-FORMAT'] = 'NV'
-    req['X-PAYPAL-RESPONSE-DATA-FORMAT'] = 'JSON'
+    req['X-PAYPAL-REQUEST-DATA-FORMAT'] = 'NV' # or 'JSON'
+    req['X-PAYPAL-RESPONSE-DATA-FORMAT'] = 'NV' # or 'JSON'
     # req['X-PAYPAL-DEVICE-IPADDRESS'] = '127.0.0.1'
     # req['X-PAYPAL-REQUEST-SOURCE'] = 'merchant-php-sdk-2.0.96'
     # req['X-PAYPAL-SANDBOX-EMAIL-ADDRESS'] = 'Platform.sdk.seller@gmail.com'
     req.body = q
+
+    https.set_debug_output $stderr
 
     now = Time.now
 
@@ -75,12 +83,11 @@ class PpAdaptive
     p "==================call_api elapsed time (sec.): #{elapsed}"
     p "==================call_api response code: #{res.code}"
     p "==================call_api response msg: #{res.message}"
-  #  p "==================call_api response headers: #{res.headers}"
     p "==================call_api response body: #{res.body}"
 
-    #res = Hash[URI.decode_www_form(res.body)]
+    res = Hash[URI.decode_www_form(res.body)]
 
-    #res['_MY_ELAPSED_TIME'] = elapsed
+    res['_MY_ELAPSED_TIME'] = elapsed
 
     res
   end

@@ -11,13 +11,14 @@
                 <p>
                 <%= label_tag(nil, "Parameters") %>
                 <%= link_to("details", 'https://developer.paypal.com/webapps/developer/docs/classic/api/adaptive-payments/Pay_API_Operation/', :target => '_blank') %>
-                <%= text_area_tag('q_pay', @q_pay, {:rows=>'3', :class=>'form-control'}) %>
+                <%= text_area_tag('q_pay', session[:q_pay], {:rows=>'3', :class=>'form-control'}) %>
                 </p>
                <%= button_tag("payment!", :class =>'btn btn-default') %>
               <% end %>
+              <%= raw show_res('Pay', @res) if request.path_info == '/ad/pay' || request.fullpath.include?('st=') %>
             </td>
           </tr>
+
+
         </tbody>
 </table>
-
-<h4>Adaptive Accounts</h4>

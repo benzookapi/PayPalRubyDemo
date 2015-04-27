@@ -156,6 +156,8 @@ class PpClassic
       https.cert = cert
     end
 
+    https.set_debug_output $stderr
+
     now = Time.now
 
     res = https.post(uri.path, q)
@@ -163,6 +165,8 @@ class PpClassic
     elapsed = Time.now - now
 
     p "==================call_api elapsed time (sec.): #{elapsed}"
+    p "==================call_api response code: #{res.code}"
+    p "==================call_api response msg: #{res.message}"
     p "==================call_api response: #{res.body}"
 
     res = Hash[URI.decode_www_form(res.body)]
