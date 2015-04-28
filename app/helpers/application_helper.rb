@@ -65,6 +65,8 @@ module ApplicationHelper
         detail = 'https://developer.paypal.com/webapps/developer/docs/classic/api/adaptive-payments/Pay_API_Operation/'
     when 'PaymentDetails' then
         detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/PaymentDetails_API_Operation/'
+    when 'Refund' then
+        detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Refund_API_Operation/'
     when 'Preapproval' then
         detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Preapproval_API_Operation/'
     end

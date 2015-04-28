@@ -1,5 +1,5 @@
 
-<h4>Adaptive Payments</h4>
+<h4>Adaptive Payments <a href="https://developer.paypal.com/docs/classic/api/#ap" target="_blank">details</a></h4>
 <table class="table table-striped">
         <tbody>
           <tr>
@@ -38,6 +38,23 @@
 
           <tr>
             <td style="width:26%;">
+              Refund
+            </td>
+            <td>
+              <%= form_tag("/ad/refund", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Refund_API_Operation/', :target => '_blank') %>
+                <%= text_area_tag('q_refund', @q_refund, {:rows=>'3', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("Refund the payment", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('Refund', @res) if request.path_info == '/ad/refund'%>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:26%;">
               Preapproval
             </td>
             <td>
@@ -45,7 +62,7 @@
                 <p>
                 <%= label_tag(nil, "startingDate") %>
                 <%= text_field_tag('sd_preapp', set_default_time(@sd_preapp, -60), :class=>'form-control') %>
-                <%= label_tag(nil, "endDate") %>
+                <%= label_tag(nil, "endingDate") %>
                 <%= text_field_tag('ed_preapp', set_default_time(@ed_preapp, -60), :class=>'form-control') %>
                 <%= label_tag(nil, "Parameters") %>
                 <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Preapproval_API_Operation/', :target => '_blank') %>

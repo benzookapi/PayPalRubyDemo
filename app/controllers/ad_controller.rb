@@ -46,6 +46,16 @@ class AdController < ApplicationController
     render template: 'ad/index'
   end
 
+  def refund
+    @q_refund = params[:q_refund]
+
+    @res = PpAdaptive.refund(@q_refund)
+
+    p "==================refund: #{@res}"
+
+    render template: 'ad/index'
+  end
+
   def preapp
     session[:q_preapp] = params[:q_preapp]
 

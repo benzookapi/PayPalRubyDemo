@@ -48,6 +48,10 @@ class PpAdaptive
     call_api(QUERY_PRFX + query, API_PATH_PAYMENT, 'PaymentDetails')
   end
 
+    def self.refund(query)
+      call_api(QUERY_PRFX + query, API_PATH_PAYMENT, 'Refund')
+    end
+
   def self.pre_app(returnUrl, cancelUrl, start_date, end_date, query)
     q = QUERY_PRFX + 'returnUrl=' + returnUrl + '&cancelUrl=' + cancelUrl + '&' +
      'startingDate=' + start_date + '&endingDate=' + end_date + '&' + query
