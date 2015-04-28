@@ -13,9 +13,47 @@
                 <%= link_to("details", 'https://developer.paypal.com/webapps/developer/docs/classic/api/adaptive-payments/Pay_API_Operation/', :target => '_blank') %>
                 <%= text_area_tag('q_pay', session[:q_pay], {:rows=>'3', :class=>'form-control'}) %>
                 </p>
-               <%= button_tag("payment!", :class =>'btn btn-default') %>
+               <%= button_tag("Execute a payment!", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('Pay', @res) if request.path_info == '/ad/pay' || request.fullpath.include?('st=') %>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:26%;">
+              PaymentDetails
+            </td>
+            <td>
+              <%= form_tag("/ad/paydt", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/adaptive-payments/PaymentDetails_API_Operation/', :target => '_blank') %>
+                <%= text_area_tag('q_paydt', @q_paydt, {:rows=>'3', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("Get a payment details", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('PaymentDetails', @res) if request.path_info == '/ad/paydt'%>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:26%;">
+              Preapproval
+            </td>
+            <td>
+              <%= form_tag("/ad/preapp", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "startingDate") %>
+                <%= text_field_tag('sd_preapp', set_default_time(@sd_preapp, -60), :class=>'form-control') %>
+                <%= label_tag(nil, "endDate") %>
+                <%= text_field_tag('ed_preapp', set_default_time(@ed_preapp, -60), :class=>'form-control') %>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Preapproval_API_Operation/', :target => '_blank') %>
+                <%= text_area_tag('q_preapp', session[:q_preapp], {:rows=>'3', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("Get a preapproval", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('Preapproval', @res_preapp) if request.path_info == '/ad/preapp' || request.fullpath.include?('st_preapp=')%>
             </td>
           </tr>
 

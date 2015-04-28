@@ -86,6 +86,10 @@ Rails.application.routes.draw do
 
   post 'ad/pay' => 'ad#pay'
 
+  post 'ad/paydt' => 'ad#paydt'
+
+  post 'ad/preapp' => 'ad#preapp'
+
   get 'lg' => 'lg#index'
 
   get 'brain' => 'brain#index'

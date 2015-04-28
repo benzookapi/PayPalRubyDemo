@@ -30,13 +30,32 @@ class PpAdaptive
 
   CMD_URL = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url)
 
+  QUERY_PRFX = 'requestEnvelope.errorLanguage=en_US&'
+
   def self.pay(returnUrl, cancelUrl, query)
-    q = 'returnUrl=' + returnUrl + '&cancelUrl=' + cancelUrl + '&' + query
+    q = QUERY_PRFX + 'returnUrl=' + returnUrl + '&cancelUrl=' + cancelUrl + '&' + query
 
     res = call_api(q, API_PATH_PAYMENT, 'Pay')
 
     if res.has_key?('payKey') then
       res['_MY_REDIRECT'] = CMD_URL + '_ap-payment&paykey=' + res['payKey']
+    end
+
+    res
+  end
+
+  def self.pay_dt(query)
+    call_api(QUERY_PRFX + query, API_PATH_PAYMENT, 'PaymentDetails')
+  end
+
+  def self.pre_app(returnUrl, cancelUrl, start_date, end_date, query)
+    q = QUERY_PRFX + 'returnUrl=' + returnUrl + '&cancelUrl=' + cancelUrl + '&' +
+     'startingDate=' + start_date + '&endingDate=' + end_date + '&' + query
+
+    res = call_api(q, API_PATH_PAYMENT, 'Preapproval')
+
+    if res.has_key?('preapprovalKey') then
+      res['_MY_REDIRECT'] = CMD_URL + '_ap-preapproval&preapprovalkey=' + res['preapprovalKey']
     end
 
     res
