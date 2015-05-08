@@ -29,7 +29,8 @@ module ApplicationHelper
   end
 
   def show_res(method, res)
-    ack = res['ACK'] != nil ? res['ACK'] : res['responseEnvelope.ack']
+    ack = res['ACK'] != nil ? res['ACK'] : res['responseEnvelope.ack'] != nil ?
+      res['responseEnvelope.ack'] : res['message'] == nil ? 'Success' : 'Failure'
 
     div_class = ''
     case ack
@@ -69,6 +70,8 @@ module ApplicationHelper
         detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Refund_API_Operation/'
     when 'Preapproval' then
         detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Preapproval_API_Operation/'
+    when 'Create a payment' then
+        detail = 'https://developer.paypal.com/docs/api/#create-a-payment'
     end
 
     msg = ack + ', elapsed (sec.): ' + res['_MY_ELAPSED_TIME'].to_s

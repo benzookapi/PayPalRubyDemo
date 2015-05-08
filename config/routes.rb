@@ -82,6 +82,8 @@ Rails.application.routes.draw do
 
   get 'rest' => 'rest#index'
 
+  post 'rest/pay' => 'rest#pay'
+
   get 'ad' => 'ad#index'
 
   post 'ad/pay' => 'ad#pay'
