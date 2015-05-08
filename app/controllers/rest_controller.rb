@@ -17,19 +17,19 @@ class RestController < ApplicationController
     "funding_instruments":[
       {
         "credit_card":{
-          "number":"4417119669820331",
+          "number":"4525915739179072",
           "type":"visa",
           "expire_month":11,
-          "expire_year":2018,
-          "cvv2":"874",
-          "first_name":"Betsy",
-          "last_name":"Buyer",
+          "expire_year":2019,
+          "cvv2":"123",
+          "first_name":"Benzo",
+          "last_name":"Okapi",
           "billing_address":{
             "line1":"111 First Street",
-            "city":"Saratoga",
-            "state":"CA",
-            "postal_code":"95070",
-            "country_code":"US"
+            "city":"Minato-ku",
+            "state":"Tokyo",
+            "postal_code":"12345678",
+            "country_code":"JP"
           }
         }
       }
@@ -60,6 +60,17 @@ Q_PAY
     res = PpRest.pay(@q_pay, session[:token])
 
     p "==================pay: #{res}"
+
+    @res = res
+    render template: 'rest/index'
+  end
+
+  def getpay
+    @i_getpay = params[:i_getpay]
+
+    res = PpRest.get_pay(@i_getpay, session[:token])
+
+    p "==================getpay: #{res}"
 
     @res = res
     render template: 'rest/index'

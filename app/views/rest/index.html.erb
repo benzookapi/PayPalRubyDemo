@@ -19,5 +19,21 @@
             </td>
           </tr>
 
+          <tr>
+            <td style="width:26%;">
+              Look up a payment resource
+            </td>
+            <td>
+              <%= form_tag("/rest/getpay", method: "post") do %>
+                <p>
+                  <%= label_tag(nil, "Payment-Id") %>
+                  <%= text_field_tag('i_getpay', @i_getpay, :class=>'form-control') %>
+                </p>
+               <%= button_tag("Check a payment!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('Look up a payment resource', @res) if request.path_info == '/rest/getpay' %>
+            </td>
+          </tr>
+
         </tbody>
 </table>

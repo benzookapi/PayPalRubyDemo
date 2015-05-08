@@ -30,8 +30,12 @@ class PpRest
     call_api(query, API_PATH_PAY, '', token)
   end
 
+  def self.get_pay(id, token)
+    call_api('', API_PATH_PAY, id, token, true)
+  end
+
   private
-  def self.call_api(query, path, sub_path, token)
+  def self.call_api(query, path, sub_path, token, get = false)
     api_url = API_URL_REST + path + '/' + sub_path
 
     uri = URI.parse(api_url)
@@ -52,6 +56,10 @@ class PpRest
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
     req = Net::HTTP::Post.new(uri.request_uri)
+    if get then
+      req = Net::HTTP::Get.new(uri.request_uri)
+    end
+
     if token.empty? then
       req['Accept'] ='application/json'
       req['Accept-Language'] = 'en_US'
