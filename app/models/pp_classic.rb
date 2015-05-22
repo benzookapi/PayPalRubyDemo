@@ -30,6 +30,12 @@ class PpClassic
 
   API_SIG = ENV['PP_API_SIG']
 
+  API_USER_US = ENV['PP_API_USER_US']
+
+  API_PWD_US = ENV['PP_API_PWD_US']
+
+  API_SIG_US = ENV['PP_API_SIG_US']
+
   API_USER_CER = ENV['PP_API_USER_CER']
 
   API_PWD_CER = ENV['PP_API_PWD_CER']
@@ -38,83 +44,87 @@ class PpClassic
 
   CMD_URL = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url)
 
-  def self.set_EC(returnUrl, cancelUrl, query, endpoint = ENDPOINT_NVP_SIG)
+  CMD_URL_CONTEXT = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url_context)
+
+  def self.set_EC(returnUrl, cancelUrl, query, endpoint = ENDPOINT_NVP_SIG, commit=false, context=false, is_us=false)
     q = '&METHOD=' + 'SetExpressCheckout' +
       '&RETURNURL=' + returnUrl + '&CANCELURL=' + cancelUrl + '&' + query
 
-    res = call_api(q, endpoint)
+    res = call_api(q, endpoint, is_us)
 
     if res.has_key?('TOKEN') then
-      res['_MY_REDIRECT'] = CMD_URL + '_express-checkout&token=' + res['TOKEN']
+      r = (context ? CMD_URL_CONTEXT + '?' : CMD_URL + '_express-checkout&') + 'token=' + res['TOKEN']
+      r += '&useraction=commit' if commit
+      res['_MY_REDIRECT'] = r
     end
 
     res
   end
 
-  def self.get_EC(token, endpoint = ENDPOINT_NVP_SIG)
+  def self.get_EC(token, endpoint = ENDPOINT_NVP_SIG, is_us=false)
     q = '&METHOD=' + 'GetExpressCheckoutDetails' +
       '&TOKEN=' + token
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
-  def self.do_EC(token, payer_id, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.do_EC(token, payer_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
     q = '&METHOD=' + 'DoExpressCheckoutPayment' +
       '&TOKEN=' + token + '&PAYERID=' + payer_id +
       '&' + query
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
-  def self.create_RP(token, start_date, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.create_RP(token, start_date, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
       q = '&METHOD=' + 'CreateRecurringPaymentsProfile' +
         '&TOKEN=' + token + '&PROFILESTARTDATE=' + start_date +
         '&' + query
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
-  def self.create_BA(token, endpoint = ENDPOINT_NVP_SIG)
+  def self.create_BA(token, endpoint = ENDPOINT_NVP_SIG, is_us=false)
       q = '&METHOD=' + 'CreateBillingAgreement' +
         '&TOKEN=' + token
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
-  def self.search_TR(start_date, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.search_TR(start_date, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
     q = '&METHOD=' + 'TransactionSearch' +
       '&STARTDATE=' + start_date +
       '&' + query
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
-  def self.get_TR(trans_id, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.get_TR(trans_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
     q = '&METHOD=' + 'GetTransactionDetails' +
       '&TRANSACTIONID=' + trans_id +
       '&' + query
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
-  def self.get_RP(prof_id, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.get_RP(prof_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
     q = '&METHOD=' + 'GetRecurringPaymentsProfileDetails' +
       '&PROFILEID=' + prof_id +
       '&' + query
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
-  def self.do_RT(ref_id, query, endpoint = ENDPOINT_NVP_SIG)
+  def self.do_RT(ref_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
     q = '&METHOD=' + 'DoReferenceTransaction' +
       '&REFERENCEID=' + ref_id +
       '&' + query
 
-    call_api(q, endpoint)
+    call_api(q, endpoint, is_us)
   end
 
   private
-  def self.call_api(query, endpoint)
+  def self.call_api(query, endpoint, is_us=false)
     api_url = API_URL_NVP_SIG
 
     api_user = API_USER_CER
@@ -124,9 +134,9 @@ class PpClassic
     case endpoint
     when ENDPOINT_NVP_SIG then
       api_url = API_URL_NVP_SIG
-      api_user = API_USER
-      api_pwd = API_PWD
-      api_sig = '&SIGNATURE=' + API_SIG
+      api_user = is_us ? API_USER_US : API_USER
+      api_pwd = is_us ? API_PWD_US : API_PWD
+      api_sig = '&SIGNATURE=' + (is_us ? API_SIG_US : API_SIG)
     when ENDPOINT_NVP_CER then
       api_url = API_URL_NVP_CER
     when ENDPOINT_NVP_CER_CDN then

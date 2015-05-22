@@ -58,6 +58,10 @@ Rails.application.routes.draw do
 
   post 'web' => 'web#index'
 
+  get 'web/checkout' => 'web#checkout'
+
+  get 'web/complete' => 'web#complete'
+
   get 'btn' => 'btn#index'
 
   get 'cl' => 'cl#index'

@@ -97,10 +97,40 @@
 <div class="row">
   <div class="col-md-7"></div>
   <div class="col-md-3">
-  <button type="button" class="btn btn-primary btn-lg btn-block">Next</button>
+    <form action='web/checkout'>
+     <button type="submit" class="btn btn-primary btn-lg btn-block">Next</button>
+   </form>
 </div>
+<p>
+<%=@res%>
+</p>
 </div>
 <br/>
+
+
+<h4>
+  In-Context Express Checkout
+  <a target="_blank" href="https://developer.paypal.com/docs/classic/express-checkout/in-context/">details</a>
+</h4>
+<br/>
+<form id="myContainer" method="get" action="/web/checkout">
+  <input type="hidden" name="context" value="true">
+  <input type="hidden" name="is_us" value="true">
+</form>
+<script>
+  window.paypalCheckoutReady = function () {
+    paypal.checkout.setup('UXTTV2MAAJDJE', {
+      container: 'myContainer',
+      environment: 'sandbox'
+    });
+  };
+</script>
+
+<script src="//www.paypalobjects.com/api/checkout.js" async></script>
+<br/>
+<br/>
+
+
 <h4>
   Wep Payment Plus (Hosted Solutiuon)
   <a target="_blank" href="https://www.paypal.jp/merchant/service/web-payment-plus/integration.html">details</a>

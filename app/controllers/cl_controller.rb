@@ -18,6 +18,7 @@ class ClController < ApplicationController
       '&L_BILLINGAGREEMENTDESCRIPTION0=MY_RECURRSIVE_PAYMENT_' + init_amt
       session[:res] = nil
       session[:ua] = request.user_agent
+      session[:is_us] = params[:is_us]
     end
     a = session[:q_setec].match(/PAYMENTREQUEST_0_AMT=(\d{1,9})/)
     amt = a.blank? ? '0' : a[1]
@@ -35,7 +36,8 @@ class ClController < ApplicationController
 
     callback = base_url + '/cl'
 
-    res = PpClassic.set_EC(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec], session[:endpoint])
+    res = PpClassic.set_EC(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec], session[:endpoint],
+      false, false, set_is_us(params, session))
 
     p "==================setec: #{res}"
 
@@ -56,7 +58,7 @@ class ClController < ApplicationController
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
-    res = PpClassic.get_EC(@t_getec, session[:endpoint])
+    res = PpClassic.get_EC(@t_getec, session[:endpoint], set_is_us(params, session))
 
     p "==================getec #{res}"
 
@@ -72,7 +74,7 @@ class ClController < ApplicationController
     @p_doec = params[:p_doec]
     @q_doec = params[:q_doec]
 
-    res = PpClassic.do_EC(@t_doec, @p_doec, @q_doec, session[:endpoint])
+    res = PpClassic.do_EC(@t_doec, @p_doec, @q_doec, session[:endpoint], set_is_us(params, session))
 
     p "==================doec #{res}"
 
@@ -91,7 +93,7 @@ class ClController < ApplicationController
     @sd_crrp = params[:sd_crrp]
     session[:q_crrp] = params[:q_crrp]
 
-    res = PpClassic.create_RP(@t_crrp, @sd_crrp, session[:q_crrp], session[:endpoint])
+    res = PpClassic.create_RP(@t_crrp, @sd_crrp, session[:q_crrp], session[:endpoint], set_is_us(params, session))
 
     p "==================crrp #{res}"
 
@@ -108,7 +110,7 @@ class ClController < ApplicationController
 
     @t_crba = params[:t_crba]
 
-    res = PpClassic.create_BA(@t_crba, session[:endpoint])
+    res = PpClassic.create_BA(@t_crba, session[:endpoint], set_is_us(params, session))
 
     p "==================crba #{res}"
 
@@ -124,7 +126,7 @@ class ClController < ApplicationController
     @sd_trsr = params[:sd_trsr]
     @q_trsr = params[:q_trsr]
 
-    res = PpClassic.search_TR(@sd_trsr, @q_trsr, session[:endpoint])
+    res = PpClassic.search_TR(@sd_trsr, @q_trsr, session[:endpoint], set_is_us(params, session))
 
     p "==================trsr #{res}"
 
@@ -140,7 +142,7 @@ class ClController < ApplicationController
     @i_gettr = params[:i_gettr]
     @q_gettr = params[:q_gettr]
 
-    res = PpClassic.get_TR(@i_gettr, @q_gettr, session[:endpoint])
+    res = PpClassic.get_TR(@i_gettr, @q_gettr, session[:endpoint], set_is_us(params, session))
 
     p "==================gettr #{res}"
 
@@ -156,7 +158,7 @@ class ClController < ApplicationController
     @i_getrp = params[:i_getrp]
     @q_getrp = params[:q_getrp]
 
-    res = PpClassic.get_RP(@i_getrp, @q_getrp, session[:endpoint])
+    res = PpClassic.get_RP(@i_getrp, @q_getrp, session[:endpoint], set_is_us(params, session))
 
     p "==================getrp #{res}"
 
@@ -172,7 +174,7 @@ class ClController < ApplicationController
     @i_dort = params[:i_dort]
     @q_dort = params[:q_dort]
 
-    res = PpClassic.do_RT(@i_dort, @q_dort, session[:endpoint])
+    res = PpClassic.do_RT(@i_dort, @q_dort, session[:endpoint], set_is_us(params, session))
 
     p "==================dort #{res}"
 
