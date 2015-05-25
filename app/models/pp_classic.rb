@@ -46,7 +46,7 @@ class PpClassic
 
   CMD_URL_CONTEXT = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url_context)
 
-  def self.set_EC(returnUrl, cancelUrl, query, endpoint = ENDPOINT_NVP_SIG, commit=false, context=false, is_us=false)
+  def self.set_EC(returnUrl, cancelUrl, query, endpoint: ENDPOINT_NVP_SIG, commit: false, context: false, is_us: false)
     q = '&METHOD=' + 'SetExpressCheckout' +
       '&RETURNURL=' + returnUrl + '&CANCELURL=' + cancelUrl + '&' + query
 
@@ -61,14 +61,14 @@ class PpClassic
     res
   end
 
-  def self.get_EC(token, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.get_EC(token, endpoint: ENDPOINT_NVP_SIG, is_us: false)
     q = '&METHOD=' + 'GetExpressCheckoutDetails' +
       '&TOKEN=' + token
 
     call_api(q, endpoint, is_us)
   end
 
-  def self.do_EC(token, payer_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.do_EC(token, payer_id, query, endpoint: ENDPOINT_NVP_SIG, is_us: false)
     q = '&METHOD=' + 'DoExpressCheckoutPayment' +
       '&TOKEN=' + token + '&PAYERID=' + payer_id +
       '&' + query
@@ -76,7 +76,7 @@ class PpClassic
     call_api(q, endpoint, is_us)
   end
 
-  def self.create_RP(token, start_date, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.create_RP(token, start_date, query, endpoint: ENDPOINT_NVP_SIG, is_us: false)
       q = '&METHOD=' + 'CreateRecurringPaymentsProfile' +
         '&TOKEN=' + token + '&PROFILESTARTDATE=' + start_date +
         '&' + query
@@ -84,14 +84,14 @@ class PpClassic
     call_api(q, endpoint, is_us)
   end
 
-  def self.create_BA(token, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.create_BA(token, endpoint: ENDPOINT_NVP_SIG, is_us: false)
       q = '&METHOD=' + 'CreateBillingAgreement' +
         '&TOKEN=' + token
 
     call_api(q, endpoint, is_us)
   end
 
-  def self.search_TR(start_date, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.search_TR(start_date, query, endpoint: ENDPOINT_NVP_SIG, is_us: false)
     q = '&METHOD=' + 'TransactionSearch' +
       '&STARTDATE=' + start_date +
       '&' + query
@@ -99,7 +99,7 @@ class PpClassic
     call_api(q, endpoint, is_us)
   end
 
-  def self.get_TR(trans_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.get_TR(trans_id, query, endpoint: ENDPOINT_NVP_SIG, is_us: false)
     q = '&METHOD=' + 'GetTransactionDetails' +
       '&TRANSACTIONID=' + trans_id +
       '&' + query
@@ -107,7 +107,7 @@ class PpClassic
     call_api(q, endpoint, is_us)
   end
 
-  def self.get_RP(prof_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.get_RP(prof_id, query, endpoint: ENDPOINT_NVP_SIG, is_us: false)
     q = '&METHOD=' + 'GetRecurringPaymentsProfileDetails' +
       '&PROFILEID=' + prof_id +
       '&' + query
@@ -115,7 +115,7 @@ class PpClassic
     call_api(q, endpoint, is_us)
   end
 
-  def self.do_RT(ref_id, query, endpoint = ENDPOINT_NVP_SIG, is_us=false)
+  def self.do_RT(ref_id, query, endpoint: ENDPOINT_NVP_SIG, is_us: false)
     q = '&METHOD=' + 'DoReferenceTransaction' +
       '&REFERENCEID=' + ref_id +
       '&' + query

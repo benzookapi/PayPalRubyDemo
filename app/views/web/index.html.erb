@@ -115,17 +115,16 @@
 <br/>
 <form id="myContainer" method="get" action="/web/checkout">
   <input type="hidden" name="context" value="true">
-  <input type="hidden" name="is_us" value="true">
+  <input type="hidden" name="is_us" value="<%= @is_us.to_s %>">
 </form>
 <script>
   window.paypalCheckoutReady = function () {
-    paypal.checkout.setup('UXTTV2MAAJDJE', {
+    paypal.checkout.setup('<%= @merchant_id %>', {
       container: 'myContainer',
       environment: 'sandbox'
     });
   };
 </script>
-
 <script src="//www.paypalobjects.com/api/checkout.js" async></script>
 <br/>
 <br/>
