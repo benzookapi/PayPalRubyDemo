@@ -26,7 +26,7 @@ class WebController < ApplicationController
     #query = 'L_BILLINGTYPE0=MerchantInitiatedBilling&PAYMENTREQUEST_0_AMT=3000&PAYMENTREQUEST_0_CURRENCYCODE=JPY'
     #query = 'L_BILLINGTYPE0=RecurringPayments&L_BILLINGAGREEMENTDESCRIPTION0=定期支払いです！&PAYMENTREQUEST_0_AMT=3000&PAYMENTREQUEST_0_CURRENCYCODE=JPY'
 
-    res = PpClassic.set_EC(callback + '/complete', callback + '', query, endpoint: ENDPOINT, commit: true,
+    res = PpClassic.set_EC(callback + '/complete', callback + '?is_us=' + is_us.to_s, query, endpoint: ENDPOINT, commit: true,
       context: (params[:context] == 'true' ? true : false), is_us: is_us)
 
     p "==================checkout: #{res}"
@@ -40,11 +40,11 @@ class WebController < ApplicationController
   end
 
   def complete
-    is_us = set_is_us(params, session)
+    @is_us = set_is_us(params, session)
 
-    query = get_amt(is_us)
+    query = get_amt(@is_us)
 
-    res = PpClassic.do_EC(params[:token], params[:PayerID], query, endpoint: ENDPOINT, is_us: is_us)
+    res = PpClassic.do_EC(params[:token], params[:PayerID], query, endpoint: ENDPOINT, is_us: @is_us)
 
     p "==================complete #{res}"
 
