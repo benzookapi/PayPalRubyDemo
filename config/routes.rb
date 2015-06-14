@@ -110,5 +110,7 @@ Rails.application.routes.draw do
 
   post 'ipn' => 'ipn#index'
 
+  get 'rest/payouts' => 'rest#payouts'
+
 
 end

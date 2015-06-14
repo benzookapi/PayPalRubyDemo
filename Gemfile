@@ -37,6 +37,8 @@ gem 'rails_12factor'
 # For Braintree SDK
 gem 'braintree'
 
+gem 'paypal-sdk-rest'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
