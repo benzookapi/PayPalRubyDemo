@@ -4,12 +4,12 @@
 <script>
 paypal.use( ["login"], function(login) {
   login.render ({
-    "appid": "AZE755WCwmQata01pA9JCtpBgjNsqvUg8UOQ3LEghuJVFFGGP3auKYYPYkWKXBOSu5_ZbKzyYII9wGYV",
+    "appid": "<%= @client_id %>",
     "authend": "sandbox",
     "scopes": "profile email address phone https://uri.paypal.com/services/paypalattributes https://uri.paypal.com/services/expresscheckout",
     "containerid": "myContainer",
     "locale": "ja-jp",
-    "returnurl": "<%= @base_url%>/lg/callback"
+    "returnurl": "<%= @redirect_uri %>"
   });
 });
 </script>

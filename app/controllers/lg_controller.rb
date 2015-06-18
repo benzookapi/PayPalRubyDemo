@@ -5,7 +5,8 @@ class LgController < ApplicationController
   ENDPOINT = PpClassic::ENDPOINT_NVP_SIG
 
   def index
-    @base_url = request.url.sub(request.fullpath, '')
+    @client_id = PpRest::API_APP_REST
+    @redirect_uri = PpRest::API_APP_REST_URI    
     @access_token = params[:access_token]
 
   end
