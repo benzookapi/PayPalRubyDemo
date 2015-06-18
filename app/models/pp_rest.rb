@@ -17,10 +17,13 @@ class PpRest
 
   API_PATH_PAY = 'payments/payment'
 
+  API_PATH_IDENTITY = 'identity/openidconnect/tokenservice'
+
   API_APP_REST = ENV['PP_API_APP_REST']
 
   API_APP_REST_SEC = ENV['PP_API_APP_REST_SEC']
 
+  API_APP_REST_URI = ENV['PP_API_APP_REST_URI']
 
   def self.get_token()
     call_api('grant_type=client_credentials', API_PATH_TOKEN, '', '')
@@ -32,6 +35,10 @@ class PpRest
 
   def self.get_pay(id, token)
     call_api('', API_PATH_PAY, id, token, true)
+  end
+
+  def self.identity(code)
+    call_api("grant_type=authorization_code&code=#{code}&redirect_uri=#{API_APP_REST_URI}", API_PATH_IDENTITY, '', '')
   end
 
   private

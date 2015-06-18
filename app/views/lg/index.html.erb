@@ -1,2 +1,26 @@
+<h4>Login With PayPal JS Gadget</h4>
+<span id="myContainer"></span>
+<script src="https://www.paypalobjects.com/js/external/api.js"></script>
+<script>
+paypal.use( ["login"], function(login) {
+  login.render ({
+    "appid": "AZE755WCwmQata01pA9JCtpBgjNsqvUg8UOQ3LEghuJVFFGGP3auKYYPYkWKXBOSu5_ZbKzyYII9wGYV",
+    "authend": "sandbox",
+    "scopes": "profile email address phone https://uri.paypal.com/services/paypalattributes https://uri.paypal.com/services/expresscheckout",
+    "containerid": "myContainer",
+    "locale": "ja-jp",
+    "returnurl": "<%= @base_url%>/lg/callback"
+  });
+});
+</script>
 
-<div class="alert alert-info" role="alert">TODO</div>
+<br/>
+<br/>
+
+<h4>Seamless Checkout by Login With PayPal</h4>
+<form method="post" action="/lg/seamless_ec">
+  <input type="hidden" value="<%= @access_token %>" name="access_token">
+  <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_checkout_pp_142x27.png">
+</form>
+
+<%= @res %>

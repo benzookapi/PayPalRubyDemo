@@ -102,6 +102,10 @@ Rails.application.routes.draw do
 
   get 'lg' => 'lg#index'
 
+  get 'lg/callback' => 'lg#callback'
+
+  post 'lg/seamless_ec' => 'lg#seamless_ec'
+
   get 'brain' => 'brain#index'
 
   post 'brain/checkout' => 'brain#checkout'
