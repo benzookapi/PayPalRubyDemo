@@ -76,6 +76,8 @@ module ApplicationHelper
         detail = 'https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment'
     when 'Execute payouts' then
         detail = 'https://developer.paypal.com/docs/api/#payouts'
+    else
+        detail = 'https://developer.paypal.com/docs/api/'
     end
 
     msg = ack + ', elapsed (sec.): ' + res['_MY_ELAPSED_TIME'].to_s
