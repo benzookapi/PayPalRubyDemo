@@ -6,13 +6,21 @@ class LgController < ApplicationController
 
   def index
     @client_id = PpRest::API_APP_REST
-    @redirect_uri = PpRest::API_APP_REST_URI    
+    @redirect_uri = PpRest::API_APP_REST_URI
     @access_token = params[:access_token]
 
   end
 
   def callback
     base_url = request.url.sub(request.fullpath, '')
+    if params[:token].present? then
+      url = base_url + "/rest?"
+      params.each do |k, v|
+        url += "#{k}=#{v}&"
+      end
+      redirect_to url
+      return
+    end
 
     code = params[:code]
 
@@ -20,7 +28,10 @@ class LgController < ApplicationController
 
     res = PpRest.identity(code)
 
-    render :text => "<script>top.window.opener.location='#{base_url}/lg?access_token=#{res['access_token']}'; window.close();</script>"
+    p "==================callback res: #{res}"
+
+    render :text => "<script>if (top.window.opener != null) { top.window.opener.location='#{base_url}/lg?access_token=#{res['access_token']}'; " +
+      "window.close(); } else { window.location='#{base_url}/lg?access_token=#{res['access_token']}'; } </script>"
 
   end
 
@@ -48,6 +59,13 @@ class LgController < ApplicationController
       @res = res
       render template: 'lg/index'
     end
+  end
+
+  def auth
+
+    redirect_to("https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize" +
+      "?client_id=#{PpRest::API_APP_REST}&response_type=code&scope=profile+email+address+phone" +
+        "+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes&redirect_uri=#{PpRest::API_APP_REST_URI}")
 
   end
 end

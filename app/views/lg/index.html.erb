@@ -1,4 +1,4 @@
-<h4>Login With PayPal JS Gadget</h4>
+<h4>Login With PayPal JS Gadget <a target="_blank" href="https://developer.paypal.com/docs/integration/direct/identity/log-in-with-paypal/">details</a></h4>
 <span id="myContainer"></span>
 <script src="https://www.paypalobjects.com/js/external/api.js"></script>
 <script>
@@ -17,7 +17,15 @@ paypal.use( ["login"], function(login) {
 <br/>
 <br/>
 
-<h4>Seamless Checkout by Login With PayPal</h4>
+<h4>Obtain Buyer Token (Manual Login With PayPal) <a target="_blank" href="https://developer.paypal.com/docs/api/#obtain-users-consent">details</a></h4>
+<form method="post" action="/lg/auth">
+  <input type="submit" value="Give your access token!">
+</form>
+
+<br/>
+<br/>
+
+<h4>Seamless Checkout by Access Token <a target="_blank" href="https://developer.paypal.com/docs/integration/direct/identity/seamless-checkout/">details</a></h4>
 <form method="post" action="/lg/seamless_ec">
   <input type="hidden" value="<%= @access_token %>" name="access_token">
   <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_checkout_pp_142x27.png">

@@ -4,6 +4,12 @@ include PayPal::SDK::REST
 class RestController < ApplicationController
 
   def index
+    if params.has_key?(:token) then
+
+    else
+      session[:res_rest] = nil
+    end
+
     res = PpRest.get_token()
 
     p "==================index: #{res}"
@@ -12,32 +18,16 @@ class RestController < ApplicationController
 
     p "==================index access_token: #{session[:token]}"
 
-@q_pay=<<'Q_PAY'
+@q_pay=<<"Q_PAY"
 {
   "intent":"sale",
   "payer":{
-    "payment_method":"credit_card",
-    "funding_instruments":[
-      {
-        "credit_card":{
-          "number":"4525915739179072",
-          "type":"visa",
-          "expire_month":11,
-          "expire_year":2019,
-          "cvv2":"123",
-          "first_name":"Benzo",
-          "last_name":"Okapi",
-          "billing_address":{
-            "line1":"111 First Street",
-            "city":"Minato-ku",
-            "state":"Tokyo",
-            "postal_code":"12345678",
-            "country_code":"JP"
-          }
-        }
-      }
-    ]
+    "payment_method":"paypal"
   },
+  "redirect_urls": {
+        "return_url": "#{PpRest::API_APP_REST_URI}",
+        "cancel_url":"#{PpRest::API_APP_REST_URI}"
+    },
   "transactions":[
     {
       "amount":{
@@ -55,66 +45,101 @@ class RestController < ApplicationController
 }
 Q_PAY
 
+@q_payouts=<<"Q_PAYOUTS"
+{
+    "sender_batch_header": {
+        "sender_batch_id": "2014021801",
+        "email_subject": "You have a Payout!",
+        "recipient_type": "EMAIL"
+    },
+    "items": [
+        {
+            "recipient_type": "EMAIL",
+            "amount": {
+                "value": "1.0",
+                "currency": "USD"
+            },
+            "note": "Thanks for your patronage!",
+            "sender_item_id": "201403140001",
+            "receiver": "WHO_YOU_WANT_PAY"
+        }
+    ]
+}
+Q_PAYOUTS
+
+    @i_dopay = params['paymentId']
+
+@q_dopay=<<"Q_DOPAY"
+{ "payer_id" : "#{params['PayerID']}" }
+Q_DOPAY
+
   end
 
+  def call
+    @u_call = params[:u_call]
+    @m_call = params[:m_call]
+    @q_call = params[:q_call]
+
+    @res = PpRest.call_api(@q_call, @u_call.gsub("#{PpRest::API_URL_REST}", ""), '', session[:token], @m_call == 'get' ? true : false)
+
+    p "==================call: #{@res}"
+
+    render template: 'rest/index'
+
+  end
   def pay
     @q_pay = params[:q_pay]
 
     res = PpRest.pay(@q_pay, session[:token])
 
+    session[:res_rest] = res
+
     p "==================pay: #{res}"
 
-    @res = res
+    redirect = ''
+    res['links'].each do |l|
+      if l['method'] == 'REDIRECT' then
+        redirect = l['href'] + '&useraction=commit'
+      end
+    end
+
+    if redirect.empty? then
+      render template: 'rest/index'
+    else
+      redirect_to redirect
+    end
+  end
+
+  def dopay
+    @i_dopay = params[:i_dopay]
+    @q_dopay = params[:q_dopay]
+
+    @res = PpRest.do_pay(@q_dopay, @i_dopay, session[:token])
+
+    p "==================dopay: #{@res}"
+
     render template: 'rest/index'
+
   end
 
   def getpay
     @i_getpay = params[:i_getpay]
 
-    res = PpRest.get_pay(@i_getpay, session[:token])
+    @res = PpRest.get_pay(@i_getpay, session[:token])
 
-    p "==================getpay: #{res}"
+    p "==================getpay: #{@res}"
 
-    @res = res
     render template: 'rest/index'
   end
 
   def payouts
-    PayPal::SDK.configure(
-      :mode => "sandbox", # "sandbox" or "live"
-      :client_id => "AXVvn6-DsQXYUk7y2Z7C_R6iF7CX1cwkTZvqHVfqJhdocifI7xsb5HRqTCGZKH7XFDp7c-5wvYqONdbc",
-      :client_secret => "EOHfBuP55K7A3_yrx4bO0STByDjAjxpOD7KUszlKQ7wEFtL9uJ2J25MBVYsYEZb_wf4leSz7ckRIZCcy",
-      :ssl_options => { } )
+    @q_payouts = params[:q_payouts]
 
-    @payout = Payout.new(
-      {
-        :sender_batch_header => {
-          :sender_batch_id => SecureRandom.hex(8),
-          :email_subject => 'You have a Payout!',
-        },
-        :items => [
-        {
-          :recipient_type => 'EMAIL',
-          :amount => {
-            :value => '1.0',
-            :currency => 'USD'
-          },
-          :note => 'Thanks for your patronage!',
-          :receiver => 'benzookapi+P@gmail.com',
-          :sender_item_id => "2014031400023",
-        }
-      ]
-    }
-  )
+    @res = PpRest.payout(@q_payouts, session[:token])
 
-  #begin
-    @payout_batch = @payout.create
-    logger.info "Created Payout with [#{@payout_batch.batch_header.payout_batch_id}]"
-  #rescue ResourceNotFound => err
-  #  logger.error @payout.error.inspect
-  #end
+    p "==================payouts: #{@res}"
 
-  render :text => "aaaaa"
+    render template: 'rest/index'
   end
 
 end

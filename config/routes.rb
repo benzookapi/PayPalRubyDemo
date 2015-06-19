@@ -86,7 +86,13 @@ Rails.application.routes.draw do
 
   get 'rest' => 'rest#index'
 
+  post 'rest/call' => 'rest#call'
+
   post 'rest/pay' => 'rest#pay'
+
+  post 'rest/dopay' => 'rest#dopay'
+
+  post 'rest/payouts' => 'rest#payouts'
 
   post 'rest/getpay' => 'rest#getpay'
 
@@ -104,6 +110,8 @@ Rails.application.routes.draw do
 
   get 'lg/callback' => 'lg#callback'
 
+  post 'lg/auth' => 'lg#auth'
+
   post 'lg/seamless_ec' => 'lg#seamless_ec'
 
   get 'brain' => 'brain#index'
@@ -113,8 +121,6 @@ Rails.application.routes.draw do
   get 'ipn' => 'ipn#indexget'
 
   post 'ipn' => 'ipn#index'
-
-  get 'rest/payouts' => 'rest#payouts'
 
 
 end

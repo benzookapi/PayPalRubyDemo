@@ -1,3 +1,29 @@
+<h4>Common Request</h4>
+<table class="table table-striped">
+        <tbody>
+          <tr>
+            <td style="width:26%;">
+              Call a REST API
+            </td>
+            <td>
+              <%= form_tag("/rest/call", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "URL") %>
+                <%= text_field_tag('u_call', @u_call, :class=>'form-control') %>
+                <%= label_tag(nil, "Method") %>
+                <%= raw "<select name='m_call' class='form-control'><option value='get'>GET</option><option value='post'>POST</option></select>" %><br/>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/api/', :target => '_blank') %>
+                <%= text_area_tag('q_call', @q_call, {:rows=>'8', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("Call REST API!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('Call REST API!', @res) if request.path_info == '/rest/call' %>
+            </td>
+          </tr>
+        </tbody>
+</table>
+
 
 <h4>Payments <a href="https://developer.paypal.com/docs/api/#payments" target="_blank">details</a></h4>
 <table class="table table-striped">
@@ -15,7 +41,43 @@
                 </p>
                <%= button_tag("Execute a payment!", :class =>'btn btn-default') %>
               <% end %>
-              <%= raw show_res('Create a payment', @res) if request.path_info == '/rest/pay' %>
+              <%= raw show_res('Create a payment', session[:res_rest]) if request.path_info == '/rest/pay' || request.fullpath.include?('token=') %>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:26%;">
+              Execute an approved PayPal payment
+            </td>
+            <td>
+              <%= form_tag("/rest/dopay", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Payment-Id") %>
+                <%= text_field_tag('i_dopay', @i_dopay, :class=>'form-control') %>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment', :target => '_blank') %>
+                <%= text_area_tag('q_dopay', @q_dopay, {:rows=>'8', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("Execute a payment By PayPal!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('Execute an approved PayPal payment', @res) if request.path_info == '/rest/dopay' %>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="width:26%;">
+              Create payouts
+            </td>
+            <td>
+              <%= form_tag("/rest/payouts", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/api/#payouts', :target => '_blank') %>
+                <%= text_area_tag('q_payouts', @q_payouts, {:rows=>'8', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("Execute payouts!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('Execute payouts!', @res) if request.path_info == '/rest/payouts' %>
             </td>
           </tr>
 

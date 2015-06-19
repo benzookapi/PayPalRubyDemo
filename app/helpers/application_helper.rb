@@ -72,6 +72,10 @@ module ApplicationHelper
         detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/Preapproval_API_Operation/'
     when 'Create a payment' then
         detail = 'https://developer.paypal.com/docs/api/#create-a-payment'
+    when 'Execute an approved PayPal payment' then
+        detail = 'https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment'
+    when 'Execute payouts' then
+        detail = 'https://developer.paypal.com/docs/api/#payouts'
     end
 
     msg = ack + ', elapsed (sec.): ' + res['_MY_ELAPSED_TIME'].to_s
