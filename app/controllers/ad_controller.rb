@@ -36,6 +36,17 @@ class AdController < ApplicationController
     end
   end
 
+  def execpay
+    @k_execpay = params[:k_execpay]
+    @q_execpay = params[:q_execpay]
+
+    @res = PpAdaptive.exec_pay(@k_execpay, @q_execpay)
+
+    p "==================execpay: #{@res}"
+
+    render template: 'ad/index'
+  end
+
   def paydt
     @q_paydt = params[:q_paydt]
 

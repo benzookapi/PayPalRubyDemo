@@ -100,6 +100,8 @@ Rails.application.routes.draw do
 
   post 'ad/pay' => 'ad#pay'
 
+  post 'ad/execpay' => 'ad#execpay'
+
   post 'ad/paydt' => 'ad#paydt'
 
   post 'ad/refund' => 'ad#refund'

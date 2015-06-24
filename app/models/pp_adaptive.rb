@@ -44,6 +44,11 @@ class PpAdaptive
     res
   end
 
+  def self.exec_pay(key, query)
+    q = QUERY_PRFX + 'payKey=' + key + '&' + query
+    call_api(q, API_PATH_PAYMENT, 'ExecutePayment')
+  end
+
   def self.pay_dt(query)
     call_api(QUERY_PRFX + query, API_PATH_PAYMENT, 'PaymentDetails')
   end

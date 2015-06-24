@@ -64,6 +64,8 @@ module ApplicationHelper
         detail = 'https://developer.paypal.com/docs/classic/api/merchant/DoReferenceTransaction_API_Operation_NVP/'
     when 'Pay' then
         detail = 'https://developer.paypal.com/webapps/developer/docs/classic/api/adaptive-payments/Pay_API_Operation/'
+    when 'ExecutePayment' then
+        detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/ExecutePayment_API_Operation/'
     when 'PaymentDetails' then
         detail = 'https://developer.paypal.com/docs/classic/api/adaptive-payments/PaymentDetails_API_Operation/'
     when 'Refund' then
