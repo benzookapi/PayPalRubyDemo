@@ -56,7 +56,7 @@ class WebController < ApplicationController
   private
   def get_amt(is_us)
     query = 'PAYMENTREQUEST_0_AMT=3000&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBilling'
-    query = 'PAYMENTREQUEST_0_AMT=300&PAYMENTREQUEST_0_CURRENCYCODE=USDL_BILLINGTYPE0=MerchantInitiatedBilling' if is_us
+    query = 'PAYMENTREQUEST_0_AMT=300&PAYMENTREQUEST_0_CURRENCYCODE=USD&L_BILLINGTYPE0=MerchantInitiatedBilling' if is_us
     query
   end
 end
