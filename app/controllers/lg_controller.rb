@@ -2,7 +2,7 @@ class LgController < ApplicationController
 
   protect_from_forgery with: :null_session
 
-  ENDPOINT = PpClassic::ENDPOINT_NVP_SIG
+  ENDPOINT = PpClassic::ENDPOINT_NVP_CER
 
   def index
     @client_id = PpRest::API_APP_REST
