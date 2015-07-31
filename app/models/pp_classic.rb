@@ -42,6 +42,8 @@ class PpClassic
 
   API_CER = ENV['PP_API_CER']
 
+  API_SUBJECT = ENV['PP_API_SUBJECT']
+
   CMD_URL = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url)
 
   CMD_URL_CONTEXT = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url_context)
@@ -130,6 +132,7 @@ class PpClassic
     api_user = API_USER_CER
     api_pwd = API_PWD_CER
     api_sig = ''
+    api_sub = API_SUBJECT
 
     case endpoint
     when ENDPOINT_NVP_SIG then
@@ -143,7 +146,7 @@ class PpClassic
       api_url = API_URL_NVP_CER_CDN
     end
 
-    api_query = 'USER=' + api_user + '&PWD=' + api_pwd + '&VERSION=' + API_VERSION + api_sig + query
+    api_query = 'USER=' + api_user + '&PWD=' + api_pwd + '&SUBJECT=' + api_sub + '&VERSION=' + API_VERSION + api_sig + query
 
     uri = URI.parse(api_url)
 
