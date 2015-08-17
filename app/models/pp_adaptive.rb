@@ -28,6 +28,8 @@ class PpAdaptive
 
   API_APP_AD = ENV['PP_API_APP_AD']
 
+  API_SUBJECT = ENV['PP_API_SUBJECT']
+
   CMD_URL = set_variable(PayPalRubyDemo::Application.config.paypal_cmd_url)
 
   QUERY_PRFX = 'requestEnvelope.errorLanguage=en_US&'
@@ -93,6 +95,7 @@ class PpAdaptive
     req['X-PAYPAL-SECURITY-PASSWORD'] = API_PWD
     req['X-PAYPAL-SECURITY-SIGNATURE'] = API_SIG
     req['X-PAYPAL-APPLICATION-ID'] = API_APP_AD
+    req['X-PAYPAL-SECURITY-SUBJECT'] = API_SUBJECT    
     req['X-PAYPAL-REQUEST-DATA-FORMAT'] = 'NV' # or 'JSON'
     req['X-PAYPAL-RESPONSE-DATA-FORMAT'] = 'NV' # or 'JSON'
     # req['X-PAYPAL-DEVICE-IPADDRESS'] = '127.0.0.1'
