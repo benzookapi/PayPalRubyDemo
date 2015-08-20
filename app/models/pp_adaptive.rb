@@ -39,7 +39,7 @@ class PpAdaptive
 
     res = call_api(q, API_PATH_PAYMENT, 'Pay')
 
-    if res.has_key?('payKey') then
+    if res.has_key?('payKey') && !q.include?('preapprovalKey=') then
       res['_MY_REDIRECT'] = CMD_URL + '_ap-payment&paykey=' + res['payKey']
     end
 
@@ -95,7 +95,7 @@ class PpAdaptive
     req['X-PAYPAL-SECURITY-PASSWORD'] = API_PWD
     req['X-PAYPAL-SECURITY-SIGNATURE'] = API_SIG
     req['X-PAYPAL-APPLICATION-ID'] = API_APP_AD
-    req['X-PAYPAL-SECURITY-SUBJECT'] = API_SUBJECT    
+    req['X-PAYPAL-SECURITY-SUBJECT'] = API_SUBJECT
     req['X-PAYPAL-REQUEST-DATA-FORMAT'] = 'NV' # or 'JSON'
     req['X-PAYPAL-RESPONSE-DATA-FORMAT'] = 'NV' # or 'JSON'
     # req['X-PAYPAL-DEVICE-IPADDRESS'] = '127.0.0.1'
