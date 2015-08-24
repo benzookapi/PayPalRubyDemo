@@ -1,28 +1,33 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is my private PayPal integration sample for learning products and Ruby, Not official one.
 
 Things you may want to cover:
 
-* Ruby version
+* Prerequisites
 
-* System dependencies
+  PostgreSQL database named 'pp_ruby_demo'.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+  Following environment variables.
+  - Set true if you use production accounts
+  #### export PP_PROD=
+  - Class API signature
+  #### export PP_API_USER=
+  #### export PP_API_PWD=
+  #### export PP_API_SIG=
+  - Classic API signature for US
+  #### export PP_API_USER_US=
+  #### export PP_API_PWD_US=
+  #### export PP_API_SIG_US=
+  - Classic API certificate
+  #### export PP_API_USER_CER=
+  #### export PP_API_PWD_CER=
+  #### export PP_API_CER=
+  - Adaptive payment app id
+  #### export PP_API_APP_AD=
+  - REST API settings
+  #### export PP_API_APP_REST=
+  #### export PP_API_APP_REST_SEC=
+  #### export PP_API_APP_REST_URI=
+  - Subject for Classic and adaptive APIs
+  #### export PP_API_SUBJECT=
