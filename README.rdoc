@@ -16,19 +16,25 @@ Things you may want to cover:
   - Class API signature
 
     export PP_API_USER=
+
     export PP_API_PWD=
+    
     export PP_API_SIG=
 
   - Classic API signature for US
 
     export PP_API_USER_US=
+
     export PP_API_PWD_US=
+
     export PP_API_SIG_US=
 
   - Classic API certificate
 
     export PP_API_USER_CER=
+
     export PP_API_PWD_CER=
+
     export PP_API_CER=
 
   - Adaptive payment app id
@@ -38,7 +44,9 @@ Things you may want to cover:
   - REST API settings
 
     export PP_API_APP_REST=
+
     export PP_API_APP_REST_SEC=
+
     export PP_API_APP_REST_URI=
 
   - Subject for Classic and adaptive APIs
