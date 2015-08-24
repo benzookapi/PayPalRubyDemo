@@ -10,14 +10,15 @@ Things you may want to cover:
 
   Following environment variables.
   - Set true if you use production accounts
-  ### export PP_PROD=
+
+    export PP_PROD=
   - Class API signature
-  #### export PP_API_USER=
-  #### export PP_API_PWD=
-  #### export PP_API_SIG=
+    export PP_API_USER=
+    export PP_API_PWD=
+    export PP_API_SIG=
   - Classic API signature for US
-  #### export PP_API_USER_US=
-  #### export PP_API_PWD_US=
+    export PP_API_USER_US=
+    export PP_API_PWD_US=
   #### export PP_API_SIG_US=
   - Classic API certificate
   #### export PP_API_USER_CER=
