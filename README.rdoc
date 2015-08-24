@@ -12,23 +12,35 @@ Things you may want to cover:
   - Set true if you use production accounts
 
     export PP_PROD=
+
   - Class API signature
+
     export PP_API_USER=
     export PP_API_PWD=
     export PP_API_SIG=
+
   - Classic API signature for US
+
     export PP_API_USER_US=
     export PP_API_PWD_US=
-  #### export PP_API_SIG_US=
+    export PP_API_SIG_US=
+
   - Classic API certificate
-  #### export PP_API_USER_CER=
-  #### export PP_API_PWD_CER=
-  #### export PP_API_CER=
+
+    export PP_API_USER_CER=
+    export PP_API_PWD_CER=
+    export PP_API_CER=
+
   - Adaptive payment app id
-  #### export PP_API_APP_AD=
+
+    export PP_API_APP_AD=
+
   - REST API settings
-  #### export PP_API_APP_REST=
-  #### export PP_API_APP_REST_SEC=
-  #### export PP_API_APP_REST_URI=
+
+    export PP_API_APP_REST=
+    export PP_API_APP_REST_SEC=
+    export PP_API_APP_REST_URI=
+
   - Subject for Classic and adaptive APIs
-  #### export PP_API_SUBJECT=
+
+    export PP_API_SUBJECT=
