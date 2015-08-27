@@ -90,6 +90,15 @@ payer_email=hogehoge+P3@gmail.com&first_name=Jjj&payer_id=4ZSMFPMGCCBE6&reason_c
 mp_id=B-988374119V7692935&charset=Shift_JIS&notify_version=3.8&mp_desc=&mp_cycle_start=8&ipn_track_id=3bb5c4d39187b
 SAMPLE_ERR
 
-    render :text => "<h4>Received Message Sample</h4><p>Normal payment</p><p>#{sample_ec}</p><p>Error in RT</p><p>#{sample_err}</p>"
+sample_err_rp=<<'SAMPLE_ERR_RP'
+payment_cycle=Daily&txn_type=recurring_payment_failed&last_name=test&next_payment_date=03:00:00 Aug 26, 2015 PDT&residence_country=JP&<br/>
+initial_payment_amount=0.00&currency_code=USD&time_created=23:48:26 May 21, 2015 PDT&<br/>
+verify_sign=AmrZscqAufOBlvUqnx80IjZKdPlyAzkmVnvr-RpGiPLppxjeZfvC6.ou&period_type= Regular&payer_status=unverified&test_ipn=1&tax=0.00&<br/>
+payer_email=hogehoge+P0522@gmail.com&first_name=test&receiver_email=hogehoge+B@gmail.com&payer_id=RVFDEMDQ9WA7G&product_type=1&shipping=0.00&<br/>
+amount_per_cycle=102.00&profile_status=Active&charset=UTF-8&notify_version=3.8&amount=102.00&outstanding_balance=9690.00&<br/>
+recurring_payment_id=I-GR2J9UD2PAK3&product_name=MY_RECURRSIVE_PAYMENT_102&ipn_track_id=cddc113ab08fb
+SAMPLE_ERR_RP
+
+    render :text => "<h4>Received Message Sample</h4><p>Normal payment</p><p>#{sample_ec}</p><p>Error in RT</p><p>#{sample_err}</p><p>Error in RP</p><p>#{sample_err_rp}</p>"
   end
 end
