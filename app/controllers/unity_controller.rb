@@ -17,7 +17,7 @@ class UnityController < ApplicationController
 
     callback = base_url + '/unity'
 
-    query = 'PAYMENTREQUEST_0_AMT=1000&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBilling'
+    query = 'PAYMENTREQUEST_0_AMT=1000&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBilling&PAYMENTREQUEST_0_DESC=Unity Demo&NOSHIPPING=1'
 
     res = PpClassic.set_EC(callback + '?is_comp=true', callback + '?is_comp=false', query, endpoint: ENDPOINT, commit: true,
       context: true, is_us: false)
