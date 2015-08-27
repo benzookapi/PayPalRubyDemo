@@ -10,14 +10,16 @@ class UnityController < ApplicationController
     if is_comp == 'true' then
       token = params[:token]
       res = PpClassic.create_BA(token, endpoint: ENDPOINT, is_us: false)
-      return render :text =>  "YOUR ACCESS KEY: #{res['BILLINGAGREEMENTID']}"
+      ba = res['BILLINGAGREEMENTID']
+      PpClassic.do_RT(ba, "AMT=1000&PAYMENTACTION=Sale&CURRENCYCODE=JPY", endpoint: ENDPOINT, is_us: false)
+      return render :text =>  "YOUR ACCESS KEY: #{ba}"
     end
 
     base_url = request.url.sub(request.fullpath, '')
 
     callback = base_url + '/unity'
 
-    query = 'PAYMENTREQUEST_0_AMT=1000&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBilling&PAYMENTREQUEST_0_DESC=Unity Demo&NOSHIPPING=1'
+    query = 'PAYMENTREQUEST_0_AMT=1000&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBilling&PAYMENTREQUEST_0_DESC=Unity and PayPal demo initial charge&NOSHIPPING=1'
 
     res = PpClassic.set_EC(callback + '?is_comp=true', callback + '?is_comp=false', query, endpoint: ENDPOINT, commit: true,
       context: true, is_us: false)
