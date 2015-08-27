@@ -129,4 +129,7 @@ Rails.application.routes.draw do
   get 'unity' => 'unity#index'
 
   get 'unity/pay' => 'unity#pay'
+
+  get 'unity/charge' => 'unity#charge'
+
 end

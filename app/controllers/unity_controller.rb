@@ -33,8 +33,17 @@ class UnityController < ApplicationController
 
   def pay
     email = params[:email]
-    query = "RECEIVERTYPE=EmailAddress&L_EMAIL0=#{email}&L_AMT0=10&CURRENCYCODE=JPY"
+    amt = params[:amt]
+    query = "RECEIVERTYPE=EmailAddress&L_EMAIL0=#{email}&L_AMT0=#{amt}&CURRENCYCODE=JPY"
     res = PpClassic.masspay(query, endpoint: ENDPOINT, is_us: false)
+    render :text =>  "#{res}"
+  end
+
+  def charge
+    ba = params[:ba]
+    amt = params[:amt]
+    query = "AMT=#{amt}&PAYMENTACTION=Sale&CURRENCYCODE=JPY"
+    res = PpClassic.do_RT(ba, query, endpoint: ENDPOINT, is_us: false)
     render :text =>  "#{res}"
   end
 end
