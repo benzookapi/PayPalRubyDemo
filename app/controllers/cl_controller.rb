@@ -182,4 +182,16 @@ class ClController < ApplicationController
 
     render template: 'cl/index'
   end
+
+  def mass
+    @q_mass = params[:q_mass]
+
+    res = PpClassic.masspay(@q_mass, endpoint: session[:endpoint], is_us: set_is_us(params, session))
+
+    p "==================mass #{res}"
+
+    @res = res
+
+    render template: 'cl/index'
+  end
 end

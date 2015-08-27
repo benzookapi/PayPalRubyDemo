@@ -125,6 +125,13 @@ class PpClassic
     call_api(q, endpoint, is_us)
   end
 
+  def self.masspay(query, endpoint: ENDPOINT_NVP_SIG, is_us: false)
+    q = '&METHOD=' + 'MassPay' +
+      '&' + query
+
+    call_api(q, endpoint, is_us)
+  end
+
   private
   def self.call_api(query, endpoint, is_us=false)
     api_url = API_URL_NVP_SIG

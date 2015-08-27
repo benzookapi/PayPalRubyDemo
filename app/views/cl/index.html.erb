@@ -207,6 +207,25 @@
             </td>
           </tr>
 
+          <tr>
+            <td>
+              MassPay
+            </td>
+            <td>
+              <%= form_tag("/cl/mass", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/classic/mass-pay/integration-guide/MassPayUsingAPI/#id101DEJ0100A', :target => '_blank') %>
+                <%= text_area_tag('q_mass', @q_mass, {:rows=>'3', :class=>'form-control'}) %>
+                <%= hidden_field_tag('t_getec', @t_getec) %>
+                <%= hidden_field_tag('t_doec', @t_doec) %>
+                </p>
+               <%= button_tag("Send money to multiple accounts!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('MassPay', @res) if request.path_info == '/cl/mass' %>
+            </td>
+          </tr>
+
     </tbody>
 </table>
 

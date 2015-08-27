@@ -84,6 +84,8 @@ Rails.application.routes.draw do
 
   post 'cl/dort' => 'cl#dort'
 
+  post 'cl/mass' => 'cl#mass'
+
   get 'rest' => 'rest#index'
 
   post 'rest/call' => 'rest#call'
@@ -124,5 +126,7 @@ Rails.application.routes.draw do
 
   post 'ipn' => 'ipn#index'
 
+  get 'unity' => 'unity#index'
 
+  get 'unity/pay' => 'unity#pay'
 end
