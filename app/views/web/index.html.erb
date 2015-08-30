@@ -131,7 +131,7 @@
 
 
 <h4>
-  Wep Payment Plus (Hosted Solutiuon) for PC by template D
+  Wep Payment Plus in fixed layout by template D
   <a target="_blank" href="https://www.paypal.jp/merchant/service/web-payment-plus/integration.html">details</a>
 </h4>
 
@@ -162,7 +162,7 @@ webflow/sparta/hostedSoleSolutionProcess">
 <br/>
 
 <h4>
-  Wep Payment Plus (Hosted Solutiuon) for mobile by mobile-iframe
+  Wep Payment Plus in responsive layout by mobile-iframe
   <a target="_blank" href="https://www.paypal.jp/merchant/service/web-payment-plus/integration.html">details</a>
 </h4>
 
@@ -187,6 +187,7 @@ webflow/sparta/hostedSoleSolutionProcess">
 <!--<input type="hidden" name="return" value="https://twitter.com/">-->
 </form>
 <script type="text/javascript">
+ document.hss_iframe_mobile.width = "320px"; if (isMobile());
  document.form_iframe_mobile.submit();
 </script>
 <br/>
@@ -311,3 +312,13 @@ webflow/sparta/hostedSoleSolutionProcess">
 <input type="submit" value="Pay in template mobile-iframe">
 </form>
 <br/>
+
+<script type="text/javascript">
+function isMobile(){
+  if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) ||
+    navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+  	return true;
+  }
+  return false;
+}
+</script>
