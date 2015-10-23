@@ -132,4 +132,8 @@ Rails.application.routes.draw do
 
   get 'unity/charge' => 'unity#charge'
 
+  get 'demo' => 'demo#index'
+
+  get 'demo/checkout' => 'demo#checkout'
+
 end
