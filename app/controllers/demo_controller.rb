@@ -61,8 +61,8 @@ class DemoController < ApplicationController
 
   private
   def get_amt(is_us, amt)
-    query = "PAYMENTREQUEST_0_AMT=#{amt}&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBilling"
-    query = "PAYMENTREQUEST_0_AMT=#{amt}&PAYMENTREQUEST_0_CURRENCYCODE=USD&L_BILLINGTYPE0=MerchantInitiatedBilling" if is_us
+    query = "PAYMENTREQUEST_0_AMT=#{amt}&PAYMENTREQUEST_0_CURRENCYCODE=JPY"
+    query = "PAYMENTREQUEST_0_AMT=#{amt}&PAYMENTREQUEST_0_CURRENCYCODE=USD" if is_us
     query
   end
 end

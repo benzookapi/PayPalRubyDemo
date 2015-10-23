@@ -136,4 +136,6 @@ Rails.application.routes.draw do
 
   get 'demo/checkout' => 'demo#checkout'
 
+  get 'demo/complete' => 'demo#complete'
+
 end
