@@ -25,6 +25,8 @@ class DemoController < ApplicationController
 
     session[:redirect] = params[:redirect]
 
+    session[:txt] = params[:txt]
+
     query = get_amt(is_us, session[:amt])
 
     #query = 'L_BILLINGTYPE0=MerchantInitiatedBilling&PAYMENTREQUEST_0_AMT=3000&PAYMENTREQUEST_0_CURRENCYCODE=JPY'
