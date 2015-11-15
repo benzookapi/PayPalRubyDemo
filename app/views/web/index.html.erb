@@ -140,37 +140,6 @@ function isMobile(){
 </script>
 
 <h4>
-  Wep Payment Plus in fixed layout by template D
-  <a target="_blank" href="https://www.paypal.jp/merchant/service/web-payment-plus/integration.html">details</a>
-</h4>
-
-<iframe name="hss_iframe" width="470px" height="320px" style="border:none;"></iframe>
-<form style="display:none;" method="post" name="form_iframe" target="hss_iframe"
-action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
-webflow/sparta/hostedSoleSolutionProcess">
-<input type="hidden" name="cmd" value="_hosted-payment">
-<input type="hidden" name="subtotal" value="320000">
-<input type="hidden" name="currency_code" value="JPY">
-<input type="hidden" name="business" value="W2RNXXPHP3YXE">
-<input type="hidden" name="paymentaction" value="sale">
-<input type="hidden" name="template" value="templateD">
-<input type="hidden" name="billing_address1" value="Address1">
-<input type="hidden" name="billing_address2" value="">
-<input type="hidden" name="billing_city" value="Setagaya-ku">
-<input type="hidden" name="billing_country" value="JP">
-<input type="hidden" name="billing_first_name" value="Taro">
-<input type="hidden" name="billing_last_name" value="Test">
-<input type="hidden" name="billing_state" value="Tokyo">
-<input type="hidden" name="billing_zip" value="1234567">
-<!--<input type="hidden" name="return" value="https://twitter.com/">-->
-</form>
-<script type="text/javascript">
- document.form_iframe.submit();
-</script>
-<br/>
-<br/>
-
-<h4>
   Wep Payment Plus in responsive layout by mobile-iframe
   <a target="_blank" href="https://www.paypal.jp/merchant/service/web-payment-plus/integration.html">details</a>
 </h4>
@@ -180,8 +149,8 @@ webflow/sparta/hostedSoleSolutionProcess">
 action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
 webflow/sparta/hostedSoleSolutionProcess">
 <input type="hidden" name="cmd" value="_hosted-payment">
-<input type="hidden" name="subtotal" value="3200">
-<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="subtotal" value="320000">
+<input type="hidden" name="currency_code" value="JPY">
 <input type="hidden" name="business" value="W2RNXXPHP3YXE">
 <input type="hidden" name="paymentaction" value="sale">
 <input type="hidden" name="template" value="mobile-iframe">
@@ -207,106 +176,6 @@ action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
 webflow/sparta/hostedSoleSolutionProcess">
 <input type="hidden" name="cmd" value="_hosted-payment">
 <input type="hidden" name="subtotal" value="50">
-<input type="hidden" name="business" value="W2RNXXPHP3YXE">
-<input type="hidden" name="paymentaction" value="authorization">
-<input type="hidden" name="template" value="templateA">
-<input type="hidden" name="billing_address1" value="Address1">
-<input type="hidden" name="billing_address2" value="">
-<input type="hidden" name="billing_city" value="Setagaya-ku">
-<input type="hidden" name="billing_country" value="US">
-<input type="hidden" name="billing_first_name" value="Taro">
-<input type="hidden" name="billing_last_name" value="Test">
-<input type="hidden" name="billing_state" value="Tokyo">
-<input type="hidden" name="billing_zip" value="1234567">
-<input type="submit" value="Pay in template A using authorization">
-</form>
-<br/>
-
-<form method="post"
-action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
-webflow/sparta/hostedSoleSolutionProcess">
-<input type="hidden" name="cmd" value="_hosted-payment">
-<input type="hidden" name="subtotal" value="50">
-<input type="hidden" name="business" value="W2RNXXPHP3YXE">
-<input type="hidden" name="paymentaction" value="sale">
-<input type="hidden" name="template" value="templateB">
-<input type="hidden" name="billing_address1" value="Address1">
-<input type="hidden" name="billing_address2" value="">
-<input type="hidden" name="billing_city" value="Setagaya-ku">
-<input type="hidden" name="billing_country" value="US">
-<input type="hidden" name="billing_first_name" value="Taro">
-<input type="hidden" name="billing_last_name" value="Test">
-<input type="hidden" name="billing_state" value="Tokyo">
-<input type="hidden" name="billing_zip" value="1234567">
-<input type="submit" value="Payin template B">
-</form>
-<br/>
-
-<form method="post"
-action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
-webflow/sparta/hostedSoleSolutionProcess">
-<input type="hidden" name="cmd" value="_hosted-payment">
-<input type="hidden" name="subtotal" value="50">
-<input type="hidden" name="business" value="W2RNXXPHP3YXE">
-<input type="hidden" name="paymentaction" value="sale">
-<input type="hidden" name="template" value="templateC">
-<input type="hidden" name="billing_address1" value="Address1">
-<input type="hidden" name="billing_address2" value="">
-<input type="hidden" name="billing_city" value="Setagaya-ku">
-<input type="hidden" name="billing_country" value="US">
-<input type="hidden" name="billing_first_name" value="Taro">
-<input type="hidden" name="billing_last_name" value="Test">
-<input type="hidden" name="billing_state" value="Tokyo">
-<input type="hidden" name="billing_zip" value="1234567">
-<input type="submit" value="Payin template C">
-</form>
-<br/>
-
-<form method="post"
-action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
-webflow/sparta/hostedSoleSolutionProcess">
-<input type="hidden" name="cmd" value="_hosted-payment">
-<input type="hidden" name="subtotal" value="50">
-<input type="hidden" name="business" value="W2RNXXPHP3YXE">
-<input type="hidden" name="paymentaction" value="sale">
-<input type="hidden" name="template" value="templateD">
-<input type="hidden" name="billing_address1" value="Address1">
-<input type="hidden" name="billing_address2" value="">
-<input type="hidden" name="billing_city" value="Setagaya-ku">
-<input type="hidden" name="billing_country" value="US">
-<input type="hidden" name="billing_first_name" value="Taro">
-<input type="hidden" name="billing_last_name" value="Test">
-<input type="hidden" name="billing_state" value="Tokyo">
-<input type="hidden" name="billing_zip" value="1234567">
-<input type="submit" value="Pay in template D">
-</form>
-<br/>
-
-<form method="post"
-action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
-webflow/sparta/hostedSoleSolutionProcess">
-<input type="hidden" name="cmd" value="_hosted-payment">
-<input type="hidden" name="subtotal" value="50">
-<input type="hidden" name="business" value="W2RNXXPHP3YXE">
-<input type="hidden" name="paymentaction" value="sale">
-<input type="hidden" name="template" value="mobile">
-<input type="hidden" name="billing_address1" value="Address1">
-<input type="hidden" name="billing_address2" value="">
-<input type="hidden" name="billing_city" value="Setagaya-ku">
-<input type="hidden" name="billing_country" value="US">
-<input type="hidden" name="billing_first_name" value="Taro">
-<input type="hidden" name="billing_last_name" value="Test">
-<input type="hidden" name="billing_state" value="Tokyo">
-<input type="hidden" name="billing_zip" value="1234567">
-<input type="submit" value="Pay in template mobile">
-</form>
-<br/>
-
-<form method="post"
-action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
-webflow/sparta/hostedSoleSolutionProcess">
-<input type="hidden" name="cmd" value="_hosted-payment">
-<input type="hidden" name="subtotal" value="50">
 <input type="hidden" name="currency_code" value="USD">
 <input type="hidden" name="business" value="W2RNXXPHP3YXE">
 <input type="hidden" name="paymentaction" value="sale">
@@ -319,9 +188,10 @@ webflow/sparta/hostedSoleSolutionProcess">
 <input type="hidden" name="billing_last_name" value="Test">
 <input type="hidden" name="billing_state" value="Tokyo">
 <input type="hidden" name="billing_zip" value="1234567">
-<input type="submit" value="Pay in template mobile-iframe">
+<input type="submit" value="Pay in template mobile-iframe in USD">
 </form>
 <br/>
+<!--
 <br/>
 <br/>
 <br/>
@@ -364,7 +234,7 @@ webflow/sparta/hostedSoleSolutionProcess">
 <input type="hidden" name="billing_last_name" value="Test">
 <input type="hidden" name="billing_state" value="Tokyo">
 <input type="hidden" name="billing_zip" value="1234567">
-<input type="submit" value="Pay in template mobile-iframe (LIVE DO NOT PAY!!)">
+<input type="submit" value="Pay in template mobile-iframe (LIVE ACCOUNT, DO NOT PAY!!)">
 </form>
-
+-->
 <br/>
