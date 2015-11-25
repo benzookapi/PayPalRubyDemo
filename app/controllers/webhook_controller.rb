@@ -21,14 +21,7 @@ class WebhookController < ApplicationController
       query = query.encode('UTF-8', charset)
     end
 
-    q = URI.escape(query).gsub('+', '%2B')
-
-    q += '&cmd=_notify-validate'
-
-    p "==================Webhook verification request: #{q}"
-
-
-    render :text => "<h4>Not Verified!</h4><p>#{query}</p>"
+    render :text => "<h4>Webhook JSON</h4><p>#{query}</p>"
 
   end
 
