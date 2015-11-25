@@ -126,6 +126,8 @@ Rails.application.routes.draw do
 
   post 'ipn' => 'ipn#index'
 
+  post 'webhook' => 'webhook#index'
+
   get 'unity' => 'unity#index'
 
   get 'unity/pay' => 'unity#pay'
