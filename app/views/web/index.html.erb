@@ -120,6 +120,7 @@
 <script>
   window.paypalCheckoutReady = function () {
     paypal.checkout.setup('<%= @merchant_id %>', {
+      locale: 'en_US',
       container: 'myContainer',
       environment: 'sandbox'
     });
