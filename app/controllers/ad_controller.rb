@@ -18,6 +18,7 @@ class AdController < ApplicationController
 
   def pay
     session[:q_pay] = params[:q_pay]
+    session[:q_setpo] = params[:q_setpo]
 
     base_url = request.url.sub(request.fullpath, '')
 
@@ -26,6 +27,10 @@ class AdController < ApplicationController
     res = PpAdaptive.pay(callback + '?st=redirect', callback + '?st=cancel', session[:q_pay])
 
     p "==================pay: #{res}"
+
+    if res['payKey'].present? && session[:q_setpo].present? then
+      p "==================setpo: #{PpAdaptive.set_po(res['payKey'], session[:q_setpo])}"
+    end
 
     if res.has_key?('_MY_REDIRECT') then
       session[:res] = res
