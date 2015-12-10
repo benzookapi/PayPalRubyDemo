@@ -195,6 +195,27 @@ webflow/sparta/hostedSoleSolutionProcess">
 <input type="submit" value="Pay in mobile-iframe template going to new window">
 </form>
 <br/>
+<form method="post"
+action="https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/
+webflow/sparta/hostedSoleSolutionProcess">
+<input type="hidden" name="cmd" value="_hosted-payment">
+<input type="hidden" name="subtotal" value="10">
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="business" value="W2RNXXPHP3YXE">
+<input type="hidden" name="paymentaction" value="sale">
+<input type="hidden" name="template" value="templateD">
+<input type="hidden" name="billing_address1" value="-">
+<input type="hidden" name="billing_address2" value="">
+<input type="hidden" name="billing_city" value="-">
+<input type="hidden" name="billing_country" value="JP">
+<input type="hidden" name="billing_first_name" value="Taro">
+<input type="hidden" name="billing_last_name" value="Test">
+<input type="hidden" name="billing_state" value="Tokyo">
+<input type="hidden" name="billing_zip" value="1234567">
+<input type="hidden" name="lc" value="JP">
+<input type="submit" value="Pay in mobile-iframe template going to new window">
+</form>
+<br/>
 <!--
 <br/>
 <br/>
