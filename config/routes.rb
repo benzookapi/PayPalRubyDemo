@@ -88,6 +88,8 @@ Rails.application.routes.draw do
 
   get 'rest' => 'rest#index'
 
+  get 'rest/cors' => 'rest#cors'
+
   post 'rest/call' => 'rest#call'
 
   post 'rest/pay' => 'rest#pay'

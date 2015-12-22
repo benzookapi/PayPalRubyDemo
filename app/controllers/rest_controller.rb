@@ -142,4 +142,8 @@ Q_DOPAY
     render template: 'rest/index'
   end
 
+  def cors
+    render template: 'rest/cors'
+  end
+
 end
