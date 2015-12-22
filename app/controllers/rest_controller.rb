@@ -31,13 +31,8 @@ class RestController < ApplicationController
   "transactions":[
     {
       "amount":{
-        "total":"7.47",
-        "currency":"USD",
-        "details":{
-          "subtotal":"7.41",
-          "tax":"0.03",
-          "shipping":"0.03"
-        }
+        "total":"200",
+        "currency":"JPY"
       },
       "description":"This is the payment transaction description."
     }
