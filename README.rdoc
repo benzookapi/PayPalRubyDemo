@@ -2,8 +2,6 @@
 
 This is my private PayPal integration sample for learning products and Ruby, Not official one.
 
-Things you may want to cover:
-
 * Prerequisites
 
   PostgreSQL database named 'pp_ruby_demo'.
@@ -11,14 +9,14 @@ Things you may want to cover:
   Following environment variables.
   - Set true if you use production accounts
 
-    export PP_PROD=
+    export PP_PROD=true
 
   - Class API signature
 
     export PP_API_USER=
 
     export PP_API_PWD=
-    
+
     export PP_API_SIG=
 
   - Classic API signature for US
@@ -35,7 +33,7 @@ Things you may want to cover:
 
     export PP_API_PWD_CER=
 
-    export PP_API_CER=
+    export PP_API_CER=<Paste your cert>
 
   - Adaptive payment app id
 
@@ -43,11 +41,11 @@ Things you may want to cover:
 
   - REST API settings
 
-    export PP_API_APP_REST=
+    export PP_API_APP_REST=<Your client id>
 
-    export PP_API_APP_REST_SEC=
+    export PP_API_APP_REST_SEC=<Your secret>
 
-    export PP_API_APP_REST_URI=
+    export PP_API_APP_REST_URI=<Your callback>
 
   - Subject for Classic and adaptive APIs
 
