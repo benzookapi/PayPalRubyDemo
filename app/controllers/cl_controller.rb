@@ -28,6 +28,19 @@ class ClController < ApplicationController
     session[:q_crrp] = 'AMT=' + amt + '&BILLINGPERIOD=Day&BILLINGFREQUENCY=1&DESC=' + desc
   end
 
+  def call
+    @m_call = params[:m_call]
+    @q_call = params[:q_call]
+
+    res = PpClassic.call_api('&METHOD=' + @m_call +  '&' +  @q_call, session[:endpoint], set_is_us(params, session))
+
+    p "==================call #{res}"
+
+    @res = res
+
+    render template: 'cl/index'
+  end
+
   def setec
     session[:endpoint] = params[:endpoint]
     session[:q_setec] = params[:q_setec]

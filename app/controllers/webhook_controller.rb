@@ -25,4 +25,10 @@ class WebhookController < ApplicationController
 
   end
 
+  def indexget
+
+    render template: 'webhook/index'
+
+  end
+
 end

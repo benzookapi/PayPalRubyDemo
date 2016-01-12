@@ -7,6 +7,30 @@
 <p>navigator.userAgent (JS): <span id="js_ua"></span></p>
 -->
 
+<h4>Common Request</h4>
+<table class="table table-striped">
+        <tbody>
+          <tr>
+            <td style="width:26%;">
+              Call a NVP(Classic) API
+            </td>
+            <td>
+              <%= form_tag("/cl/call", method: "post") do %>
+                <p>
+                <%= label_tag(nil, "Method") %>
+                <%= text_field_tag('m_call', @m_call, :class=>'form-control') %>
+                <%= label_tag(nil, "Parameters") %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/#ec', :target => '_blank') %>
+                <%= text_area_tag('q_call', session[:q_call], {:rows=>'3', :class=>'form-control'}) %>
+                </p>
+               <%= button_tag("Call NVP API!", :class =>'btn btn-default') %>
+              <% end %>
+              <%= raw show_res('Call a NVP(Classic) API', @res) if request.path_info == '/cl/call' %>
+            </td>
+          </tr>
+        </tbody>
+</table>
+
 <h4>Express Checkout API</h4>
 <table class="table table-striped">
         <tbody>

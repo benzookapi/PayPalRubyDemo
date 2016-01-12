@@ -78,6 +78,8 @@ module ApplicationHelper
         detail = 'https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment'
     when 'Execute payouts' then
         detail = 'https://developer.paypal.com/docs/api/#payouts'
+    when 'Call a NVP(Classic) API' then
+        detail = 'https://developer.paypal.com/docs/classic/api/#ec'
     else
         detail = 'https://developer.paypal.com/docs/api/'
     end

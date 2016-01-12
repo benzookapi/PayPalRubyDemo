@@ -66,6 +66,8 @@ Rails.application.routes.draw do
 
   get 'cl' => 'cl#index'
 
+  post 'cl/call' => 'cl#call'
+
   post 'cl/setec' => 'cl#setec'
 
   post 'cl/getec' => 'cl#getec'
@@ -127,6 +129,8 @@ Rails.application.routes.draw do
   get 'ipn' => 'ipn#indexget'
 
   post 'ipn' => 'ipn#index'
+
+  get 'webhook' => 'webhook#indexget'
 
   post 'webhook' => 'webhook#index'
 
