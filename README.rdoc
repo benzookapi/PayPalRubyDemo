@@ -49,4 +49,4 @@ This is my private PayPal integration sample for learning products and Ruby, Not
 
   - Subject for Classic and adaptive APIs
 
-    export PP_API_SUBJECT=
+    export PP_API_SUBJECT=<subject account email address>
