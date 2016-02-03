@@ -146,4 +146,8 @@ Rails.application.routes.draw do
 
   get 'demo/complete' => 'demo#complete'
 
+  get 'qr/agree' => 'qr#agree'
+
+  get 'qr/createba' => 'qr#createba'
+
 end
