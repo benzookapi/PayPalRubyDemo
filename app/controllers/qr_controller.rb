@@ -14,7 +14,7 @@ class QrController < ApplicationController
     query = 'PAYMENTREQUEST_0_AMT=0&L_BILLINGTYPE0=MerchantInitiatedBilling'
 
     res = PpClassic.set_EC(base_url + '/createba', callback, query, endpoint: ENDPOINT, commit: false,
-      context: true, is_us: true)
+      context: (params[:context] == 'true' ? true : false), is_us: true)
 
     p "==================agree: #{res}"
 
