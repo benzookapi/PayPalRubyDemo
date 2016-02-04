@@ -26,7 +26,7 @@ class QrController < ApplicationController
     if res.has_key?('_MY_REDIRECT') then
       redirect_to(res['_MY_REDIRECT'])
     else
-      redirect_to(session[:callback])
+      redirect_to(session[:callback] + "?ba=false")
     end
   end
 
@@ -67,7 +67,7 @@ class QrController < ApplicationController
 
     PpEmail.send_QR(to, from, subject, html, file)
 
-    redirect_to(session[:callback])
+    redirect_to(session[:callback] + "?ba=true")
   end
 
   def pay
