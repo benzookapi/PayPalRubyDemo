@@ -150,4 +150,6 @@ Rails.application.routes.draw do
 
   get 'qr/createba' => 'qr#createba'
 
+  get 'qr/pay' => 'qr#pay'
+
 end

@@ -70,4 +70,12 @@ class QrController < ApplicationController
     redirect_to(session[:callback])
   end
 
+  def pay
+    ba = params[:ba]
+    amt = params[:amt]
+    query = "AMT=#{amt}&PAYMENTACTION=Sale&CURRENCYCODE=JPY"
+    res = PpClassic.do_RT(ba, query, endpoint: ENDPOINT, is_us: true)
+    render :text =>  "#{res}"
+  end
+
 end
