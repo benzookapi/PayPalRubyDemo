@@ -39,6 +39,14 @@ gem 'braintree'
 
 gem 'paypal-sdk-rest'
 
+# For QR generation
+gem 'barby', '~> 0.6.2'
+gem 'rqrcode', '~> 0.4.2'
+gem 'chunky_png'
+
+# For Sending email
+gem 'sendgrid-ruby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

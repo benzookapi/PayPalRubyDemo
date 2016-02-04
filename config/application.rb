@@ -41,7 +41,5 @@ module PayPalRubyDemo
 
     config.paypal_api_url_rest = "https://api.sandbox.paypal.com/v1/"
 
-    config.sendgrid_api_url = "https://api.sendgrid.com/api/"
-
   end
 end

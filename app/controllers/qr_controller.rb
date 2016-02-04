@@ -1,3 +1,8 @@
+require 'barby'
+require 'barby/barcode'
+require 'barby/barcode/qr_code'
+require 'barby/outputter/png_outputter'
+
 class QrController < ApplicationController
 
   protect_from_forgery with: :null_session
@@ -27,15 +32,40 @@ class QrController < ApplicationController
 
   def createba
 
-    res = PpClassic.create_BA(params[:token], endpoint: ENDPOINT, is_us: true)
+    token = params[:token]
 
-    p "==================createba #{res}"
+    res = PpClassic.get_EC(token, endpoint: ENDPOINT, is_us: true)
+
+    p "==================createba get_EC: #{res}"
+
+    to = res['EMAIL']
+
+    res = PpClassic.create_BA(token, endpoint: ENDPOINT, is_us: true)
+
+    p "==================createba create_BA: #{res}"
 
     html = "TEST! #{res}"
 
-    res = PpEmail.send_QR("jokksk@gmail.com", "benzookapi-noreply@gmail.com", "Your Ticket!", html)
+    ba = res['BILLINGAGREEMENTID']
 
-    p "==================createba email: #{res}"
+    from = "benzookapi-noreply@gmail.com"
+
+    subject = "Your PayPal QR Ticket!"
+
+    qrcode = Barby::QrCode.new(ba, level: :q, size: 5)
+
+    file = "./tmp/qrcode_#{Time.now}.png".gsub(" " , "")
+
+    File.open(file, 'wb') do |f|
+        f.write qrcode.to_png({ xdim: 5 })
+    end
+    #base64_output = Base64.encode64(qrcode.to_png({ xdim: 5 }))
+    #p "==================createba encode64: #{base64_output}"
+    #  "<img src=\"data:image/png;base64,#{base64_output}\"  alt=\"qrcode\">"
+
+    html = "Thank you for getting your QR Ticket. Here is yours:<br/>"
+
+    PpEmail.send_QR(to, from, subject, html, file)
 
     redirect_to(session[:callback])
   end
