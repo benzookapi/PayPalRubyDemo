@@ -2,11 +2,50 @@
   <tbody>
 	  <tr>
 	  <td>
-	  Card Number
+	  Card Information
 	  </td>
 	  <td>
-	  <%= text_field_tag('t_cardno', @t_cardno, :class=>'form-control') %>
-	  </td>
+    <label>Type</label>
+  	<input type="text" id="brand" class="form-control" value="visa"/>
+    <label>Number</label>
+	  <input type="text" id="number" class="form-control" value="4417119669820331"/>
+    <label>Month</label>
+	  <input type="text" id="month" class="form-control" value="11"/>
+    <label>Year</label>
+	  <input type="text" id="year" class="form-control" value="2018"/>
+    </td>
     </tr>
   </tbody>
 </table>
+<button onclick="regCard($('#brand').val(), $('#number').val(), $('#month').val(),$('#year').val());">Register</button>
+<script>
+function regCard(brand, number, month, year) {
+      $.ajax(
+        { type:"POST",
+          headers: { Authorization : "Bearer Acz3G7kG9afqvZF7PJNw-hZvw_F9INQPnZGnSVbclnydHjpK53GxFkW67Wf76FbR8ZzbW_RB3Rznnckq"},
+          url: "https://api.sandbox.paypal.com/v1/payments/payment",
+          contentType: "application/json",
+          dataType: "json",
+          data: JSON.stringify({
+              "payer_id": "user12345",
+              "type": brand, //"type": "visa",
+              "number": number, //"number": "4417119669820331",
+              "expire_month": month, //"expire_month": "11",
+              "expire_year": year, //"expire_year": "2018",
+              "first_name": "Betsy",
+              "last_name": "Buyer",
+              "billing_address": {
+                  "line1": "111 First Street",
+                  "city": "Saratoga",
+                  "country_code": "US",
+                  "state": "CA",
+                  "postal_code": "95070"
+              }
+          })
+        }).always(function(jqXHR, textStatus, errorThrown){
+          alert(jqXHR);
+          alert(textStatus);
+          alert(errorThrown);
+        });
+}
+</script>
