@@ -7,6 +7,7 @@ class WebController < ApplicationController
   def index
     @res = nil
     session[:is_us] = params[:is_us]
+    session[:q_context] = "PAYMENTREQUEST_0_AMT=0&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
     @is_us = set_is_us(params, session)
     @merchant_id = 'GML6GZVPKKSGS'
     @merchant_id = 'UXTTV2MAAJDJE' if @is_us
@@ -21,13 +22,13 @@ class WebController < ApplicationController
 
     is_us = set_is_us(params, session)
 
-    #query = get_amt(is_us)
-
     query = params[:q_context]
 
     session[:q_context] = query
 
-    res = PpClassic.set_EC(callback + '/complete', callback + '?is_us=' + is_us.to_s, query, endpoint: ENDPOINT, commit: true,
+    commit = (query.include?("MerchantInitiatedBilling") == true ? false : true)
+
+    res = PpClassic.set_EC(callback + '/complete', callback + '?is_us=' + is_us.to_s, query, endpoint: ENDPOINT, commit: commit,
       context: (params[:context] == 'true' ? true : false), is_us: is_us)
 
     p "==================checkout: #{res}"
@@ -43,21 +44,19 @@ class WebController < ApplicationController
   def complete
     @is_us = set_is_us(params, session)
 
-    query = get_amt(@is_us)
+    query = session[:q_context]
 
-    res = PpClassic.do_EC(params[:token], params[:PayerID], query, endpoint: ENDPOINT, is_us: @is_us)
+    if !query.include?("PAYMENTREQUEST_0_AMT=0") then
+      res = PpClassic.do_EC(params[:token], params[:PayerID], query, endpoint: ENDPOINT, is_us: @is_us)
+      p "==================complete #{res}"
+      @res = res
+    end
 
-    p "==================complete #{res}"
-
-    @res = res
+    if query.include?("MerchantInitiatedBilling") then
+      res = PpClassic.create_BA(params[:token], endpoint: ENDPOINT, is_us: @is_us)
+      @res = res
+    end
 
     render template: 'web/complete'
-  end
-
-  private
-  def get_amt(is_us)
-    query = 'PAYMENTREQUEST_0_AMT=300&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBilling'
-    query = 'PAYMENTREQUEST_0_AMT=3&PAYMENTREQUEST_0_CURRENCYCODE=USD&L_BILLINGTYPE0=MerchantInitiatedBilling' if is_us
-    query
   end
 end

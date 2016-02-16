@@ -1,3 +1,4 @@
+<a href="?is_us=true">&gt;&gt;Check in US mode</a>
 <div class="row">
   <div class="col-md-9">
     <h4>Express Checkout Best Practice
@@ -98,6 +99,7 @@
   <div class="col-md-7"></div>
   <div class="col-md-3">
     <form action='web/checkout'>
+      <input type="hidden" name="q_context" value="<%=session[:q_context]=%>">
      <button type="submit" class="btn btn-primary btn-lg btn-block">Next</button>
    </form>
 </div>
