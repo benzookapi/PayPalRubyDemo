@@ -112,10 +112,11 @@
   In-Context Express Checkout
   <a target="_blank" href="https://developer.paypal.com/docs/classic/express-checkout/in-context/">details</a>
 </h4>
-<br/>
 <form id="myContainer" method="get" action="/web/checkout">
   <input type="hidden" name="context" value="true">
   <input type="hidden" name="is_us" value="<%= @is_us.to_s %>">
+  <%= label_tag(nil, "Parameters for SetExpressCheckout") %>
+  <%= text_area_tag('q_context', session[:q_context], {:rows=>'3', :class=>'form-control'}) %>
 </form>
 <script>
   window.paypalCheckoutReady = function () {
@@ -129,6 +130,7 @@
 <script src="//www.paypalobjects.com/api/checkout.js" async></script>
 <br/>
 <br/>
+
 
 <script type="text/javascript">
 function isMobile(){

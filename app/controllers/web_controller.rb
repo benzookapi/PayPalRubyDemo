@@ -21,10 +21,11 @@ class WebController < ApplicationController
 
     is_us = set_is_us(params, session)
 
-    query = get_amt(is_us)
+    #query = get_amt(is_us)
 
-    #query = 'L_BILLINGTYPE0=MerchantInitiatedBilling&PAYMENTREQUEST_0_AMT=3000&PAYMENTREQUEST_0_CURRENCYCODE=JPY'
-    #query = 'L_BILLINGTYPE0=RecurringPayments&L_BILLINGAGREEMENTDESCRIPTION0=定期支払いです！&PAYMENTREQUEST_0_AMT=3000&PAYMENTREQUEST_0_CURRENCYCODE=JPY'
+    query = params[:q_context]
+
+    session[:q_context] = query
 
     res = PpClassic.set_EC(callback + '/complete', callback + '?is_us=' + is_us.to_s, query, endpoint: ENDPOINT, commit: true,
       context: (params[:context] == 'true' ? true : false), is_us: is_us)
