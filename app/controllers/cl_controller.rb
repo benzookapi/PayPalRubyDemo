@@ -50,7 +50,7 @@ class ClController < ApplicationController
     callback = base_url + '/cl'
 
     res = PpClassic.set_EC(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec],
-      endpoint: session[:endpoint], commit: true, context: false, is_us: set_is_us(params, session))
+      endpoint: session[:endpoint], commit: false, context: true, is_us: set_is_us(params, session))
 
     p "==================setec: #{res}"
 
