@@ -14,8 +14,9 @@ class ClController < ApplicationController
     else
       init_amt = Random.rand(100 .. 500).to_s
       session[:endpoint] = PpClassic::ENDPOINT_NVP_SIG
-      session[:q_setec] = 'PAYMENTREQUEST_0_AMT=' + init_amt + '&L_BILLINGTYPE0=RecurringPayments' +
-      '&L_BILLINGAGREEMENTDESCRIPTION0=MY_RECURRSIVE_PAYMENT_' + init_amt
+      #session[:q_setec] = 'PAYMENTREQUEST_0_AMT=' + init_amt + '&L_BILLINGTYPE0=RecurringPayments' +
+      #'&L_BILLINGAGREEMENTDESCRIPTION0=MY_RECURRSIVE_PAYMENT_' + init_amt
+      session[:q_setec] = 'PAYMENTREQUEST_0_AMT=' + init_amt + '&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement'
       session[:res] = nil
       session[:ua] = request.user_agent
       session[:is_us] = params[:is_us]
