@@ -145,9 +145,8 @@ Q_DOPAY
   end
 
   def fp
-    desc = param[:desc]
-    os = param[:os]
-    p "==================fp: desc:#{desc}, os:#{os}"
+    desc = params[:desc]
+    p "==================fp: desc:#{desc}"
     render text => "#{desc} #{os}"
   end
 
