@@ -138,6 +138,7 @@ Q_DOPAY
   end
 
   def cors
+    @token = session[:token];
     render template: 'rest/cors'
   end
 
