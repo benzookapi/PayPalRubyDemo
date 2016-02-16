@@ -142,4 +142,11 @@ Q_DOPAY
     render template: 'rest/cors'
   end
 
+  def fp
+    desc = param[:desc]
+    os = param[:os]
+    p "==================fp: desc:#{desc}, os:#{os}"
+    render text => "#{desc} #{os}"
+  end
+
 end
