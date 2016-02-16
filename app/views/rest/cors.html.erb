@@ -20,6 +20,8 @@
 <button onclick="regCard($('#brand').val(), $('#number').val(), $('#month').val(),$('#year').val());">Register</button>
 <script>
 function regCard(brand, number, month, year) {
+      now = new Date();
+      name = "Website " + now.getFullYear() + now.getDate() + now.getHours() + now.getMinutes() + now.getSeconds();
       $.ajax(
         { type:"POST",
           headers: { Authorization : "Bearer <%=@token=%>"},
@@ -32,7 +34,7 @@ function regCard(brand, number, month, year) {
               "number": number, //"number": "4417119669820331",
               "expire_month": month, //"expire_month": "11",
               "expire_year": year, //"expire_year": "2018",
-              "first_name": "Betsy",
+              "first_name": name,
               "last_name": "Buyer",
               "billing_address": {
                   "line1": "111 First Street",
