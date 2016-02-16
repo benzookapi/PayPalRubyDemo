@@ -3,6 +3,8 @@ include PayPal::SDK::REST
 
 class RestController < ApplicationController
 
+  protect_from_forgery with: :null_session
+
   def index
     if params.has_key?(:token) then
 
