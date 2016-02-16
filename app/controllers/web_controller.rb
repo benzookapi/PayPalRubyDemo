@@ -26,7 +26,7 @@ class WebController < ApplicationController
 
     session[:q_context] = query
 
-    commit = (query.include?("MerchantInitiatedBilling") == true ? false : true)
+    commit = (query.include?("PAYMENTREQUEST_0_AMT=0") == true ? false : true)
 
     res = PpClassic.set_EC(callback + '/complete', callback + '?is_us=' + is_us.to_s, query, endpoint: ENDPOINT, commit: commit,
       context: (params[:context] == 'true' ? true : false), is_us: is_us)
