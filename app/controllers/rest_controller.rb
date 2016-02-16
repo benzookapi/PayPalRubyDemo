@@ -140,14 +140,14 @@ Q_DOPAY
   end
 
   def token
-    res = PpRest.get_token()
+    res = PpRest.get_token(true)
     p "==================token: #{res}"
     token = res['access_token']
     render :text => "#{token}"
   end
 
   def cors
-    res = PpRest.get_token()
+    res = PpRest.get_token(true)
     p "==================cors: #{res}"
     @token = res['access_token']
     render template: 'rest/cors'

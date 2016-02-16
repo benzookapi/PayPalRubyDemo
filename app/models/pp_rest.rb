@@ -27,8 +27,8 @@ class PpRest
 
   API_APP_REST_URI = ENV['PP_API_APP_REST_URI']
 
-  def self.get_token()
-    call_api('grant_type=client_credentials', API_PATH_TOKEN, '', '')
+  def self.get_token(client = false)
+    call_api('grant_type=client_credentials', API_PATH_TOKEN, '', '', false, client)
   end
 
   def self.pay(query, token)
@@ -51,7 +51,7 @@ class PpRest
     call_api(query, API_PATH_PAYOUT, '', token)
   end
 
-  def self.call_api(query, path, sub_path, token, get = false)
+  def self.call_api(query, path, sub_path, token, get = false, client = false)
     api_url = API_URL_REST + path + '/' + sub_path
 
     uri = URI.parse(api_url)
@@ -79,7 +79,11 @@ class PpRest
     if token.empty? then
       req['Accept'] ='application/json'
       req['Accept-Language'] = 'en_US'
-      req.basic_auth API_APP_REST, API_APP_REST_SEC
+      if client then
+        req.basic_auth API_APP_REST, ''
+      else
+        req.basic_auth API_APP_REST, API_APP_REST_SEC
+      end
     else
       req['Content-Type'] ='application/json'
       req['Authorization'] = "Bearer #{token}"
