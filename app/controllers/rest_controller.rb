@@ -139,8 +139,17 @@ Q_DOPAY
     render template: 'rest/index'
   end
 
+  def token
+    res = PpRest.get_token()
+    p "==================token: #{res}"
+    token = res['access_token']
+    render :text => "#{token}"
+  end
+
   def cors
-    @token = session[:token];
+    res = PpRest.get_token()
+    p "==================cors: #{res}"
+    @token = res['access_token']
     render template: 'rest/cors'
   end
 

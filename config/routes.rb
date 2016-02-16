@@ -100,6 +100,8 @@ Rails.application.routes.draw do
 
   post 'rest/getpay' => 'rest#getpay'
 
+  post 'rest/token' => 'rest#token'
+
   get 'rest/cors' => 'rest#cors'
 
   post 'rest/fp' => 'rest#fp'
