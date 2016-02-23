@@ -11,6 +11,8 @@ class WebController < ApplicationController
     @is_us = set_is_us(params, session)
     @merchant_id = 'GML6GZVPKKSGS'
     @merchant_id = 'UXTTV2MAAJDJE' if @is_us
+    @locale = "ja_JP"
+    @locale = 'en_US' if @is_us
   end
 
   def checkout
