@@ -13,6 +13,12 @@ class WebController < ApplicationController
     @merchant_id = 'UXTTV2MAAJDJE' if @is_us
     @locale = "ja_JP"
     @locale = 'en_US' if @is_us
+    @context_params = "container: 'myContainer'"
+    @button = ""
+    if params[:is_button].present? then
+      @context_params = "button: ['t1']"
+      @button = "<button id='t1' type='submit'>Button</button>"
+    end
   end
 
   def checkout

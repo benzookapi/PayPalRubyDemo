@@ -119,13 +119,14 @@
   <input type="hidden" name="is_us" value="<%= @is_us.to_s %>">
   <%= label_tag(nil, "Parameters for SetExpressCheckout") %>
   <%= text_area_tag('q_context', session[:q_context], {:rows=>'3', :class=>'form-control'}) %>
+  <%= @button.html_safe %>
 </form>
 <script>
   window.paypalCheckoutReady = function () {
     paypal.checkout.setup('<%= @merchant_id %>', {
       locale: '<%= @locale %>',
-      container: 'myContainer',
-      environment: 'sandbox'
+      environment: 'sandbox',
+      <%= @context_params.html_safe %>
     });
   };
 </script>
