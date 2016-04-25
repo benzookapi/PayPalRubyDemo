@@ -5,6 +5,7 @@ class WebController < ApplicationController
   ENDPOINT = PpClassic::ENDPOINT_NVP_SIG
 
   def index
+    p "==================index: #{params}"
     @res = nil
     session[:is_us] = params[:is_us]
     session[:q_context] = "PAYMENTREQUEST_0_AMT=0&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
