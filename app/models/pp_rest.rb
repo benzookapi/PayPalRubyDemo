@@ -51,7 +51,7 @@ class PpRest
     call_api(query, API_PATH_PAYOUT, '', token)
   end
 
-  def self.call_api(query, path, sub_path, token, get = false, client = false)
+  def self.call_api(query, path, sub_path, token, get = false, client = false, headers = '')
     api_url = API_URL_REST + path + '/' + sub_path
 
     uri = URI.parse(api_url)
@@ -89,6 +89,14 @@ class PpRest
       req['Authorization'] = "Bearer #{token}"
     end
 
+    if headers.present? then
+      headers.split("\n").each do |h|
+        i = h.index(":")
+        k = h[0, i]
+        v = h[i+1, h.length-1]
+        req[k] = v.strip
+      end
+    end
 
     req.body = q
 

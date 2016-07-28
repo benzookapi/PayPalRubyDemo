@@ -14,7 +14,9 @@
                 <%= raw "<select name='m_call' class='form-control'><option value='get'>GET</option><option value='post'>POST</option></select>" %><br/>
                 <%= label_tag(nil, "Parameters") %>
                 <%= link_to("details", 'https://developer.paypal.com/docs/api/', :target => '_blank') %>
-                <%= text_area_tag('q_call', @q_call, {:rows=>'8', :class=>'form-control'}) %>
+                <%= text_area_tag('q_call', @q_call, {:rows=>'8', :class=>'form-control'}) %><br/>
+                <%= label_tag(nil, "Additional Headers (Key: Value\\n)") %>
+                <%= text_area_tag('h_call', @h_call, {:rows=>'2', :class=>'form-control'}) %>
                 </p>
                <%= button_tag("Call REST API!", :class =>'btn btn-default') %>
               <% end %>

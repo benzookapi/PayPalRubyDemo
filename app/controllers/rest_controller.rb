@@ -76,8 +76,9 @@ Q_DOPAY
     @u_call = params[:u_call]
     @m_call = params[:m_call]
     @q_call = params[:q_call]
+    @h_call = params[:h_call]
 
-    @res = PpRest.call_api(@q_call, @u_call.gsub("#{PpRest::API_URL_REST}", ""), '', session[:token], @m_call == 'get' ? true : false)
+    @res = PpRest.call_api(@q_call, @u_call.gsub("#{PpRest::API_URL_REST}", ""), '', session[:token], @m_call == 'get' ? true : false, false, @h_call)
 
     p "==================call: #{@res}"
 
