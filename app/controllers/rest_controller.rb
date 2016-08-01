@@ -22,8 +22,6 @@ class RestController < ApplicationController
 
     @u_call = "https://api.sandbox.paypal.com/v1/payments/payment"
 
-    @m_call = "post"
-
 @q_call=<<"Q_COMM"
 {
     "intent": "sale",
