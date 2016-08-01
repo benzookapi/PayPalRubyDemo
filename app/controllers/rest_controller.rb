@@ -20,6 +20,10 @@ class RestController < ApplicationController
 
     p "==================index access_token: #{session[:token]}"
 
+    @u_call = "https://api.sandbox.paypal.com/v1/payments/payment"
+
+    @m_call = "post"
+
 @q_call=<<"Q_COMM"
 {
     "intent": "sale",
