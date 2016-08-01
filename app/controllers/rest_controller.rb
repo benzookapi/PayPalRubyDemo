@@ -20,6 +20,37 @@ class RestController < ApplicationController
 
     p "==================index access_token: #{session[:token]}"
 
+@q_call=<<"Q_COMM"
+{
+    "intent": "sale",
+    "payer": {
+      "payment_method": "credit_card",
+      "funding_instruments": [
+        {
+          "credit_card": {
+            "number": "4148529247832259",
+            "type": "visa",
+            "expire_month": 12,
+            "expire_year": 2018,
+            "cvv2": 111,
+            "first_name": "Betsy",
+            "last_name": "Buyer"
+          }
+        }
+      ]
+    },
+    "transactions": [
+      {
+        "amount": {
+          "total": "7.47",
+          "currency": "USD"
+        },
+        "description": "This is the payment transaction description."
+      }
+    ]
+  }
+Q_COMM
+
 @q_pay=<<"Q_PAY"
 {
   "intent":"sale",
