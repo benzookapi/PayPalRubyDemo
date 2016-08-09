@@ -21,6 +21,8 @@ class PpRest
 
   API_PATH_IDENTITY = 'identity/openidconnect/tokenservice'
 
+  API_PATH_USERINFO = 'identity/openidconnect/userinfo'
+
   API_APP_REST = ENV['PP_API_APP_REST']
 
   API_APP_REST_SEC = ENV['PP_API_APP_REST_SEC']
@@ -28,30 +30,34 @@ class PpRest
   API_APP_REST_URI = ENV['PP_API_APP_REST_URI']
 
   def self.get_token(client = false)
-    call_api('grant_type=client_credentials', API_PATH_TOKEN, '', '', false, client)
+    call_api('grant_type=client_credentials', API_PATH_TOKEN, '', '', 'post', client)
   end
 
   def self.pay(query, token)
-    call_api(query, API_PATH_PAY, '', token)
+    call_api(query, API_PATH_PAY, '', token, 'post')
   end
 
   def self.do_pay(query, id, token)
-    call_api(query, API_PATH_PAY, "#{id}/execute", token)
+    call_api(query, API_PATH_PAY, "#{id}/execute", token, 'post')
   end
 
   def self.get_pay(id, token)
-    call_api('', API_PATH_PAY, id, token, true)
-  end
-
-  def self.identity(code)
-    call_api("grant_type=authorization_code&code=#{code}&redirect_uri=#{API_APP_REST_URI}", API_PATH_IDENTITY, '', '')
+    call_api('', API_PATH_PAY, id, token)
   end
 
   def self.payout(query, token)
-    call_api(query, API_PATH_PAYOUT, '', token)
+    call_api(query, API_PATH_PAYOUT, '', token, 'post')
   end
 
-  def self.call_api(query, path, sub_path, token, get = false, client = false, headers = '')
+  def self.identity(code)
+    call_api("grant_type=authorization_code&code=#{code}&redirect_uri=#{API_APP_REST_URI}", API_PATH_IDENTITY, '', '', 'post')
+  end
+
+  def self.userinfo(token)
+    call_api('', API_PATH_USERINFO, '?schema=openid', token)
+  end
+
+  def self.call_api(query, path, sub_path, token, method = 'get', client = false, headers = '')
     api_url = API_URL_REST + path + '/' + sub_path
 
     uri = URI.parse(api_url)
@@ -71,9 +77,16 @@ class PpRest
 
     https.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-    req = Net::HTTP::Post.new(uri.request_uri)
-    if get then
-      req = Net::HTTP::Get.new(uri.request_uri)
+    req = Net::HTTP::Get.new(uri.request_uri)
+    case method
+    when 'post' then
+      req = Net::HTTP::Post.new(uri.request_uri)
+    when 'put' then
+      req = Net::HTTP::Put.new(uri.request_uri)
+    when 'patch' then
+      req = Net::HTTP::Patch.new(uri.request_uri)
+    when 'delete' then
+      req = Net::HTTP::Delete.new(uri.request_uri)
     end
 
     if token.empty? then

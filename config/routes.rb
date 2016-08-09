@@ -124,8 +124,6 @@ Rails.application.routes.draw do
 
   post 'lg/auth' => 'lg#auth'
 
-  post 'lg/seamless_ec' => 'lg#seamless_ec'
-
   get 'brain' => 'brain#index'
 
   post 'brain/checkout' => 'brain#checkout'
