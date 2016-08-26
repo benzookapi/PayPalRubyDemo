@@ -108,6 +108,8 @@ Rails.application.routes.draw do
 
   get 'ad' => 'ad#index'
 
+  post 'ad/call' => 'ad#call'
+
   post 'ad/pay' => 'ad#pay'
 
   post 'ad/execpay' => 'ad#execpay'

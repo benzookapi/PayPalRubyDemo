@@ -77,7 +77,6 @@ class PpAdaptive
   end
 
 
-  private
   def self.call_api(query, path, sub_path)
     api_url = API_URL_AD + path + '/' + sub_path
 

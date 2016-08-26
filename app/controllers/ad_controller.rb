@@ -16,6 +16,21 @@ class AdController < ApplicationController
     end
   end
 
+  def call
+      @p_call = params[:p_call]
+      @q_call = params[:q_call]
+
+      path = @p_call.split('/')
+
+      res = PpAdaptive.call_api(@q_call, path[0], path[1])
+
+      p "==================pay: #{res}"
+
+      @res = res
+
+      render template: 'ad/index'
+  end
+
   def pay
     session[:q_pay] = params[:q_pay]
     session[:q_setpo] = params[:q_setpo]
