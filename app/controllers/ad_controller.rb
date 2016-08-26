@@ -14,6 +14,41 @@ class AdController < ApplicationController
       "\r\n&receiverList.receiver(0).amount=#{init_amt}\r\n&receiverList.receiver(0).email=WHO_YOU_WANT_PAY"
       session[:q_preapp] = "currencyCode=USD"
     end
+
+    @p_call="AdaptiveAccounts/CreateAccount"
+
+@q_call=<<"Q_CALL"
+accountType=Business&
+emailAddress=benzookapi+B#{Random.rand(100 .. 500).to_s}@gmail.com&
+name.firstName=Benzo&
+name.lastName=Okapi&
+dateOfBirth=1999-01-01Z&
+address.line1=aaaa&
+address.line2=bbbb&
+address.city=Shibuya-ku&
+address.state=Tokyo&
+address.postalCode=1070061&
+address.countryCode=JP&
+contactPhoneNumber=03-1234-5678&
+currencyCode=JPY&
+citizenshipCountryCode=JP&
+preferredLanguageCode=ja_JP&
+businessInfo.businessAddress.line1=aaaa&
+businessInfo.businessAddress.line2=bbbb&
+businessInfo.businessAddress.city=Shibuya-ku&
+businessInfo.businessAddress.state=Tokyo&
+businessInfo.businessAddress.postalCode=1070061&
+businessInfo.businessAddress.countryCode=JP&
+businessInfo.businessName=BO Corp&
+businessInfo.workPhone=03-1234-5678&
+businessInfo.merchantCategoryCode=0763&
+businessInfo.businessType=INDIVIDUAL&
+businessInfo.customerServiceEmail=benzookapi-B@gmail.com&
+notificationURL=https://jo-pp-ruby-demo.herokuapp.com/ipn&
+registrationType=Web&
+createAccountWebOptions.returnUrl=https://jo-pp-ruby-demo.herokuapp.com/ad
+Q_CALL
+
   end
 
   def call
@@ -24,7 +59,7 @@ class AdController < ApplicationController
 
       res = PpAdaptive.call_api(@q_call, path[0], path[1])
 
-      p "==================pay: #{res}"
+      p "==================call: #{res}"
 
       @res = res
 

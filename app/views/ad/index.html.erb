@@ -10,17 +10,17 @@
               <%= form_tag("/ad/call", method: "post") do %>
                 <p>
                 <%= label_tag(nil, "PATH") %>
-                <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/#aa', :target => '_blank') %>
+                <%= link_to("details", 'https://developer.paypal.com/docs/classic/adaptive-accounts/gs_AdaptiveAccounts/', :target => '_blank') %>
                 <%= text_field_tag('p_call', @p_call, :class=>'form-control') %>
                 </p>
 
                 <p>
                 <%= label_tag(nil, "Parameters") %>
                 <%= link_to("details", 'https://developer.paypal.com/docs/classic/api/#aa', :target => '_blank') %>
-                <%= text_area_tag('q_call', session[:q_call], {:rows=>'3', :class=>'form-control'}) %>
+                <%= text_area_tag('q_call', @q_call, {:rows=>'15', :class=>'form-control'}) %>
                 </p>
 
-               <%= button_tag("Call Adaptive!", :class =>'btn btn-default') %>
+               <%= button_tag("Call Adaptive API!", :class =>'btn btn-default') %>
               <% end %>
               <%= raw show_res('Call', @res) if request.path_info == '/ad/call' || request.fullpath.include?('st=') %>
             </td>
