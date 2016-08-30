@@ -37,6 +37,7 @@ notificationURL=https://jo-pp-ruby-demo.herokuapp.com/ipn&
 registrationType=Web&
 createAccountWebOptions.returnUrl=https://jo-pp-ruby-demo.herokuapp.com/ad&
 createAccountWebOptions.confirmEmail=true&
+createAccountWebOptions.useMiniBrowser=true&
 suppressWelcomeEmail=true
 Q_CALL
 
