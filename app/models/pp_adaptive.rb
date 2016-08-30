@@ -104,7 +104,7 @@ class PpAdaptive
     req['X-PAYPAL-RESPONSE-DATA-FORMAT'] = 'NV' # or 'JSON'
     req['X-PAYPAL-DEVICE-IPADDRESS'] = '127.0.0.1'
     # req['X-PAYPAL-REQUEST-SOURCE'] = 'merchant-php-sdk-2.0.96'
-    req['X-PAYPAL-SANDBOX-EMAIL-ADDRESS'] = 'benzookapi-facilitator@gmail.com'
+    req['X-PAYPAL-SANDBOX-EMAIL-ADDRESS'] = 'benzookapi+B@gmail.com'
     req.body = q
 
     https.set_debug_output $stderr
