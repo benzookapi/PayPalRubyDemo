@@ -35,7 +35,9 @@ citizenshipCountryCode=JP&
 preferredLanguageCode=ja_JP&
 notificationURL=https://jo-pp-ruby-demo.herokuapp.com/ipn&
 registrationType=Web&
-createAccountWebOptions.returnUrl=https://jo-pp-ruby-demo.herokuapp.com/ad
+createAccountWebOptions.returnUrl=https://jo-pp-ruby-demo.herokuapp.com/ad&
+createAccountWebOptions.confirmEmail=true&
+suppressWelcomeEmail=true
 Q_CALL
 
   end
