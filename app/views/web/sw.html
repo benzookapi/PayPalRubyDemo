@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <title>PayPal</title>
+  <body>
+    <div>
+      <form method="POST" action="">
+        <p>
+          <a id="paypal_button” href="/paypal/checkout/initiate"></a>
+          <script>
+            window.paypalCheckoutReady = function () {
+              paypal.checkout.setup('{{ paypal_api_endpoint }}', {
+                locale: 'ja_JP',
+                environment: 'sandbox',
+                container: 'paypal_button'
+              });
+            };
+          </script>
+          <script src="//www.paypalobjects.com/api/checkout.js" async></script>
+        </p>
+      </form>
+    </div>
+  </body>
+</html>
