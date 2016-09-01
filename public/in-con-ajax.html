@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <title>My Test Store</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+  <form method="POST" action="">
+   <p>
+    <div id="t1" ></div>
+   </p>
+   <script>
+    window.paypalCheckoutReady = function() {
+        paypal.checkout.setup("GML6GZVPKKSGS", {
+            environment: 'sandbox',
+            click: function(event) {
+                alert('preventDefault');
+                event.preventDefault();
+
+                alert('initXO');
+                paypal.checkout.initXO();
+                $.support.cors = true;
+                $.ajax({
+                    url: "http://166.78.8.98/cgi-bin/aries.cgi?sandbox=1&direct=1&returnurl=https://jo-pp-ruby-demo.herokuapp.com/sw.html%3Ff%3DOK&cancelurl=https://jo-pp-ruby-demo.herokuapp.com/sw.html%3Ff%3Dcancel",
+                    type: "GET",
+                    data: '&ajax=1&onlytoken=1',
+                    async: true,
+                    crossDomain: true,
+
+                    //Load the minibrowser with the redirection url in the success handler
+                    success: function (token) {
+                        alert(token);
+                        var url = paypal.checkout.urlPrefix +token;
+                        //Loading Mini browser with redirect url, true for async AJAX calls
+                        paypal.checkout.startFlow(url);
+                    },
+                    error: function (responseData, textStatus, errorThrown) {
+                        alert("Error in ajax post"+responseData.statusText);
+                        //Gracefully Close the minibrowser in case of AJAX errors
+                        paypal.checkout.closeFlow();
+                    }
+                });
+            },
+            container: 't1'
+        });
+    }
+   </script>
+  </form>
+  <script async src="//www.paypalobjects.com/api/checkout.js"></script>
+</body>
