@@ -1,3 +1,4 @@
+<h4>Dropin UI</h4>
 <form id="checkout" method="post" action="/brain/checkout">
   <div id="dropin"></div>
   <input type="hidden" name="amount" value="10">
@@ -19,5 +20,39 @@
 
 
 </script>
+
+<h4>v.zero for EC (PayPal Express Checkout)</h4>
+<div id="paypal-container"></div>
+<br/>
+<form id="checkout_ec" method="post" action="/brain/checkout_ec">
+  <input type="hidden" name="payment_method_nonce" id="nonce_ec"/>
+  <input type="hidden" name="amount" value="222">
+  <input type="hidden" name="currency" value="USD">
+  <input type="submit" value="Pay $222" id="pay_btn_ec">
+</form>
+<br/>
+
+<div class="alert alert-info" role="alert"><%= @success_ec %> <%= @status_ec %> <%= @transaction_ec %></div>
+
+<script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>
+<script>
+braintree.setup('<%= @client_token_ec %>', 'custom', {
+  paypal: {
+    container: 'paypal-container',
+    singleUse: true, // Required
+    amount: 222.00, // Required
+    currency: 'USD', // Required
+    intent: 'sale',
+    paymentMethodNonceInputField: 'nonce_ec'
+  }
+});
+
+</script>
+
+
+
+
+
+
 
 <a href="https://sandbox.braintreegateway.com" target="_blank">Go to Braintree!</a>

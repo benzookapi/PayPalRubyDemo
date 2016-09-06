@@ -40,7 +40,7 @@ GEM
     barby (0.6.2)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    braintree (2.41.0)
+    braintree (2.66.0)
       builder (>= 2.0.0)
     builder (3.2.2)
     byebug (3.5.1)
@@ -175,7 +175,7 @@ PLATFORMS
 
 DEPENDENCIES
   barby (~> 0.6.2)
-  braintree
+  braintree (~> 2.66.0)
   byebug
   chunky_png
   coffee-rails (~> 4.1.0)

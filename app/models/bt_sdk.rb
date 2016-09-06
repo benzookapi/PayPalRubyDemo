@@ -13,8 +13,19 @@ class BtSdk
     client_token
   end
 
+  def self.getTokenEC()
+    gateway = Braintree::Gateway.new(:access_token => 'access_token$sandbox$btdxhpwfbt6dy2vt$41c6f24f692e018e2c68d84ce235fe79')
+    gateway.client_token.generate
+  end
+
   def self.doTrans(nonce, amount)
     result = Braintree::Transaction.sale(:amount => amount, :payment_method_nonce => nonce)
+    result
+  end
+
+  def self.doTransEC(nonce, amount, currency)
+    gateway = Braintree::Gateway.new(:access_token => 'access_token$sandbox$btdxhpwfbt6dy2vt$41c6f24f692e018e2c68d84ce235fe79')
+    result = gateway.transaction.sale(:amount => amount, :payment_method_nonce => nonce, :merchant_account_id => currency)
     result
   end
 end

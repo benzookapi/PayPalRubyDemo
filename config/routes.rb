@@ -130,6 +130,8 @@ Rails.application.routes.draw do
 
   post 'brain/checkout' => 'brain#checkout'
 
+  post 'brain/checkout_ec' => 'brain#checkout_ec'
+
   get 'ipn' => 'ipn#indexget'
 
   post 'ipn' => 'ipn#index'
