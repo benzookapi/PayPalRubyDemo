@@ -24,7 +24,6 @@ class BtSdk
   end
 
   def self.doTransEC(nonce, amount, currency, deviceData: '')
-    p "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX #{nonce}"
     gateway = Braintree::Gateway.new(:access_token => 'access_token$sandbox$btdxhpwfbt6dy2vt$41c6f24f692e018e2c68d84ce235fe79')
     result = gateway.transaction.sale(:amount => amount, :payment_method_nonce => nonce, :merchant_account_id => currency,
       :device_data => deviceData, :options => {:submit_for_settlement => true, :store_in_vault_on_success => true})
