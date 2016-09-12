@@ -8,7 +8,8 @@
 
 <div class="alert alert-info" role="alert"><%= @success %> <%= @status %></div>
 
-<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+<!--<script src="https://js.braintreegateway.com/v2/braintree.js"></script>-->
+<script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>
 
 <script>
   braintree.setup(
@@ -26,30 +27,57 @@
 <br/>
 <form id="checkout_ec" method="post" action="/brain/checkout_ec">
   <input type="hidden" name="payment_method_nonce" id="nonce_ec"/>
-  <input type="hidden" name="amount" value="222">
+  <input type="hidden" name="amount" value="21">
   <input type="hidden" name="currency" value="USD">
-  <input type="submit" value="Pay $222" id="pay_btn_ec">
+  <input type="submit" value="Pay $21 storing agreement is Vault" id="pay_btn_ec">
 </form>
 <br/>
 
 <div class="alert alert-info" role="alert"><%= @success_ec %> <%= @status_ec %> <%= @transaction_ec %></div>
 
-<script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>
+
 <script>
 braintree.setup('<%= @client_token_ec %>', 'custom', {
   paypal: {
     container: 'paypal-container',
-    singleUse: true, // Required
-    amount: 222.00, // Required
+    singleUse: false, // Required
+    amount: 21.00, // Required
     currency: 'USD', // Required
     intent: 'sale',
-    paymentMethodNonceInputField: 'nonce_ec'
+    paymentMethodNonceInputField: 'nonce_ec',
+    billingAgreementDescription: 'My Agreement!'
+  },
+  dataCollector: {
+        paypal: true
+  },
+  onReady: function (braintreeInstance) {
+    var form = document.getElementById('checkout_ec');
+    var deviceDataInput = form['device_data'];
+
+    if (deviceDataInput == null) {
+      deviceDataInput = document.createElement('input');
+      deviceDataInput.name = 'device_data';
+      deviceDataInput.type = 'hidden';
+      form.appendChild(deviceDataInput);
+    }
+
+    deviceDataInput.value = braintreeInstance.deviceData;
   }
 });
 
 </script>
 
+<h4>Sale with PayPal Vault (a.k.a Reference Transaction in PayPal)</h4>
+<form id="vault_ec" method="post" action="/brain/vault">
+  <label>Customer Id:</label><input type="text" name="vault_customer_id" value="<%= @customer_id %>"/><br/>
+  <label>Amount:</label><input type="text" name="vault_amount" value="32"><br/>
+  <label>Currency:</label><input type="text" name="vault_currency" value="USD"><br/>
+  <br/>
+  <input type="submit" value="Charge dynamically!" id="pay_btn_vault">
+</form>
+<br/>
 
+<div class="alert alert-info" role="alert"><%= @success_vault %> <%= @status_vault %> <%= @transaction_vault %></div>
 
 
 
