@@ -134,6 +134,8 @@ Rails.application.routes.draw do
 
   post 'brain/vault' => 'brain#vault'
 
+  get 'brain/get_token' => 'brain#get_token'
+
   get 'ipn' => 'ipn#indexget'
 
   post 'ipn' => 'ipn#index'

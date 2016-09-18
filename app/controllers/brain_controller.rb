@@ -15,6 +15,10 @@ class BrainController < ApplicationController
 
   end
 
+  def get_token
+    render :text => BtSdk.getTokenEC()
+  end
+
   def checkout
 
     result = BtSdk.doTrans(params[:payment_method_nonce], params[:amount])
