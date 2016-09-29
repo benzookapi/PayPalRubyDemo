@@ -1,5 +1,13 @@
 class BtSdk
 
+  TOKEN_JP_PRO = 'access_token$sandbox$btdxhpwfbt6dy2vt$41c6f24f692e018e2c68d84ce235fe79'
+
+  TOKEN_US_PRO = 'access_token$sandbox$8zbxpg8bdwpbwgv3$d0555a86a3e36eb3b088a194d02a2b1a'
+
+  TOKEN_JP_NORMAL = 'access_token$sandbox$rrmfw6c4w3yps6t3$9a1ca6d71b74db5c5be6d16ffd395348'
+
+  MY_TOKEN = TOKEN_JP_NORMAL
+
   def self.getToken(customer_id)
     Braintree::Configuration.environment = :sandbox
     Braintree::Configuration.merchant_id = "sqhrsttx42vpt63j"
@@ -14,7 +22,7 @@ class BtSdk
   end
 
   def self.getTokenEC()
-    gateway = Braintree::Gateway.new(:access_token => 'access_token$sandbox$btdxhpwfbt6dy2vt$41c6f24f692e018e2c68d84ce235fe79')
+    gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     gateway.client_token.generate
   end
 
@@ -24,14 +32,14 @@ class BtSdk
   end
 
   def self.doTransEC(nonce, amount, currency, deviceData: '')
-    gateway = Braintree::Gateway.new(:access_token => 'access_token$sandbox$btdxhpwfbt6dy2vt$41c6f24f692e018e2c68d84ce235fe79')
+    gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     result = gateway.transaction.sale(:amount => amount, :payment_method_nonce => nonce, :merchant_account_id => currency,
       :device_data => deviceData, :options => {:submit_for_settlement => true, :store_in_vault_on_success => true})
     result
   end
 
   def self.doTransVault(customer_id, amount, currency, billingId: '', shippingId: '')
-    gateway = Braintree::Gateway.new(:access_token => 'access_token$sandbox$btdxhpwfbt6dy2vt$41c6f24f692e018e2c68d84ce235fe79')
+    gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     result = gateway.transaction.sale(:customer_id => customer_id, :amount => amount, :merchant_account_id => currency,
       :options => {:submit_for_settlement => true})
     result
