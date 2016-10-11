@@ -6,7 +6,10 @@ class BtSdk
 
   TOKEN_JP_NORMAL = 'access_token$sandbox$rrmfw6c4w3yps6t3$9a1ca6d71b74db5c5be6d16ffd395348'
 
-  MY_TOKEN = TOKEN_JP_NORMAL
+  TOKEN_LIVE = ENV['PP_BT_TOKEN']
+
+  MY_TOKEN = TOKEN_JP_PRO
+  #MY_TOKEN = TOKEN_LIVE
 
   def self.getToken(customer_id)
     Braintree::Configuration.environment = :sandbox
@@ -31,17 +34,37 @@ class BtSdk
     result
   end
 
-  def self.doTransEC(nonce, amount, currency, deviceData: '')
+  def self.doTransEC(nonce, amount, currency, deviceData: '', payee: '')
     gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     result = gateway.transaction.sale(:amount => amount, :payment_method_nonce => nonce, :merchant_account_id => currency,
-      :device_data => deviceData, :options => {:submit_for_settlement => true, :store_in_vault_on_success => true})
+      :device_data => deviceData, :options => {:submit_for_settlement => true, :store_in_vault_on_success => true,
+        :paypal => {:payee_email => payee}})
     result
   end
 
-  def self.doTransVault(customer_id, amount, currency, billingId: '', shippingId: '')
+  def self.doTransVault(customer_id, amount, currency, billingId: '', shippingId: '', payee: '')
     gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     result = gateway.transaction.sale(:customer_id => customer_id, :amount => amount, :merchant_account_id => currency,
-      :options => {:submit_for_settlement => true})
+      :options => {:submit_for_settlement => true, :paypal => {:payee_email => payee}})
+    result
+  end
+
+  def self.search(customer_id, id)
+    gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
+    collection = gateway.transaction.search do |search|
+      search.customer_id.is customer_id
+      search.id.is id
+    end
+    result = []
+    collection.each do |transaction|
+      result.push(transaction.inspect + " " + transaction.paypal_details.inspect + " " + transaction.shipping_details.inspect)
+    end
+    result
+  end
+
+  def self.refund(id)
+    gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
+    result = gateway.transaction.refund(id)
     result
   end
 end

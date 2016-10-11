@@ -35,7 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails_12factor'
 
 # For Braintree SDK
-gem "braintree", "~> 2.66.0"
+gem "braintree"
 
 gem 'paypal-sdk-rest'
 

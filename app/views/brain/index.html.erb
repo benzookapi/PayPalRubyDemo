@@ -1,4 +1,4 @@
-<h4>Dropin UI</h4>
+<!--<h4>Dropin UI</h4>
 <form id="checkout" method="post" action="/brain/checkout">
   <div id="dropin"></div>
   <input type="hidden" name="amount" value="10">
@@ -7,45 +7,177 @@
 <br/>
 
 <div class="alert alert-info" role="alert"><%= @success %> <%= @status %></div>
-
+<div class="alert alert-info" role="alert"><%= @tran_res %></div>
+-->
+<!-- for V2 -->
 <!--<script src="https://js.braintreegateway.com/v2/braintree.js"></script>-->
-<script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>
+<!--<script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>-->
+
+<!-- for V3 -->
+<!-- Load the required client component. -->
+<script src="https://js.braintreegateway.com/web/3.3.0/js/client.min.js"></script>
+
+<!-- Load additional components if desired. -->
+<script src="https://js.braintreegateway.com/web/3.3.0/js/hosted-fields.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.3.0/js/paypal.min.js"></script>
+<script src="https://js.braintreegateway.com/web/3.3.0/js/data-collector.min.js"></script>
 
 <script>
+/* for V2
   braintree.setup(
     // Replace this with a client token from your server
     "<%= @client_token %>",
     'dropin', {
       container: 'dropin'
     });
+*/
+// for V3
+/*
+var client = require('braintree-web/client');
+client.create({
+  authorization: '<%= @client_token %>'
+}, function (err, clientInstance) {
 
-
+});
+*/
 </script>
 
-<h4>v.zero for EC (PayPal Express Checkout)</h4>
-<div id="paypal-container"></div>
+<h4>v.zero for EC</h4>
+<script src="https://www.paypalobjects.com/api/button.js?"
+     data-merchant="braintree"
+     data-id="paypal-button"
+     data-button="checkout"
+     data-color="gold"
+     data-size="medium"
+     data-shape="pill"
+     data-button_type="submit"
+     data-button_disabled="false"
+     data-locale="ja_JP"
+ ></script>
+ <!-- Configuration options:
+  data-color: "blue", "gold", "silver"
+  data-size: "tiny", "small", "medium"
+  data-shape: "pill", "rect"
+  data-button_disabled: "false", "true"
+  data-button_type: "submit", "button"
+--->
+<!--<div id="paypal-container"></div>-->
+<br/>
 <br/>
 <form id="checkout_ec" method="post" action="/brain/checkout_ec">
   <input type="hidden" name="payment_method_nonce" id="nonce_ec"/>
-  <input type="hidden" name="amount" value="21">
-  <input type="hidden" name="currency" value="USD">
-  <input type="submit" value="Pay $21 storing agreement is Vault" id="pay_btn_ec">
+  <label>Amount:</label><input type="text" name="amount" value="<%= session[:amount] %>"> (set amount=10|20.00|...) <br/>
+  <label>Curency:</label><input type="text" name="currency" value="<%= session[:currency] %>"> (set currency=USD|JPY|...) <br/>
+  <label>Is_vault:</label><input type="text" name="is_vault" value="<%= session[:is_vault] %>"> (set is_vault=true|'') <br/>
+  <label>Is_submit:</label><input type="text" name="is_submit" value="<%= session[:is_submit] %>"> (set is_submit=false|'') <br/>
+  <label>Payee:</label><input type="text" name="payee" value="<%= session[:payee] %>"> (set payee=payee email|'') <br/>
+  <input type="submit" value="Pay" id="pay_btn_ec"><br/>
 </form>
 <br/>
 
-<div class="alert alert-info" role="alert"><%= @success_ec %> <%= @status_ec %> <%= @transaction_ec %></div>
+<div class="alert alert-<%= @css_ec %>" role="alert"><%= @err_ec %> <%= @success_ec %> <%= @status_ec %> <%= @transaction_ec %></div>
+<div class="alert alert-<%= @css_ec %>" role="alert"><%= @tran_res_ec %></div>
 
 
 <script>
+<% if session[:is_vault].blank? then %>
+/* for V2
+braintree.setup('<%= @client_token_ec %>', 'custom', {
+  paypal: {
+    container: 'paypal-container',
+    singleUse: true, // Required
+    amount: <%= session[:amount] %>, // Required
+    currency: '<%= session[:currency] %>', // Required
+    intent: 'sale',
+    paymentMethodNonceInputField: 'nonce_ec',
+    locale: 'ja_jp',
+    enableShippingAddress: true,
+    shippingAddressOverride: {
+      recipientName: '購入者　太郎',
+      streetAddress: '青山一丁目',
+      extendedAddress: '1F',
+      locality: '東京都',
+      countryCodeAlpha2: 'JP',
+      postalCode: '1234567',
+      region: '港区',
+      phone: '03-1234-5678',
+      editable: false
+    }
+  }
+});
+*/
+// for V3
+// Fetch the button you are using to initiate the PayPal flow
+var paypalButton = document.getElementById('paypal-button');
+
+// Create a Client component
+braintree.client.create({
+  authorization: '<%= @client_token_ec %>'
+}, function (clientErr, clientInstance) {
+  // Create PayPal component
+  braintree.paypal.create({
+    client: clientInstance
+  }, function (err, paypalInstance) {
+    paypalButton.addEventListener('click', function () {
+      // Tokenize here!
+      paypalInstance.tokenize({
+        flow: 'checkout', // Required
+        amount: <%= session[:amount] %>, // Required
+        currency: '<%= session[:currency] %>', // Required
+        locale: 'ja_JP',
+        enableShippingAddress: true,
+        shippingAddressEditable: false,
+        shippingAddressOverride: {
+          recipientName: '購入者太郎',
+          line1: '青山一丁目',
+          line2: 'ビル１F',
+          city: '港区',
+          countryCode: 'JP',
+          postalCode: '123-4567',
+          state: '東京都',
+          phone: '0312345678'
+        }
+        /*shippingAddressOverride: {
+          recipientName: 'Scruff McGruff',
+          line1: '1234 Main St.',
+          line2: 'Unit 1',
+          city: 'Chicago',
+          countryCode: 'US',
+          postalCode: '60652',
+          state: 'IL',
+          phone: '123.456.7890'
+        }*/
+      }, function (err, tokenizationPayload) {
+        // Tokenization complete
+        // Send tokenizationPayload.nonce to server
+        var form = document.getElementById('checkout_ec');
+        var nonceInput = form['nonce_ec'];
+        if (nonceInput == null) {
+          nonceInput = document.createElement('input');
+          nonceInput.name = 'payment_method_nonce';
+          nonceInput.type = 'text';
+          form.appendChild(nonceInput);
+        }
+        nonceInput.value = tokenizationPayload.nonce;
+        <% if session[:is_submit].blank? then %>
+         form.submit();
+        <% end %>
+      });
+    });
+  });
+});
+<% else %>
+/* for V2
 braintree.setup('<%= @client_token_ec %>', 'custom', {
   paypal: {
     container: 'paypal-container',
     singleUse: false, // Required
-    amount: 21.00, // Required
-    currency: 'USD', // Required
+    amount: <%= session[:amount] %>, // Required
+    currency: '<%= session[:currency] %>', // Required
     intent: 'sale',
     paymentMethodNonceInputField: 'nonce_ec',
-    billingAgreementDescription: 'My Agreement!'
+    locale: 'en_us',
+    billingAgreementDescription: 'Web Agreement!'
   },
   dataCollector: {
         paypal: true
@@ -64,23 +196,132 @@ braintree.setup('<%= @client_token_ec %>', 'custom', {
     deviceDataInput.value = braintreeInstance.deviceData;
   }
 });
+*/
 
+// for V3
+// Fetch the button you are using to initiate the PayPal flow
+var paypalButton = document.getElementById('paypal-button');
+
+braintree.client.create({
+  authorization: '<%= @client_token_ec %>',
+}, function (err, clientInstance) {
+  braintree.dataCollector.create({
+    client: clientInstance,
+    paypal: true
+  }, function (err, dataCollectorInstance) {
+    if (err) {
+      // Handle error
+      return;
+    }
+    // At this point, you should access the dataCollectorInstance.deviceData value and provide it
+    // to your server, e.g. by injecting it into your form as a hidden input.
+    myDeviceData = dataCollectorInstance.deviceData;
+
+    var form = document.getElementById('checkout_ec');
+    var deviceDataInput = form['device_data'];
+    if (deviceDataInput == null) {
+      deviceDataInput = document.createElement('input');
+      deviceDataInput.name = 'device_data';
+      deviceDataInput.type = 'text';
+      form.appendChild(deviceDataInput);
+    }
+
+    deviceDataInput.value = myDeviceData;
+
+    dataCollectorInstance.teardown();
+  });
+
+  // Initialize your PayPal component here.
+  //braintree.paypal.create(/* ... */);
+  braintree.paypal.create({
+    client: clientInstance
+  }, function (err, paypalInstance) {
+    paypalButton.addEventListener('click', function () {
+      // Tokenize here!
+      paypalInstance.tokenize({
+        flow: 'vault', // Required
+        amount: <%= session[:amount] %>, // Required
+        currency: '<%= session[:currency] %>', // Required
+        locale: 'ja_JP',
+        enableShippingAddress: true,
+        shippingAddressEditable: false,
+        shippingAddressOverride: {
+          recipientName: '購入者太郎',
+          line1: '青山一丁目',
+          line2: 'ビル１F',
+          city: '港区',
+          countryCode: 'JP',
+          postalCode: '123-4567',
+          state: '東京都',
+          phone: '0312345678'
+        }
+        /*shippingAddressOverride: {
+          recipientName: 'Scruff McGruff',
+          line1: '1234 Main St.',
+          line2: 'Unit 1',
+          city: 'Chicago',
+          countryCode: 'US',
+          postalCode: '60652',
+          state: 'IL',
+          phone: '123.456.7890'
+        }*/
+      }, function (err, tokenizationPayload) {
+        // Tokenization complete
+        // Send tokenizationPayload.nonce to server
+        var form = document.getElementById('checkout_ec');
+        var nonceInput = form['nonce_ec'];
+        if (nonceInput == null) {
+          nonceInput = document.createElement('input');
+          nonceInput.name = 'payment_method_nonce';
+          nonceInput.type = 'text';
+          form.appendChild(nonceInput);
+        }
+        nonceInput.value = tokenizationPayload.nonce;
+        <% if session[:is_submit].blank? then %>
+         form.submit();
+        <% end %>
+      });
+    });
+  });
+
+});
+<% end %>
 </script>
 
 <h4>Sale with PayPal Vault (a.k.a Reference Transaction in PayPal)</h4>
 <form id="vault_ec" method="post" action="/brain/vault">
   <label>Customer Id:</label><input type="text" name="vault_customer_id" value="<%= @customer_id %>"/><br/>
-  <label>Amount:</label><input type="text" name="vault_amount" value="32"><br/>
-  <label>Currency:</label><input type="text" name="vault_currency" value="USD"><br/>
+  <label>Amount:</label><input type="text" name="vault_amount" value="1234"><br/>
+  <label>Currency:</label><input type="text" name="vault_currency" value="JPY"><br/>
+  <label>Payee:</label><input type="text" name="payee" value="<%= session[:payee] %>"><br/>
   <br/>
   <input type="submit" value="Charge dynamically!" id="pay_btn_vault">
 </form>
 <br/>
 
-<div class="alert alert-info" role="alert"><%= @success_vault %> <%= @status_vault %> <%= @transaction_vault %></div>
+<div class="alert alert-<%= @css_vault %>" role="alert"><%= @success_vault %> <%= @status_vault %> <%= @transaction_vault %></div>
+<div class="alert alert-<%= @css_vault %>" role="alert"><%= @tran_res_vault %></div>
 
 
+<h4>Search For Transactions</h4>
+<form id="search_tr" method="post" action="/brain/search">
+  <label>Customer Id:</label><input type="text" name="customer_id" value="<%= @customer_id %>"/><br/>
+  <label>Transacrion Id (BT):</label><input type="text" name="id" value="<%= @id %>"><br/>
+  <br/>
+  <input type="submit" value="Search for transactions" id="search_btn">
+</form>
+<br/>
 
+<div class="alert alert-info" role="alert"><%= @search_res %></div>
 
+<h4>Refund Transaction</h4>
+<form id="refund_tr" method="post" action="/brain/refund">
+  <label>Transacrion Id (BT):</label><input type="text" name="id" value="<%= @id %>"><br/>
+  <br/>
+  <input type="submit" value="Refund a transaction" id="refund_btn">
+</form>
+<br/>
+
+<div class="alert alert-info" role="alert"><%= @success_refund %> <%= @refund_res %></div>
 
 <a href="https://sandbox.braintreegateway.com" target="_blank">Go to Braintree!</a>
