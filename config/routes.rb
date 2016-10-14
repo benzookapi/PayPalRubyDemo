@@ -132,6 +132,8 @@ Rails.application.routes.draw do
 
   post 'brain/checkout_ec' => 'brain#checkout_ec'
 
+  post 'brain/create_cs' => 'brain#create_cs'
+
   post 'brain/vault' => 'brain#vault'
 
   post 'brain/search' => 'brain#search'

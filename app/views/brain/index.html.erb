@@ -61,6 +61,7 @@ client.create({
   data-button_disabled: "false", "true"
   data-button_type: "submit", "button"
 --->
+<strong>&lt;- Click Me!</strong>
 <!--<div id="paypal-container"></div>-->
 <br/>
 <br/>
@@ -70,8 +71,14 @@ client.create({
   <label>Curency:</label><input type="text" name="currency" value="<%= session[:currency] %>"> (set currency=USD|JPY|...) <br/>
   <label>Is_vault:</label><input type="text" name="is_vault" value="<%= session[:is_vault] %>"> (set is_vault=true|'') <br/>
   <label>Is_submit:</label><input type="text" name="is_submit" value="<%= session[:is_submit] %>"> (set is_submit=false|'') <br/>
-  <label>Payee:</label><input type="text" name="payee" value="<%= session[:payee] %>"> (set payee=payee email|'') <br/>
+  <label>Payee:</label><input type="text" name="payee" value="<%= @payee %>"> (set payee=payee email|'') <br/>
+  <label>BNCode:</label><input type="text" name="bncode" value="<%= @bncode %>"> (set bncode=SOMETEXT|'') <br/>
   <input type="submit" value="Pay" id="pay_btn_ec"><br/>
+</form>
+<strong>Or</strong>
+<form id="create_cs" method="post" action="/brain/create_cs">
+  <input type="hidden" name="payment_method_nonce" id="nonce_create_cs"/>
+  <input type="submit" value="Create Customer Id (BA)" id="pay_btn_create_cs"><br/>
 </form>
 <br/>
 
@@ -228,6 +235,8 @@ braintree.client.create({
 
     deviceDataInput.value = myDeviceData;
 
+    document.getElementById('create_cs').appendChild(deviceDataInput.cloneNode(true));
+
     dataCollectorInstance.teardown();
   });
 
@@ -243,8 +252,8 @@ braintree.client.create({
         amount: <%= session[:amount] %>, // Required
         currency: '<%= session[:currency] %>', // Required
         locale: 'ja_JP',
-        enableShippingAddress: true,
-        shippingAddressEditable: false,
+        enableShippingAddress: false
+        /*shippingAddressEditable: false,
         shippingAddressOverride: {
           recipientName: '購入者太郎',
           line1: '青山一丁目',
@@ -254,7 +263,7 @@ braintree.client.create({
           postalCode: '123-4567',
           state: '東京都',
           phone: '0312345678'
-        }
+        }*/
         /*shippingAddressOverride: {
           recipientName: 'Scruff McGruff',
           line1: '1234 Main St.',
@@ -277,6 +286,9 @@ braintree.client.create({
           form.appendChild(nonceInput);
         }
         nonceInput.value = tokenizationPayload.nonce;
+
+        document.getElementById('create_cs')['nonce_create_cs'].value = nonceInput.value;
+
         <% if session[:is_submit].blank? then %>
          form.submit();
         <% end %>
@@ -293,7 +305,8 @@ braintree.client.create({
   <label>Customer Id:</label><input type="text" name="vault_customer_id" value="<%= @customer_id %>"/><br/>
   <label>Amount:</label><input type="text" name="vault_amount" value="1234"><br/>
   <label>Currency:</label><input type="text" name="vault_currency" value="JPY"><br/>
-  <label>Payee:</label><input type="text" name="payee" value="<%= session[:payee] %>"><br/>
+  <label>Payee:</label><input type="text" name="payee" value="<%= @payee %>"><br/>
+  <label>BNCode:</label><input type="text" name="bncode" value="<%= @bncode %>"><br/>
   <br/>
   <input type="submit" value="Charge dynamically!" id="pay_btn_vault">
 </form>

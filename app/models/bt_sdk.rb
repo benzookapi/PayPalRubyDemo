@@ -34,18 +34,24 @@ class BtSdk
     result
   end
 
-  def self.doTransEC(nonce, amount, currency, deviceData: '', payee: '')
+  def self.doTransEC(nonce, amount, currency, deviceData: '', payee: '', bncode: '')
     gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     result = gateway.transaction.sale(:amount => amount, :payment_method_nonce => nonce, :merchant_account_id => currency,
       :device_data => deviceData, :options => {:submit_for_settlement => true, :store_in_vault_on_success => true,
-        :paypal => {:payee_email => payee}})
+        :paypal => {:payee_email => payee}}, :channel => bncode)
     result
   end
 
-  def self.doTransVault(customer_id, amount, currency, billingId: '', shippingId: '', payee: '')
+  def self.createCS(nonce, deviceData: '')
+    gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
+    result = gateway.customer.create(:payment_method_nonce => nonce, :device_data => deviceData)
+    result
+  end
+
+  def self.doTransVault(customer_id, amount, currency, billingId: '', shippingId: '', payee: '', bncode: '')
     gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     result = gateway.transaction.sale(:customer_id => customer_id, :amount => amount, :merchant_account_id => currency,
-      :options => {:submit_for_settlement => true, :paypal => {:payee_email => payee}})
+      :options => {:submit_for_settlement => true, :paypal => {:payee_email => payee}}, :channel => bncode)
     result
   end
 

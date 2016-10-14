@@ -15,7 +15,6 @@ class BrainController < ApplicationController
     session[:currency] = params[:currency].blank? ? 'JPY' : params[:currency]
     session[:is_vault] = params[:is_vault].blank? ? '' : 'true'
     session[:is_submit] = params[:is_submit].blank? ? '' : 'false'
-    session[:payee] = params[:payee].blank? ? '' : params[:payee]
 
     p "==================index token: #{@client_token}"
     p "==================index token for EC: #{@client_token_ec}"
@@ -45,9 +44,10 @@ class BrainController < ApplicationController
     p "==================checkout_ec amount and currency: #{session[:amount]} #{session[:currency]}"
 
     deviceData = params[:device_data].blank? ? '' : params[:device_data]
-    payee = params[:payee].blank? ? '' : params[:payee]
+    @payee = params[:payee].blank? ? '' : params[:payee]
+    @bncode = params[:bncode].blank? ? '' : params[:bncode]
 
-    result = BtSdk.doTransEC(params[:payment_method_nonce], params[:amount], params[:currency], deviceData: deviceData, payee: payee)
+    result = BtSdk.doTransEC(params[:payment_method_nonce], params[:amount], params[:currency], deviceData: deviceData, payee: @payee, bncode: @bncode)
     @sucess_ec = result.success?
     @err_ec = ''
     @css_ec = 'info'
@@ -76,10 +76,44 @@ class BrainController < ApplicationController
 
   end
 
-  def vault
-    payee = params[:payee].blank? ? '' : params[:payee]
+  def create_cs
+    deviceData = params[:device_data].blank? ? '' : params[:device_data]
 
-    result = BtSdk.doTransVault(params[:vault_customer_id], params[:vault_amount], params[:vault_currency], payee: payee)
+    p "==================create_cs payment_method_nonce device_data: #{params[:payment_method_nonce]} #{deviceData}"
+
+
+    result = BtSdk.createCS(params[:payment_method_nonce],deviceData: deviceData)
+
+    p "==================create_cs result: #{result.inspect}"
+
+    @sucess_ec = result.success?
+    @err_ec = ''
+    @css_ec = 'info'
+    if defined? result.errors then
+      result.errors.each do |error|
+        @err_ec = @err_ec + error.inspect + " "
+        @css_ec = 'danger'
+      end
+    end
+
+    #@status_ec = ''
+    @customer_id = ''
+    #@transaction_ec = ''
+    @tran_res_ec = result.inspect
+    if @err_ec.blank? then
+      @customer_id = result.customer.id
+      @tran_res_ec = result.customer.inspect + " " + result.customer.paypal_accounts.inspect
+    end
+
+    render :template => 'brain/index'
+
+  end
+
+  def vault
+    @payee = params[:payee].blank? ? '' : params[:payee]
+    @bncode = params[:bncode].blank? ? '' : params[:bncode]
+
+    result = BtSdk.doTransVault(params[:vault_customer_id], params[:vault_amount], params[:vault_currency], payee: @payee, bncode: @bncode)
     @success_vault = result.success?
     @err_vault = ''
     @css_vault = 'info'
