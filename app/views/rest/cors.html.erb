@@ -6,18 +6,35 @@
 	  </td>
 	  <td>
     <label>Type</label>
-  	<input type="text" id="brand" class="form-control" value="visa"/>
+  	<input type="text" id="brand" class="form-control" value="jcb"/>
     <label>Number</label>
-	  <input type="text" id="number" class="form-control" value="4417119669820331"/>
+	  <input type="text" id="number" class="form-control" value="3530111333300000"/>
     <label>Month</label>
 	  <input type="text" id="month" class="form-control" value="11"/>
     <label>Year</label>
 	  <input type="text" id="year" class="form-control" value="2018"/>
     </td>
     </tr>
+    <tr>
+	  <td>
+	  Payment Information (for pay button only)
+	  </td>
+	  <td>
+    <label>Amount</label>
+	  <input type="text" id="amount" class="form-control" value="100"/>
+    <label>Currency</label>
+	  <input type="text" id="currency" class="form-control" value="JPY"/>
+    <label>Intent (sale/authorize)</label>
+	  <input type="text" id="intent" class="form-control" value="sale"/>
+    </td>
+    </tr>
   </tbody>
 </table>
-<button onclick="regCard($('#brand').val(), $('#number').val(), $('#month').val(),$('#year').val());">Register</button>
+<div style="text-align:center">
+  <button onclick="regCard($('#brand').val(), $('#number').val(), $('#month').val(),$('#year').val());">Register by Vault</button><br/>
+  or</br>
+  <button onclick="pay($('#brand').val(), $('#number').val(), $('#month').val(),$('#year').val(),$('#amount').val(),$('#currency').val(),$('#intent').val());">Pay by Payment</button>
+</div>
 <script>
 function regCard(brand, number, month, year) {
       now = new Date();
@@ -50,5 +67,49 @@ function regCard(brand, number, month, year) {
         }).fail(function(error){
           alert("Error!: " + error);
         });
-}
+};
+function pay(brand, number, month, year, amount, currency, intent) {
+      req = JSON.stringify({
+       "intent": intent,
+       "payer": {
+        "payment_method": "credit_card",
+        "funding_instruments": [
+          {
+           "credit_card": {
+             "number": number,
+             "type": brand,
+             "expire_month": month,
+             "expire_year": year,
+             "first_name": "Buyer",
+             "last_name": "SaleAuthCORS"
+           }
+          }
+        ]
+       },
+       "transactions": [
+         {
+         "amount": {
+          "total": amount,
+           "currency": currency
+         },
+          "description": "This is the payment transaction description. (sale/auth)"
+        }
+       ]
+      });
+
+      //alert(req);
+
+      $.ajax(
+        { type:"POST",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "https://api.sandbox.paypal.com/v1/payments/payment",
+          contentType: "application/json",
+          dataType: "json",
+          data: req
+        }).done(function(data){
+          alert("Success!: " + JSON.stringify(data));
+        }).fail(function(xhr, status, error){
+          alert("Error!: " + error);
+        });
+};
 </script>
