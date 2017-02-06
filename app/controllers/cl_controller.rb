@@ -53,7 +53,7 @@ class ClController < ApplicationController
     commit = (session[:q_setec].include?("PAYMENTREQUEST_0_AMT=0") == true ? false : true)
 
     res = PpClassic.set_EC(callback + '?st=redirect', callback + '?st=cancel', session[:q_setec],
-      endpoint: session[:endpoint], commit: commit, context: true, is_us: set_is_us(params, session))
+      endpoint: session[:endpoint], commit: commit, context: false, is_us: set_is_us(params, session))
 
     p "==================setec: #{res}"
 
