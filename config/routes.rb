@@ -140,6 +140,8 @@ Rails.application.routes.draw do
 
   post 'brain/refund' => 'brain#refund'
 
+  post 'brain/capture' => 'brain#capture'
+
   get 'brain/get_token' => 'brain#get_token'
 
   get 'ipn' => 'ipn#indexget'

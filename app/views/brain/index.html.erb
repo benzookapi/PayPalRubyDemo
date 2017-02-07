@@ -73,6 +73,7 @@ client.create({
   <label>Is_submit:</label><input type="text" name="is_submit" value="<%= session[:is_submit] %>"> (set is_submit=false|'') <br/>
   <label>Payee:</label><input type="text" name="payee" value="<%= @payee %>"> (set payee=payee email|'') <br/>
   <label>BNCode:</label><input type="text" name="bncode" value="<%= @bncode %>"> (set bncode=SOMETEXT|'') <br/>
+  <label>Intent:</label><input type="text" name="intent" value="<%= @intent %>"> (set intent=sale|authorize) <br/>
   <input type="submit" value="Pay" id="pay_btn_ec"><br/>
 </form>
 <strong>Or</strong>
@@ -131,18 +132,20 @@ braintree.client.create({
         flow: 'checkout', // Required
         amount: <%= session[:amount] %>, // Required
         currency: '<%= session[:currency] %>', // Required
+        intent: '<%= session[:intent] %>',
+        useraction: 'commit',
         locale: 'ja_JP',
         enableShippingAddress: true,
         shippingAddressEditable: false,
         shippingAddressOverride: {
-          recipientName: '購入者太郎',
+          recipientName: '太郎 購入者',
           line1: '青山一丁目',
           line2: 'ビル１F',
           city: '港区',
           countryCode: 'JP',
           postalCode: '123-4567',
           state: '東京都',
-          phone: '0312345678'
+          phone: '03-1234-5678'
         }
         /*shippingAddressOverride: {
           recipientName: 'Scruff McGruff',
@@ -251,6 +254,8 @@ braintree.client.create({
         flow: 'vault', // Required
         amount: <%= session[:amount] %>, // Required
         currency: '<%= session[:currency] %>', // Required
+        intent: '<%= session[:intent] %>',
+        useraction: 'commit',
         locale: 'ja_JP',
         enableShippingAddress: false
         /*shippingAddressEditable: false,
@@ -336,5 +341,15 @@ braintree.client.create({
 <br/>
 
 <div class="alert alert-info" role="alert"><%= @success_refund %> <%= @refund_res %></div>
+
+<h4>Capture Transaction</h4>
+<form id="cap_tr" method="post" action="/brain/capture">
+  <label>Transacrion Id (BT):</label><input type="text" name="id" value="<%= @id %>"><br/>
+  <br/>
+  <input type="submit" value="Capture a transaction" id="capture_btn">
+</form>
+<br/>
+
+<div class="alert alert-info" role="alert"><%= @success_capture %> <%= @capture_res %></div>
 
 <a href="https://sandbox.braintreegateway.com" target="_blank">Go to Braintree!</a>

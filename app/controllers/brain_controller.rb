@@ -15,6 +15,7 @@ class BrainController < ApplicationController
     session[:currency] = params[:currency].blank? ? 'JPY' : params[:currency]
     session[:is_vault] = params[:is_vault].blank? ? '' : 'true'
     session[:is_submit] = params[:is_submit].blank? ? '' : 'false'
+    session[:intent] = params[:intent].blank? ? 'sale' : params[:intent]
 
     p "==================index token: #{@client_token}"
     p "==================index token for EC: #{@client_token_ec}"
@@ -46,8 +47,10 @@ class BrainController < ApplicationController
     deviceData = params[:device_data].blank? ? '' : params[:device_data]
     @payee = params[:payee].blank? ? '' : params[:payee]
     @bncode = params[:bncode].blank? ? '' : params[:bncode]
+    @intent = params[:intent].blank? ? 'sale' : params[:intent]
+    submit = @intent == 'sale' ? true : false
 
-    result = BtSdk.doTransEC(params[:payment_method_nonce], params[:amount], params[:currency], deviceData: deviceData, payee: @payee, bncode: @bncode)
+    result = BtSdk.doTransEC(params[:payment_method_nonce], params[:amount], params[:currency], deviceData: deviceData, payee: @payee, bncode: @bncode, submit: submit)
     @sucess_ec = result.success?
     @err_ec = ''
     @css_ec = 'info'
@@ -164,6 +167,20 @@ class BrainController < ApplicationController
     @refund_res = result.transaction.inspect + " " + result.transaction.paypal_details.inspect
 
     p "==================refund result: #{@success_refund} #{@refund_res}"
+
+    render :template => 'brain/index'
+
+  end
+
+  def capture
+    @id = params[:id]
+    result = BtSdk.capture(@id)
+
+    @success_capture = result.success?
+
+    @capture_res = result.transaction.inspect + " " + result.transaction.paypal_details.inspect
+
+    p "==================capture result: #{@success_capture} #{@capture_res}"
 
     render :template => 'brain/index'
 
