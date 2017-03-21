@@ -50,3 +50,8 @@ This is my private PayPal integration sample for learning products and Ruby, Not
   - Subject for Classic and adaptive APIs
 
     export PP_API_SUBJECT=<subject account email address>
+
+* Running on Heroku
+
+  https://jo-pp-ruby-demo.herokuapp.com
+  

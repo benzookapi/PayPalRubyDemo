@@ -1,18 +1,3 @@
-<!--<h4>Dropin UI</h4>
-<form id="checkout" method="post" action="/brain/checkout">
-  <div id="dropin"></div>
-  <input type="hidden" name="amount" value="10">
-  <input type="submit" value="Pay $10" id="pay_btn">
-</form>
-<br/>
-
-<div class="alert alert-info" role="alert"><%= @success %> <%= @status %></div>
-<div class="alert alert-info" role="alert"><%= @tran_res %></div>
--->
-<!-- for V2 -->
-<!--<script src="https://js.braintreegateway.com/v2/braintree.js"></script>-->
-<!--<script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>-->
-
 <!-- for V3 -->
 <!-- Load the required client component. -->
 <script src="https://js.braintreegateway.com/web/3.3.0/js/client.min.js"></script>
@@ -21,26 +6,6 @@
 <script src="https://js.braintreegateway.com/web/3.3.0/js/hosted-fields.min.js"></script>
 <script src="https://js.braintreegateway.com/web/3.3.0/js/paypal.min.js"></script>
 <script src="https://js.braintreegateway.com/web/3.3.0/js/data-collector.min.js"></script>
-
-<script>
-/* for V2
-  braintree.setup(
-    // Replace this with a client token from your server
-    "<%= @client_token %>",
-    'dropin', {
-      container: 'dropin'
-    });
-*/
-// for V3
-/*
-var client = require('braintree-web/client');
-client.create({
-  authorization: '<%= @client_token %>'
-}, function (err, clientInstance) {
-
-});
-*/
-</script>
 
 <h4>v.zero for EC</h4>
 <script src="https://www.paypalobjects.com/api/button.js?"
@@ -89,32 +54,6 @@ client.create({
 
 <script>
 <% if session[:is_vault].blank? then %>
-/* for V2
-braintree.setup('<%= @client_token_ec %>', 'custom', {
-  paypal: {
-    container: 'paypal-container',
-    singleUse: true, // Required
-    amount: <%= session[:amount] %>, // Required
-    currency: '<%= session[:currency] %>', // Required
-    intent: 'sale',
-    paymentMethodNonceInputField: 'nonce_ec',
-    locale: 'ja_jp',
-    enableShippingAddress: true,
-    shippingAddressOverride: {
-      recipientName: '購入者　太郎',
-      streetAddress: '青山一丁目',
-      extendedAddress: '1F',
-      locality: '東京都',
-      countryCodeAlpha2: 'JP',
-      postalCode: '1234567',
-      region: '港区',
-      phone: '03-1234-5678',
-      editable: false
-    }
-  }
-});
-*/
-// for V3
 // Fetch the button you are using to initiate the PayPal flow
 var paypalButton = document.getElementById('paypal-button');
 
@@ -135,6 +74,7 @@ braintree.client.create({
         intent: '<%= session[:intent] %>',
         useraction: 'commit',
         locale: 'ja_JP',
+        billingAgreementDescription: "ここにカスタムメッセージを表示できます。",
         enableShippingAddress: true,
         shippingAddressEditable: false,
         shippingAddressOverride: {
@@ -177,38 +117,6 @@ braintree.client.create({
   });
 });
 <% else %>
-/* for V2
-braintree.setup('<%= @client_token_ec %>', 'custom', {
-  paypal: {
-    container: 'paypal-container',
-    singleUse: false, // Required
-    amount: <%= session[:amount] %>, // Required
-    currency: '<%= session[:currency] %>', // Required
-    intent: 'sale',
-    paymentMethodNonceInputField: 'nonce_ec',
-    locale: 'en_us',
-    billingAgreementDescription: 'Web Agreement!'
-  },
-  dataCollector: {
-        paypal: true
-  },
-  onReady: function (braintreeInstance) {
-    var form = document.getElementById('checkout_ec');
-    var deviceDataInput = form['device_data'];
-
-    if (deviceDataInput == null) {
-      deviceDataInput = document.createElement('input');
-      deviceDataInput.name = 'device_data';
-      deviceDataInput.type = 'hidden';
-      form.appendChild(deviceDataInput);
-    }
-
-    deviceDataInput.value = braintreeInstance.deviceData;
-  }
-});
-*/
-
-// for V3
 // Fetch the button you are using to initiate the PayPal flow
 var paypalButton = document.getElementById('paypal-button');
 
@@ -257,6 +165,7 @@ braintree.client.create({
         intent: '<%= session[:intent] %>',
         useraction: 'commit',
         locale: 'ja_JP',
+        billingAgreementDescription: "ここにカスタムメッセージを表示できます。",
         enableShippingAddress: false
         /*shippingAddressEditable: false,
         shippingAddressOverride: {
