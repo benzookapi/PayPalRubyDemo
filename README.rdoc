@@ -51,7 +51,10 @@ This is my private PayPal integration sample for learning products and Ruby, Not
 
     export PP_API_SUBJECT=<subject account email address>
 
+  -  Braintree SDK settings
+
+    export PP_BT_TOKEN=<Your access token for LIVE>
+
 * Running on Heroku
 
   https://jo-pp-ruby-demo.herokuapp.com
-  
