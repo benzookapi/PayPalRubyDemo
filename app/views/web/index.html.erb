@@ -109,9 +109,42 @@
 </div>
 <br/>
 
-
 <h4>
   In-Context Express Checkout
+  <a target="_blank" href="https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/upgrade-integration">details</a>
+</h4>
+<div id="paymentMethods"></div>
+
+<script src="https://www.paypalobjects.com/api/checkout.js">
+</script>
+
+<script>
+    var CREATE_PAYMENT_URL  = 'https://jo-pp-ruby-demo.herokuapp.com/web/checkout?context=true&commit=false&is_us=<%= @is_us.to_s %>&q_context=<%= session[:q_context].gsub('&', '%26')%>&redirect=false';
+
+    paypal.Button.render({
+
+        env: 'sandbox', // Optional: specify 'sandbox' environment
+
+        payment: function(resolve, reject) {
+            paypal.request.get(CREATE_PAYMENT_URL)
+                .then(function(data) { resolve(data.token); })
+                .catch(function(err) { reject(err); });
+        },
+
+        onAuthorize: function(data, actions) {
+            return actions.redirect();
+        },
+
+        onCancel: function(data, actions) {
+            return actions.redirect();
+        }
+
+    }, '#paymentMethods');
+</script>
+
+<!--
+<h4>
+  In-Context Express Checkout (Old)
   <a target="_blank" href="https://developer.paypal.com/docs/classic/express-checkout/in-context/">details</a>
 </h4>
 <form id="myContainer" method="get" action="/web/checkout">
@@ -130,7 +163,7 @@
     });
   };
 </script>
-<script src="//www.paypalobjects.com/api/checkout.js" async></script>
+
 <br/>
 <br/>
 
@@ -141,7 +174,7 @@
 <a href="/in-con-ajax.html">&gt;&gt; Here</a>
 <br/>
 <br/>
-
+-->
 <script type="text/javascript">
 function isMobile(){
   if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) ||
@@ -151,6 +184,7 @@ function isMobile(){
   return false;
 };
 </script>
+
 
 <h4>
   Wep Payment Plus in responsive layout by mobile-iframe

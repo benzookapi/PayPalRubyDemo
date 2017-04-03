@@ -37,13 +37,17 @@ class WebController < ApplicationController
 
     commit = (query.include?("PAYMENTREQUEST_0_AMT=0") == true ? false : true)
 
+    redirect = (params.has_key?(:redirect) && params[:redirect] == 'false' ? false : true)
+
     res = PpClassic.set_EC(callback + '/complete', callback + '?is_us=' + is_us.to_s, query, endpoint: ENDPOINT, commit: commit,
       context: (params[:context] == 'true' ? true : false), is_us: is_us)
 
     p "==================checkout: #{res}"
 
     if res.has_key?('_MY_REDIRECT') then
-      redirect_to(res['_MY_REDIRECT'])
+      redirect_to(res['_MY_REDIRECT']) if redirect
+      j = {'token': res['TOKEN']}
+      render :json =>  j  if !redirect
     else
       @res = res
       render template: 'web/index'
