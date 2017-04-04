@@ -46,8 +46,7 @@ class WebController < ApplicationController
 
     if res.has_key?('_MY_REDIRECT') then
       redirect_to(res['_MY_REDIRECT']) if redirect
-      j = {'token': res['TOKEN']}
-      render :json =>  j  if !redirect
+      render :json => {'token': res['TOKEN']}  if !redirect
     else
       @res = res
       render template: 'web/index'
