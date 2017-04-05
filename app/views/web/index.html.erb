@@ -115,9 +115,9 @@
   <a target="_blank" href="https://developer.paypal.com/docs/integration/direct/express-checkout/integration-jsv4/upgrade-integration">details</a>
 </h4>
 <div id="paymentMethods"></div>
-<script async src="//www.paypalobjects.com/api/checkout.js"></script>
+<script src="//www.paypalobjects.com/api/checkout.js"></script>
 <script>
-    var CREATE_PAYMENT_URL  = 'https://jo-pp-ruby-demo.herokuapp.com/web/checkout?context=true&commit=false&is_us=<%= @is_us.to_s %>&q_context=<%= session[:q_context].gsub('&', '%26')%>&redirect=false';
+    var CREATE_PAYMENT_URL  = '<%= root_url(only_path: false) %>web/checkout?context=true&commit=false&is_us=<%= @is_us.to_s %>&q_context=<%= session[:q_context].gsub('&', '%26')%>&redirect=false';
 
     paypal.Button.render({
 
