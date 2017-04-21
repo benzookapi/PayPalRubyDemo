@@ -202,8 +202,7 @@ Q_DOPAY
     if params.has_key?(:paymentId) then
       payId = params[:paymentId]
       payer_id = params[:PayerID]
-      t = params[:token]
-      res = PpRest.do_pay("{ \"payer_id\" : \"#{payer_id}\" }", payId, t)
+      res = PpRest.do_pay("{ \"payer_id\" : \"#{payer_id}\" }", payId, @token)
       p "==================ecqr: #{res}"
       @msg = "<h2>Thank you! Your payment has been accepted!</h2>"
     end
