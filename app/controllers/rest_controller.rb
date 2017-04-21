@@ -195,7 +195,7 @@ Q_DOPAY
   end
 
   def ecqr
-    res = PpRest.get_token(true)
+    res = PpRest.get_token()
     p "==================ecqr: #{res}"
     @token = res['access_token']
     @msg = ""
