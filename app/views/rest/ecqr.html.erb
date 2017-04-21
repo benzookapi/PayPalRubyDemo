@@ -34,7 +34,8 @@
 </div>
 <br/>
 <br/>
-<div style="text-align:center" id="status">
+<div style="text-align:center">
+  <h2 id="status"></h2>
 </div>
 <br/>
 <br/>
@@ -120,7 +121,7 @@ function check(id) {
           contentType: "application/json",
           data: ""
         }).done(function(data){
-          alert("Success!: " + data);
+          //alert("Success!: " + data);
           $('#status').text(data.state);
         }).fail(function(xhr, status, error){
           alert("Error!: " + error);
