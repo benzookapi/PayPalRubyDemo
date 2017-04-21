@@ -194,6 +194,31 @@ Q_DOPAY
     render template: 'rest/invoice'
   end
 
+  def ecqr
+    res = PpRest.get_token(true)
+    p "==================ecqr: #{res}"
+    @token = res['access_token']
+    @msg = ""
+    if params.has_key?(:paymentId) then
+      payId = params[:paymentId]
+      payer_id = params[:PayerID]
+      t = params[:token]
+      res = PpRest.do_pay("{ \"payer_id\" : \"#{payer_id}\" }", payId, t)
+      p "==================ecqr: #{res}"
+      @msg = "<h2>Thank you! Your payment has been accepted!</h2>"
+    end
+    render template: 'rest/ecqr'
+  end
+
+  def call_qr
+    require 'net/http'
+    uri = URI.parse("http://api.qrserver.com/v1/create-qr-code?data=" + ERB::Util.url_encode(params[:url]))
+    res = Net::HTTP.get_response(uri)
+    p "==================call_qr: #{res.body}"
+    imgSrc = res.body.match(/href="(.+?)"/)
+    render :text => "#{imgSrc[1]}"
+  end
+
   def fp
     desc = params[:desc]
     p "==================fp: desc:#{desc}"

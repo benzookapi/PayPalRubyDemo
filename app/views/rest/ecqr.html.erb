@@ -1,0 +1,129 @@
+<h1>QR checkout by EC + external APIs</h1>
+<%=raw @msg=%>
+<table class="table table-striped">
+  <tbody>
+	  <tr>
+	  <td>
+	  Item Information
+	  </td>
+	  <td>
+    <label>Name</label>
+  	<input type="text" id="name" class="form-control" value="Test Product1"/>
+    <label>Amount</label>
+	  <input type="text" id="amount" class="form-control" value="100"/>
+    <label>Currency</label>
+	  <input type="text" id="currency" class="form-control" value="JPY"/>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align:center">
+  <button onclick="createQR($('#name').val(), $('#amount').val(), $('#currency').val());">Generate QR Code</button>
+</div>
+<br/>
+<br/>
+<div style="text-align:center" id="id">
+</div>
+<div style="text-align:center">
+  <img id="qr">
+</div>
+<br/>
+<br/>
+<div style="text-align:center">
+  <button onclick="check($('#id').text());">Check the payment status</button>
+</div>
+<br/>
+<br/>
+<div style="text-align:center" id="status">
+</div>
+<br/>
+<br/>
+<script>
+function createQR(name, amount, currency) {
+      now = new Date();
+      dateStr = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+      $.ajax(
+        { type:"POST",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "https://api.sandbox.paypal.com/v1/payments/payment",
+          contentType: "application/json",
+          dataType: "json",
+          data: JSON.stringify({
+            "intent": "sale",
+            "payer": {
+              "payment_method": "paypal"
+            },
+            "transactions": [
+              {
+                "amount": {
+                "total": amount,
+                "currency": currency
+                },
+                "description": "DESC " + dateStr,
+                "custom": "CUSTOM " + dateStr,
+                "item_list": {
+                  "items": [
+                    {
+                      "name": name,
+                      "description": "DESC " + name,
+                      "quantity": "1",
+                      "price": amount,
+                      "currency": currency
+                    }
+                  ],
+                  "shipping_address": {
+                    "recipient_name": "Hoge hoge",
+                    "line1": "123",
+                    "line2": "Mote-sando",
+                    "city": "Minato-ku",
+                    "country_code": "JP",
+                    "postal_code": "1234567",
+                    "phone": "81312345678",
+                    "state": "Tokyo"
+                  }
+                }
+              }
+            ],
+            "note_to_payer": "NOTE " + dateStr,
+            "redirect_urls": {
+              "return_url": "https://jo-pp-ruby-demo.herokuapp.com/rest/ecqr/",
+              "cancel_url": "https://jo-pp-ruby-demo.herokuapp.com/rest/ecqr/"
+            }
+          })
+        }).done(function(data){
+          //alert("Success!: " + JSON.stringify(data));
+          $('#id').text(data.id);
+          qr(data.links[1].href);
+        }).fail(function(error){
+          alert("Error!: " + error);
+        });
+};
+function qr(url) {
+      $.ajax(
+        { type:"GET",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "/rest/call_qr?url=" + url.replace("&", "%26"),
+          contentType: "application/json",
+          data: ""
+        }).done(function(data){
+          //alert("Success!: " + data);
+          $('#qr').attr("src", data);
+        }).fail(function(xhr, status, error){
+          alert("Error!: " + error);
+        });
+};
+function check(id) {
+      $.ajax(
+        { type:"GET",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "https://api.sandbox.paypal.com/v1/payments/payment" + id,
+          contentType: "application/json",
+          data: ""
+        }).done(function(data){
+          alert("Success!: " + data);
+          $('#status').text(data.state);
+        }).fail(function(xhr, status, error){
+          alert("Error!: " + error);
+        });
+};
+</script>

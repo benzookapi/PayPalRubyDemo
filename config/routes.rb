@@ -106,6 +106,10 @@ Rails.application.routes.draw do
 
   get 'rest/invoice' => 'rest#invoice'
 
+  get 'rest/ecqr' => 'rest#ecqr'
+
+  get 'rest/call_qr' => 'rest#call_qr'
+
   post 'rest/fp' => 'rest#fp'
 
   get 'ad' => 'ad#index'
