@@ -204,7 +204,7 @@ Q_DOPAY
       payer_id = params[:PayerID]
       res = PpRest.do_pay("{ \"payer_id\" : \"#{payer_id}\" }", payId, @token)
       p "==================ecqr: #{res}"
-      @msg = "<h2>Thank you! Your payment has been accepted!</h2>"
+      @msg = "<h2><span style=\"color:red;\">Thank you! Your payment has been accepted!</span></h2>"
     end
     render template: 'rest/ecqr'
   end
