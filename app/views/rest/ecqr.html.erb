@@ -116,7 +116,7 @@ function check(id) {
       $.ajax(
         { type:"GET",
           headers: { Authorization : "Bearer <%=@token=%>"},
-          url: "https://api.sandbox.paypal.com/v1/payments/payment" + id,
+          url: "https://api.sandbox.paypal.com/v1/payments/payment/" + id,
           contentType: "application/json",
           data: ""
         }).done(function(data){
