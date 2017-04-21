@@ -210,12 +210,15 @@ Q_DOPAY
   end
 
   def call_qr
-    require 'net/http'
-    uri = URI.parse("http://api.qrserver.com/v1/create-qr-code?data=" + ERB::Util.url_encode(params[:url]))
-    res = Net::HTTP.get_response(uri)
-    p "==================call_qr: #{res.body}"
-    imgSrc = res.body.match(/href="(.+?)"/)
-    render :text => "#{imgSrc[1]}"
+    require 'barby'
+    require 'barby/barcode'
+    require 'barby/barcode/qr_code'
+    require 'barby/outputter/png_outputter'
+    qrcode = Barby::QrCode.new(params[:url], level: :q, size: 10)
+    base64_output = Base64.encode64(qrcode.to_png({ xdim: 10 }))
+    p "==================call_qr: #{base64_output}"
+    imgSrc = "data:image/png;base64,#{base64_output}"
+    render :text => "#{imgSrc}"
   end
 
   def fp
