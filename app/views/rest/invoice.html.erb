@@ -1,0 +1,153 @@
+<table class="table table-striped">
+  <tbody>
+	  <tr>
+	  <td>
+	  Item Information
+	  </td>
+	  <td>
+    <label>Name</label>
+  	<input type="text" id="name" class="form-control" value="Test Product1"/>
+    <label>Amount</label>
+	  <input type="text" id="amount" class="form-control" value="100"/>
+    <label>Currency</label>
+	  <input type="text" id="currency" class="form-control" value="JPY"/>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align:center">
+  <button onclick="createQR($('#name').val(), $('#amount').val(), $('#currency').val());">Generate QR Code</button>
+</div>
+<br/>
+<br/>
+<div style="text-align:center" id="id">
+</div>
+<div style="text-align:center">
+  <img id="qr">
+</div>
+<br/>
+<br/>
+<div style="text-align:center">
+  <button onclick="check($('#id').text());">Check the invoice</button>
+</div>
+<br/>
+<br/>
+<div style="text-align:center" id="status">
+</div>
+<br/>
+<br/>
+<script>
+function createQR(name, amount, currency) {
+      now = new Date();
+      dateStr = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+      $.ajax(
+        { type:"POST",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "https://api.sandbox.paypal.com/v1/invoicing/invoices/",
+          contentType: "application/json",
+          dataType: "json",
+          data: JSON.stringify({
+              "merchant_info": {
+                 "email": "benzookapi+B@gmail.com",
+                 "first_name": "Benzo",
+                 "last_name": "Okapi",
+                 "business_name": "BO Store",
+                 "phone": {
+                   "country_code": "081",
+                   "national_number": "312345678"
+                 },
+                 "address": {
+                   "line1": "1234 Omote-santo",
+                   "city": "Minato-ku",
+                   "state": "Tokyo",
+                   "postal_code": "1234567",
+                   "country_code": "JP"
+                 }
+              },
+              "billing_info": [
+                {
+                  "email": "qrinvoice@paypal.com"
+                }
+              ],
+              "items": [
+                {
+                  "name": name,
+                  "quantity": 1,
+                  "unit_price": {
+                    "currency": currency,
+                    "value": amount
+                  }
+                }
+              ],
+              "note": "NOTE: " + dateStr,
+              "payment_term": {
+                "term_type": "NET_45"
+              },
+              "shipping_info": {
+                "first_name": "ShippingFirst",
+                "last_name": "ShippingLast",
+                "business_name": "Not applicable",
+                "phone": {
+                  "country_code": "081",
+                  "national_number": "312345678"
+                },
+                "address": {
+                  "line1": "Shipping 1234",
+                  "city": "Umeda",
+                  "state": "Osaka",
+                  "postal_code": "1234567",
+                  "country_code": "JP"
+                }
+              }
+          })
+        }).done(function(data){
+          //alert("Success!: " + JSON.stringify(data));
+          send(data.id);
+        }).fail(function(error){
+          alert("Error!: " + error);
+        });
+};
+function send(id) {
+      $.ajax(
+        { type:"POST",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "https://api.sandbox.paypal.com/v1/invoicing/invoices/" + id + "/send",
+          contentType: "application/json",
+          data: ""
+        }).done(function(data){
+          //alert("Success!: " + data);
+          $('#id').text(id);
+          qr(id);
+        }).fail(function(xhr, status, error){
+          alert("Error!: " + error);
+        });
+};
+function qr(id) {
+      $.ajax(
+        { type:"GET",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "https://api.sandbox.paypal.com/v1/invoicing/invoices/" + id + "/qr-code",
+          contentType: "application/json",
+          data: ""
+        }).done(function(data){
+          //alert("Success!: " + data);
+          $('#qr').attr("src", "data:image/jpg;base64," + data.image);
+        }).fail(function(xhr, status, error){
+          alert("Error!: " + error);
+        });
+};
+function check(id) {
+      $.ajax(
+        { type:"GET",
+          headers: { Authorization : "Bearer <%=@token=%>"},
+          url: "https://api.sandbox.paypal.com/v1/invoicing/invoices/" + id,
+          contentType: "application/json",
+          data: ""
+        }).done(function(data){
+          //alert("Success!: " + data);
+          $('#status').text(data.status);
+        }).fail(function(xhr, status, error){
+          alert("Error!: " + error);
+        });
+};
+</script>

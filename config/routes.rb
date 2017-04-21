@@ -104,6 +104,8 @@ Rails.application.routes.draw do
 
   get 'rest/cors' => 'rest#cors'
 
+  get 'rest/invoice' => 'rest#invoice'
+
   post 'rest/fp' => 'rest#fp'
 
   get 'ad' => 'ad#index'

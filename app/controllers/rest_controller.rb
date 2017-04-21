@@ -187,6 +187,13 @@ Q_DOPAY
     render template: 'rest/cors'
   end
 
+  def invoice
+    res = PpRest.get_token(true)
+    p "==================invoice: #{res}"
+    @token = res['access_token']
+    render template: 'rest/invoice'
+  end
+
   def fp
     desc = params[:desc]
     p "==================fp: desc:#{desc}"
