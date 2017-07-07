@@ -62,7 +62,7 @@ class LgController < ApplicationController
 
     redirect_to("https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize" +
       "?client_id=#{PpRest::API_APP_REST}&response_type=code&scope=profile+email+address+phone" +
-        "+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes+https%3A%2F%2Furi.paypal.com%2Fservices%2Fexpresscheckout&redirect_uri=#{PpRest::API_APP_REST_URI}")
+        "+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes+https%3A%2F%2Furi.paypal.com%2Fservices%2Fexpresscheckout+https%3a%2f%2furi%2epaypal%2ecom%2fservices%2finvoicing&redirect_uri=#{PpRest::API_APP_REST_URI}")
 
   end
 end

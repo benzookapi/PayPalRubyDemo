@@ -6,7 +6,7 @@ paypal.use( ["login"], function(login) {
   login.render ({
     "appid": "<%= @client_id %>",
     "authend": "sandbox",
-    "scopes": "profile email address phone https://uri.paypal.com/services/paypalattributes https://uri.paypal.com/services/expresscheckout",
+    "scopes": "profile email address phone https://uri.paypal.com/services/paypalattributes https://uri.paypal.com/services/expresscheckout https://uri.paypal.com/services/invoicing",
     "containerid": "myContainer",
     "locale": "ja-jp",
     "returnurl": "<%= @redirect_uri %>"
@@ -22,6 +22,9 @@ paypal.use( ["login"], function(login) {
   <input type="submit" value="Give your access token!">
 </form>
 
+<a href="https://developer.paypal.com/docs/integration/paypal-here/merchant-onboarding/obtaining-refresh-token-and-access-tokens/#refresh-tokens" target="_blank">
+  for using token continuosly, you need refresh token
+</a>
 <br/>
 <br/>
 
