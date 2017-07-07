@@ -1,7 +1,11 @@
 #!/bin/sh
+
 << COMMENT
+echo 'CLIENT_ID:SECRET' | base64
+
+
 curl -X POST https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice \
-  -H 'authorization: Basic <BASE64 encoded (ClientID:Secret)>' \
+  -H 'authorization: Basic <BASE64-ENCODED-ABOVE>' \
   -H 'content-type: application/x-www-form-urlencoded' \
   -d 'grant_type=refresh_token&refresh_token={"token_type": "Bearer", "expires_in": "28800", "access_token": "<AccessToken>"}'
 COMMENT
