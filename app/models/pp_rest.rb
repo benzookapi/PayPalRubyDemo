@@ -33,6 +33,10 @@ class PpRest
     call_api('grant_type=client_credentials', API_PATH_TOKEN, '', '', 'post', client)
   end
 
+  def self.get_token2(code)
+    call_api("grant_type=authorization_code&code=#{code}&response_type=token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", API_PATH_TOKEN, '', '', 'post', false)
+  end
+
   def self.pay(query, token)
     call_api(query, API_PATH_PAY, '', token, 'post')
   end

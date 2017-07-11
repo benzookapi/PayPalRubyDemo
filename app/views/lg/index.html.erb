@@ -17,7 +17,7 @@ paypal.use( ["login"], function(login) {
 <br/>
 <br/>
 
-<h4>Obtain Buyer Token (Manual Login With PayPal) <a target="_blank" href="https://developer.paypal.com/docs/api/#obtain-users-consent">details</a></h4>
+<h4>Obtain Buyer/Seller Token (Manual Login With PayPal) <a target="_blank" href="https://developer.paypal.com/docs/api/#obtain-users-consent">details</a></h4>
 <form method="post" action="/lg/auth">
   <input type="submit" value="Give your access token!">
 </form>
@@ -25,5 +25,12 @@ paypal.use( ["login"], function(login) {
 <br/>
 <br/>
 
-<%= @access_token %><br/>
+Access Token: <%= @access_token %><br/>
+Refresh Token: <%= @refresh_token %><br/>
+<h4>You can obtain an access token by the refresh token above without PayPal login at the next time.</h4>
+(curl -X POST https://api.sandbox.paypal.com/v1/oauth2/token <br/>
+    -H "Content-Type: application/x-www-form-urlencoded" <br/>
+    -u "CLIENT_ID:SECRET" <br/>
+    -d 'grant_type=refresh_token&refresh_token=<%= @refresh_token %>')<br/>
+<br/>
 <%= @res %>

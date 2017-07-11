@@ -2,12 +2,11 @@ class LgController < ApplicationController
 
   protect_from_forgery with: :null_session
 
-  ENDPOINT = PpClassic::ENDPOINT_NVP_CER
-
   def index
     @client_id = PpRest::API_APP_REST
     @redirect_uri = PpRest::API_APP_REST_URI
     @access_token = params[:access_token]
+    @refresh_token = params[:refresh_token]
     @res = nil
     if @access_token.present? then
       @res = session[:res]
@@ -29,11 +28,14 @@ class LgController < ApplicationController
 
     p "==================callback code: #{code}"
 
-    res = PpRest.identity(code)
+    #res = PpRest.identity(code)
+    res = PpRest.get_token2(code)
 
     p "==================callback res: #{res}"
 
     token = res['access_token']
+
+    refresh_token = res['refresh_token']
 
     res = PpRest.userinfo(token)
 
@@ -41,8 +43,8 @@ class LgController < ApplicationController
 
     session[:res] = res
 
-    render :text => "<script>if (top.window.opener != null) { top.window.opener.location='#{base_url}/lg?access_token=#{token}'; " +
-      "window.close(); } else { window.location='#{base_url}/lg?access_token=#{token}'; } </script>"
+    render :text => "<script>if (top.window.opener != null) { top.window.opener.location='#{base_url}/lg?access_token=#{token}&refresh_token=#{refresh_token}'; " +
+      "window.close(); } else { window.location='#{base_url}/lg?access_token=#{token}&refresh_token=#{refresh_token}'; } </script>"
 
   end
 
@@ -60,7 +62,7 @@ class LgController < ApplicationController
 
   def auth
 
-    redirect_to("https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize" +
+    redirect_to("https://www.sandbox.paypal.com/signin/authorize" +
       "?client_id=#{PpRest::API_APP_REST}&response_type=code&scope=profile+email+address+phone" +
         "+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes+https%3A%2F%2Furi.paypal.com%2Fservices%2Fexpresscheckout+https%3a%2f%2furi%2epaypal%2ecom%2fservices%2finvoicing&redirect_uri=#{PpRest::API_APP_REST_URI}")
 

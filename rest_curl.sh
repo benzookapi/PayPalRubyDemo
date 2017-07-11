@@ -1,23 +1,22 @@
 #!/bin/sh
 
 << COMMENT
-echo 'CLIENT_ID:SECRET' | base64
+echo '<ClientId>:<Secret>' | base64
+
+curl -X POST https://api.sandbox.paypal.com/v1/oauth2/token \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -u "<Echo-Value-Above>" \
+    -d 'grant_type=refresh_token&refresh_token=<RefreshToken>'
 
 
-curl -X POST https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice \
-  -H 'authorization: Basic <BASE64-ENCODED-ABOVE>' \
-  -H 'content-type: application/x-www-form-urlencoded' \
-  -d 'grant_type=refresh_token&refresh_token={"token_type": "Bearer", "expires_in": "28800", "access_token": "<AccessToken>"}'
-COMMENT
 
-<< COMMENT2
 curl -v https://api.sandbox.paypal.com/v1/invoicing/invoices/ \
   -H "Content-Type: application/json" \
   -H "PayPal-Partner-Attribution-Id: BENZOOKAPI" \
   -H "Authorization: Bearer <AccessToken>" \
   -d '{
   "merchant_info": {
-  "email": "xxxxxxxxxxx@xxxxxxx.com",
+  "email": "aaa@xxx.com",
   "first_name": "Dennis",
   "last_name": "Doctor",
   "business_name": "Medical Professionals, LLC",
@@ -35,7 +34,7 @@ curl -v https://api.sandbox.paypal.com/v1/invoicing/invoices/ \
   },
   "billing_info": [
   {
-    "email": "xxxxxxxxxxx@xxxxxxx.com"
+    "email": "bbb@xxx.com"
   }
   ],
   "items": [
@@ -69,7 +68,7 @@ curl -v https://api.sandbox.paypal.com/v1/invoicing/invoices/ \
   }
   }
 }'
-COMMENT2
+COMMENT
 
 << COMMENT3
 curl -v -X POST https://api.sandbox.paypal.com/v1/invoicing/invoices/INV2-YDZV-6D4N-U8RT-2FJM/send \
