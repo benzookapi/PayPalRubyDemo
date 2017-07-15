@@ -1,14 +1,10 @@
 #!/bin/sh
 
 << COMMENT
-echo '<ClientId>:<Secret>' | base64
-
 curl -X POST https://api.sandbox.paypal.com/v1/oauth2/token \
     -H "Content-Type: application/x-www-form-urlencoded" \
-    -u "<Echo-Value-Above>" \
+    -u "<ClientId>:<Secret>" \
     -d 'grant_type=refresh_token&refresh_token=<RefreshToken>'
-
-
 
 curl -v https://api.sandbox.paypal.com/v1/invoicing/invoices/ \
   -H "Content-Type: application/json" \

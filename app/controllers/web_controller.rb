@@ -8,7 +8,8 @@ class WebController < ApplicationController
     p "==================index: #{params}"
     @res = nil
     session[:is_us] = params[:is_us]
-    session[:q_context] = "PAYMENTREQUEST_0_AMT=0&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
+    #session[:q_context] = "PAYMENTREQUEST_0_AMT=0&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
+    session[:q_context] = "PAYMENTREQUEST_0_AMT=200&PAYMENTREQUEST_0_CURRENCYCODE=JPY"
     @is_us = set_is_us(params, session)
     @merchant_id = 'GML6GZVPKKSGS'
     @merchant_id = 'UXTTV2MAAJDJE' if @is_us
