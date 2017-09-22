@@ -8,7 +8,7 @@ class WebController < ApplicationController
     p "==================index: #{params}"
     @res = nil
     session[:is_us] = params[:is_us]
-    session[:q_context] = "PAYMENTREQUEST_0_AMT=200&&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
+    session[:q_context] = "PAYMENTREQUEST_0_AMT=200&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
     #session[:q_context] = "PAYMENTREQUEST_0_AMT=200&PAYMENTREQUEST_0_CURRENCYCODE=JPY"
     @is_us = set_is_us(params, session)
     @merchant_id = 'GML6GZVPKKSGS'
@@ -59,15 +59,20 @@ class WebController < ApplicationController
 
     query = session[:q_context]
 
-    if !query.include?("PAYMENTREQUEST_0_AMT=0") then
-      res = PpClassic.do_EC(params[:token], params[:PayerID], query, endpoint: ENDPOINT, is_us: @is_us)
-      p "==================complete #{res}"
-      @res = res
-    end
-
     if query.include?("MerchantInitiatedBilling") then
       res = PpClassic.create_BA(params[:token], endpoint: ENDPOINT, is_us: @is_us)
       @res = res
+      if !query.include?("PAYMENTREQUEST_0_AMT=0") then
+        res = PpClassic.do_RT(res['BILLINGAGREEMENTID'], "PAYMENTACTION=Sale&AMT=200&CURRENCYCODE=JPY", endpoint: ENDPOINT, is_us: @is_us)
+        p "==================complete #{res}"
+        @res = res
+      end
+    else
+      if !query.include?("PAYMENTREQUEST_0_AMT=0") then
+        res = PpClassic.do_EC(params[:token], params[:PayerID], query, endpoint: ENDPOINT, is_us: @is_us)
+        p "==================complete #{res}"
+        @res = res
+      end
     end
 
     render template: 'web/complete'
