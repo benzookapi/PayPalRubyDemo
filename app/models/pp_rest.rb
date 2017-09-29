@@ -130,7 +130,7 @@ class PpRest
     p "==================call_api response msg: #{res.message}"
     p "==================call_api response body: #{res.body}"
 
-    json = JSON.parse(res.body)
+    json = JSON.parse(res.body.blank? ? "{}" : res.body)
 
     json['_MY_ELAPSED_TIME'] = elapsed
 
