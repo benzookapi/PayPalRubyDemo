@@ -38,7 +38,7 @@ class BtSdk
     gateway = Braintree::Gateway.new(:access_token => MY_TOKEN)
     result = gateway.transaction.sale(:amount => amount, :payment_method_nonce => nonce, :merchant_account_id => currency,
       :device_data => deviceData, :options => {:submit_for_settlement => submit, :store_in_vault_on_success => true,
-        :paypal => {:payee_email => payee}}, :channel => bncode)
+        :paypal => {:payee_email => payee}}, :channel => bncode, :descriptor => {:name => 'PAYPAL *12345678901234'})
     result
   end
 

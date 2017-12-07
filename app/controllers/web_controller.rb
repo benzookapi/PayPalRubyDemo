@@ -8,8 +8,8 @@ class WebController < ApplicationController
     p "==================index: #{params}"
     @res = nil
     session[:is_us] = params[:is_us]
-    session[:q_context] = "PAYMENTREQUEST_0_AMT=200&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
-    #session[:q_context] = "PAYMENTREQUEST_0_AMT=200&PAYMENTREQUEST_0_CURRENCYCODE=JPY"
+    #session[:q_context] = "PAYMENTREQUEST_0_AMT=200&PAYMENTREQUEST_0_CURRENCYCODE=JPY&L_BILLINGTYPE0=MerchantInitiatedBillingSingleAgreement"
+    session[:q_context] = "PAYMENTREQUEST_0_AMT=200&PAYMENTREQUEST_0_CURRENCYCODE=JPY"
     @is_us = set_is_us(params, session)
     @merchant_id = 'GML6GZVPKKSGS'
     @merchant_id = 'UXTTV2MAAJDJE' if @is_us
@@ -69,7 +69,7 @@ class WebController < ApplicationController
       end
     else
       if !query.include?("PAYMENTREQUEST_0_AMT=0") then
-        res = PpClassic.do_EC(params[:token], params[:PayerID], query, endpoint: ENDPOINT, is_us: @is_us)
+        res = PpClassic.do_EC(params[:token], params[:PayerID], query + "&PAYMENTREQUEST_0_SOFTDESCRIPTOR=1234567890ABCD", endpoint: ENDPOINT, is_us: @is_us)
         p "==================complete #{res}"
         @res = res
       end

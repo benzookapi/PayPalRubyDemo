@@ -55,9 +55,9 @@ Q_COMM
 
 @q_pay=<<"Q_PAY"
 {
-  "intent":"sale",
+  "intent": "sale",
   "payer":{
-    "payment_method":"paypal"
+    "payment_method": "paypal"
   },
   "redirect_urls": {
         "return_url": "#{PpRest::API_APP_REST_URI}",
@@ -66,10 +66,11 @@ Q_COMM
   "transactions":[
     {
       "amount":{
-        "total":"200",
-        "currency":"JPY"
+        "total": "200",
+        "currency": "JPY"
       },
-      "description":"This is the payment transaction description."
+      "description": "This is the payment transaction description.",
+      "soft_descriptor": "ABCDEFGHIJ1234"
     }
   ]
 }
