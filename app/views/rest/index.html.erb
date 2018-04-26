@@ -43,7 +43,7 @@
                 </p>
                <%= button_tag("Execute a payment!", :class =>'btn btn-default') %>
               <% end %>
-              <%= raw show_res('Create a payment', session[:res_rest]) if request.path_info == '/rest/pay' || request.fullpath.include?('token=') %>
+              <%= raw show_res('Create a payment', @res) if request.path_info == '/rest/pay' || request.fullpath.include?('token=') %>
             </td>
           </tr>
 

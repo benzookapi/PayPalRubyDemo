@@ -29,6 +29,9 @@ module ApplicationHelper
   end
 
   def show_res(method, res)
+    if res == nil then
+      res = {}
+    end
     ack = res['ACK'] != nil ? res['ACK'] : res['responseEnvelope.ack'] != nil ?
       res['responseEnvelope.ack'] : res['message'] == nil ? 'Success' : 'Failure'
 

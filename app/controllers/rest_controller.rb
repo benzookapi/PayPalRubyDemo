@@ -9,7 +9,7 @@ class RestController < ApplicationController
     if params.has_key?(:token) then
 
     else
-      session[:res_rest] = nil
+      #session[:res_rest] = nil
     end
 
     res = PpRest.get_token()
@@ -122,14 +122,14 @@ Q_DOPAY
   def pay
     @q_pay = params[:q_pay]
 
-    res = PpRest.pay(@q_pay, session[:token])
+    @res = PpRest.pay(@q_pay, session[:token])
 
-    session[:res_rest] = res
+    #session[:res_rest] = @res
 
-    p "==================pay: #{res}"
+    p "==================pay: #{@res}"
 
     redirect = ''
-    res['links'].each do |l|
+    @res['links'].each do |l|
       if l['method'] == 'REDIRECT' then
         redirect = l['href'] + '&useraction=commit'
       end
