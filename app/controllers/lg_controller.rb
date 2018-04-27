@@ -63,8 +63,8 @@ class LgController < ApplicationController
   def auth
 
     redirect_to("https://www.sandbox.paypal.com/signin/authorize" +
-      "?client_id=#{PpRest::API_APP_REST}&response_type=code&scope=profile+email+address+phone" +
-        "+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes+https%3A%2F%2Furi.paypal.com%2Fservices%2Fexpresscheckout+https%3a%2f%2furi%2epaypal%2ecom%2fservices%2finvoicing&redirect_uri=#{PpRest::API_APP_REST_URI}")
+      "?client_id=#{PpRest::API_APP_REST}&response_type=code&scope=openid+profile+email+address+phone" +
+        "+https%3A%2F%2Furi.paypal.com%2Fservices%2Fpaypalattributes+https%3a%2f%2furi%2epaypal%2ecom%2fservices%2finvoicing&redirect_uri=#{PpRest::API_APP_REST_URI}")
 
   end
 end
