@@ -1,0 +1,342 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Ship&co an Integrated solution for Managing, and Shipping  Orders for Online Sellers 1-Click Shipping Label Solution Order  Management User Interface, Ship&co",
+    "version": "1.0.0",
+    "title": "Ship&Co",
+    "termsOfService": "https://www.shipandco.com/en/terms/",
+    "contact": {
+      "email": "hello@shipandco.com"
+    }
+  },
+  "host": "shipandco.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "shipment",
+      "description": "Shipment management with label printing"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/shipment": {
+      "post": {
+        "tags": [
+          "shipment"
+        ],
+        "summary": "Create a shipment with a generated label",
+        "description": "",
+        "operationId": "addShipment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Shipment object that needs to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Shipment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/shipment/{shipmentId}": {
+      "get": {
+        "tags": [
+          "shipment"
+        ],
+        "summary": "Find shipment details by ID",
+        "description": "Returns a single shipment info",
+        "operationId": "getShipmentById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "description": "ID of shipment to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Shipment"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Shipment not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Shipment": {
+      "type": "object",
+      "required": [
+        "to_address",
+        "from_address",
+        "parcels",
+        "products",
+        "setup"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "to_address": {
+          "$ref": "#/definitions/Address"
+        },
+        "from_address": {
+          "$ref": "#/definitions/Address"
+        },
+        "parcels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Parcel"
+          }
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        },
+        "setup": {
+          "$ref": "#/definitions/Setup"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "required": [
+        "full_name",
+        "phone",
+        "country",
+        "address1",
+        "province",
+        "zip",
+        "city"
+      ],
+      "properties": {
+        "full_name": {
+          "type": "string",
+          "example": "Stephane SALEMA"
+        },
+        "company": {
+          "type": "string",
+          "example": "Ship&Co"
+        },
+        "email": {
+          "type": "string",
+          "example": "stephane@bentoandco.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "0901231234"
+        },
+        "country": {
+          "type": "string",
+          "example": "PT"
+        },
+        "address1": {
+          "type": "string",
+          "example": "Rua Quintinha da Foz, 32"
+        },
+        "address2": {
+          "type": "string",
+          "example": "Room 301"
+        },
+        "province": {
+          "type": "string",
+          "example": "SETUBAL"
+        },
+        "zip": {
+          "type": "string",
+          "example": "2820-307"
+        },
+        "city": {
+          "type": "string",
+          "example": "CHARNECA DA CAPARICA"
+        }
+      }
+    },
+    "Parcel": {
+      "type": "object",
+      "required": [
+        "weight",
+        "amount",
+        "width",
+        "height",
+        "depth"
+      ],
+      "properties": {
+        "weight": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "width": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "height": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "depth": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "required": [
+        "name",
+        "quantity",
+        "price",
+        "hs_code",
+        "hs_description"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Basket ball"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "hs_code": {
+          "type": "string",
+          "example": "HS9988"
+        },
+        "hs_description": {
+          "type": "string",
+          "format": "Sports ball"
+        }
+      }
+    },
+    "Setup": {
+      "type": "object",
+      "required": [
+        "carrier",
+        "currency",
+        "date",
+        "insurance",
+        "discount",
+        "signature",
+        "duty_paid",
+        "content_type"
+      ],
+      "properties": {
+        "carrier": {
+          "type": "string",
+          "example": "dhl"
+        },
+        "currency": {
+          "type": "string",
+          "example": "JPY"
+        },
+        "date": {
+          "type": "string",
+          "example": "2018-07-12"
+        },
+        "insurance": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "ref_number": {
+          "type": "string",
+          "example": ""
+        },
+        "delivery_note": {
+          "type": "string",
+          "example": ""
+        },
+        "discount": {
+          "type": "string",
+          "example": ""
+        },
+        "signature": {
+          "type": "boolean"
+        },
+        "duty_paid": {
+          "type": "boolean"
+        },
+        "content_type": {
+          "type": "string",
+          "example": "MERCHANDISE"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
