@@ -28,8 +28,8 @@ class LgController < ApplicationController
 
     p "==================callback code: #{code}"
 
-    #res = PpRest.identity(code)
-    res = PpRest.get_token2(code)
+    res = PpRest.identity(code)
+    #res = PpRest.get_token2(code)
 
     p "==================callback res: #{res}"
 
