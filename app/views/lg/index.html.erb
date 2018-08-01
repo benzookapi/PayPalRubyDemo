@@ -6,7 +6,8 @@ paypal.use( ["login"], function(login) {
   login.render ({
     "appid": "<%= @client_id %>",
     "authend": "sandbox",
-    "scopes": "openid profile email address phone https://uri.paypal.com/services/paypalattributes https://uri.paypal.com/services/invoicing",
+    //"scopes": "openid profile email address phone https://uri.paypal.com/services/paypalattributes https://uri.paypal.com/services/invoicing",
+    "scopes": "openid profile email address phone https://uri.paypal.com/services/paypalattributes",
     "containerid": "myContainer",
     "locale": "ja-jp",
     "returnurl": "<%= @redirect_uri %>"
