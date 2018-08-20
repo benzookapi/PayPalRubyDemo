@@ -64,6 +64,9 @@ class PpRest
 
   def self.call_api(query, path, sub_path, token, method = 'get', client = false, headers = '')
     api_url = API_URL_REST + path + '/' + sub_path
+    if api_url.end_with?('/') then
+      api_url = api_url.chop
+    end
 
     uri = URI.parse(api_url)
 
