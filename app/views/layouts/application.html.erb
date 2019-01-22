@@ -34,7 +34,7 @@
               <li class="<%= request.path_info.start_with?('/brain') ? 'active' : '' %>"><a href="/brain" onclick="javascript:location.href='/brain';">Braintree</a></li>
               <li class="<%= request.path_info.start_with?('/webhook') ? 'active' : '' %>"><a href="/webhook">Webhooks</a></li>
               <li class="<%= request.path_info.start_with?('/ipn') ? 'active' : '' %>"><a href="/ipn">IPN</a></li>
-              <li class="<%= request.path_info.start_with?('/lg') ? 'active' : '' %>"><a href="/lg" onclick="javascript:location.href='/lg';">Login With PayPal</a></li>
+              <li class="<%= request.path_info.start_with?('/lg') ? 'active' : '' %>"><a href="/lg" onclick="javascript:location.href='/lg';">Connect With PayPal</a></li>
               <li class="<%= request.path_info.start_with?('/ad') ? 'active' : '' %>"><a href="/ad">Adaptive Payment</a></li>
             </ul>
 

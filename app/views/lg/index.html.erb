@@ -1,5 +1,5 @@
-<h4>Login With PayPal JS Gadget <a target="_blank" href="https://developer.paypal.com/docs/integration/direct/identity/log-in-with-paypal/">details</a></h4>
-<span id="myContainer"></span>
+<h4>Build a Customized Connect with PayPal Button <a target="_blank" href="https://developer.paypal.com/docs/integration/direct/identity/button-js-builder/">details</a></h4>
+<!--<span id="myContainer"></span>
 <script src="https://www.paypalobjects.com/js/external/api.js"></script>
 <script>
 paypal.use( ["login"], function(login) {
@@ -14,12 +14,31 @@ paypal.use( ["login"], function(login) {
     "returnurl": "<%= @redirect_uri %>"
   });
 });
+</script>-->
+
+<span id='cwppButton'></span>
+<script src='https://www.paypalobjects.com/js/external/connect/api.js'></script>
+<script>
+paypal.use( ['login'], function (login) {
+  login.render ({
+    "appid":"<%= @client_id %>",
+    "authend":"sandbox",
+    "scopes":"openid profile email address phone https://uri.paypal.com/services/paypalattributes",
+    "containerid":"cwppButton",
+    "locale":"en-us",
+    "buttonType":"CWP",
+    "buttonSize":"lg",
+    "returnurl":"<%= @redirect_uri %>"
+  });
+});
 </script>
 
+
+
 <br/>
 <br/>
 
-<h4>Obtain Buyer/Seller Token (Manual Login With PayPal) <a target="_blank" href="https://developer.paypal.com/docs/api/#obtain-users-consent">details</a></h4>
+<h4>Embed the Connect with PayPal Button Manually <a target="_blank" href="https://developer.paypal.com/docs/integration/direct/identity/button-manual/">details</a></h4>
 <form method="post" action="/lg/auth">
   <input type="submit" value="Give your access token!">
 </form>

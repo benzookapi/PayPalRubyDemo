@@ -21,7 +21,8 @@ class PpRest
 
   API_PATH_IDENTITY = 'identity/openidconnect/tokenservice'
 
-  API_PATH_USERINFO = 'identity/openidconnect/userinfo'
+  API_PATH_USERINFO = 'identity/oauth2/userinfo'
+  #API_PATH_USERINFO = 'identity/openidconnect/userinfo'
   #API_PATH_USERINFO = 'oauth2/token/userinfo'
 
   API_APP_REST = ENV['PP_API_APP_REST']
@@ -35,7 +36,8 @@ class PpRest
   end
 
   def self.get_token2(code)
-    call_api("grant_type=authorization_code&code=#{code}&response_type=token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", API_PATH_TOKEN, '', '', 'post', false)
+    #call_api("grant_type=authorization_code&code=#{code}&response_type=token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", API_PATH_TOKEN, '', '', 'post', false)
+    call_api("grant_type=authorization_code&code=#{code}", API_PATH_TOKEN, '', '', 'post', false)
   end
 
   def self.pay(query, token)
@@ -59,7 +61,8 @@ class PpRest
   end
 
   def self.userinfo(token)
-    call_api('', API_PATH_USERINFO, '?schema=openid', token)
+    #call_api('', API_PATH_USERINFO, '?schema=openid', token)
+    call_api('', API_PATH_USERINFO, '?schema=paypalv1.1', token)    
   end
 
   def self.call_api(query, path, sub_path, token, method = 'get', client = false, headers = '')
