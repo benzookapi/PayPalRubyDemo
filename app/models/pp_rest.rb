@@ -13,17 +13,17 @@ class PpRest
 
   API_URL_REST = set_variable(PayPalRubyDemo::Application.config.paypal_api_url_rest)
 
-  API_PATH_TOKEN = 'oauth2/token'
+  API_PATH_TOKEN = 'v1/oauth2/token'
 
-  API_PATH_PAY = 'payments/payment'
+  API_PATH_PAY = 'v1/payments/payment'
 
-  API_PATH_PAYOUT = 'payments/payouts'
+  API_PATH_PAYOUT = 'v1/payments/payouts'
 
-  API_PATH_IDENTITY = 'identity/openidconnect/tokenservice'
+  API_PATH_IDENTITY = 'v1/identity/openidconnect/tokenservice'
 
-  API_PATH_USERINFO = 'identity/oauth2/userinfo'
-  #API_PATH_USERINFO = 'identity/openidconnect/userinfo'
-  #API_PATH_USERINFO = 'oauth2/token/userinfo'
+  API_PATH_USERINFO = 'v1/identity/oauth2/userinfo'
+  #API_PATH_USERINFO = 'v1/identity/openidconnect/userinfo'
+  #API_PATH_USERINFO = 'v1/oauth2/token/userinfo'
 
   API_APP_REST = ENV['PP_API_APP_REST']
 
