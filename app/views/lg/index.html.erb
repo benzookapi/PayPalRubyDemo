@@ -23,7 +23,7 @@ paypal.use( ['login'], function (login) {
   login.render ({
     "appid":"<%= @client_id %>",
     "authend":"sandbox",
-    "scopes":"openid profile email address phone https://uri.paypal.com/services/paypalattributes",
+    "scopes":"openid profile email address phone https://uri.paypal.com/services/paypalattributes https://uri.paypal.com/services/invoicing",
     "containerid":"cwppButton",
     "locale":"en-us",
     "buttonType":"CWP",
